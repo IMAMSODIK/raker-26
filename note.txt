@@ -1,0 +1,30 @@
+unit kerja (kode, nama)
+jabatan (nama jabatan)
+bank (kode, nama)
+kamar (no. kamar)
+kunci kamar (id kamar, id pegawai (pemegang kunci))
+pegawai (nama, nip, jenis kelamin, golongan, jabatan, bank)
+narasumber (nip, nama, jenis kelamin, golongan, jabatan, bank)
+rundown (tanggal, waktu, keterangan, pembawa acara)
+dokument (nama, deskripsi, dokumen)
+foto event (foto, keterangan)
+master sesi (tanggal, waktu, nama sesi)
+
+laporan/notulen (rich text notulen) atau pakai point
+
+kit (status kit)
+kamar peserta (sudah/belum diatur)
+
+registrasi peserta + ttd
+absensi peserta (hari 1, hari 2) + foto
+
+
+
+card count peserta, panitia, juimnlah absensi, jumlah registrasi
+
+
+daftar mandiri
+
+
+
+bldfZv1hhrtQ
