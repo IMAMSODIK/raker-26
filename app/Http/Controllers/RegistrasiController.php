@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jabatan;
 use App\Models\Peserta;
+use App\Models\UnitKerja;
 use App\Models\User;
 use Exception;
 use Illuminate\Database\QueryException;
@@ -17,7 +19,9 @@ class RegistrasiController extends Controller
             'banks' => DB::table('banks')
                             ->select('nama_bank')
                             ->get(),
-            'pesertas' => Peserta::get()
+            'jabatans' => Jabatan::all(),
+            'unit_kerjas' => UnitKerja::all(),
+            'pesertas' => Peserta::with(['jabatan', 'unitKerja'])->get()
         ];
         return view('registrasi', $data);
     }
@@ -25,13 +29,24 @@ class RegistrasiController extends Controller
     public function registrasiProccess(Request $r){
         try {
             $validatedData = $r->validate([
-                'nip' => 'required',
-                'no_wa' => 'required|max:15|unique:pesertas,no_wa',
+                'nip' => 'required|max:50|unique:pesertas,nip,'.$r->id,
+                'jenis_kelamin' => 'required|max:20',
+                'unit_kerja_id' => 'required|string',
+                'jabatan_id' => 'required|string',
+                'no_wa' => 'required|max:15|unique:pesertas,no_wa,'.$r->id,
                 'bank' => 'required|max:200',
-                'no_rek' => 'required|max:50|unique:pesertas,no_rek',
+                'no_rek' => 'required|max:50|unique:pesertas,no_rek,'.$r->id,
                 'ukuran_baju' => 'required|max:5',
             ], [
-                'nip.required' => 'Peserta tidak ditemukan',
+                'nip.required' => 'NIP Wajib diisi',
+                'nip.max' => 'Nomor Handphone tidak boleh lebih dari 50 karakter.',
+                'nip.unique' => 'NIP sudah terdaftar.',
+                'jenis_kelamin.required' => 'Jenis Kelamin Wajib dipilih',
+                'jenis_kelamin.max' => 'Jenis Kelamin tidak valid',
+                'unit_kerja_id.required' => 'Unit Kerja Wajib dipilih',
+                'unit_kerja_id.string' => 'Unit Kerja tidak valid',
+                'jabatan_id.required' => 'Jabatan Wajib dipilih',
+                'jabatan_id.string' => 'Jabatan tidak valid',
                 'no_wa.required' => 'Nomor Handphone wajib diisi.',
                 'no_wa.max' => 'Nomor Handphone tidak boleh lebih dari 15 karakter.',
                 'no_wa.unique' => 'Nomor Handphone sudah terdaftar.',
@@ -44,9 +59,13 @@ class RegistrasiController extends Controller
                 'ukuran_baju.max' => 'Ukuran Baju tidak boleh lebih dari 5 karakter.',
             ]);
 
-            $peserta = Peserta::where('nip', $r->nip)->first();
+            $peserta = Peserta::where('id', $r->id)->first();
 
             if($peserta){
+                $peserta->nip = $r->nip;
+                $peserta->unit_kerja_id = $r->unit_kerja_id;
+                $peserta->jabatan_id = $r->jabatan_id;
+                $peserta->jenis_kelamin = $r->jenis_kelamin;
                 $peserta->no_wa = $r->no_wa;
                 $peserta->nama_bank = $r->bank;
                 $peserta->no_rek = $r->no_rek;

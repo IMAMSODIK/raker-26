@@ -45,14 +45,14 @@
 
             <a href="index.html" class="logo d-flex align-items-center">
                 <!-- Uncomment the line below if you also wish to use an image logo -->
-                <!-- <img src="assets/img/logo.png" alt=""> -->
-                <h1 class="sitename">SoftLand</h1>
+                <img src="{{asset('own_assets/images/logo_real.png')}}" width="100%" alt="">
+                {{-- <h1 class="sitename">SoftLand</h1> --}}
             </a>
 
             <nav id="navmenu" class="navmenu">
                 <ul>
                     <li><a href="#hero" class="active">Home</a></li>
-                    <li><a href="#about">About</a></li>
+                    {{-- <li><a href="#about">About</a></li>
                     <li><a href="#features">Features</a></li>
                     <li><a href="#pricing">Pricing</a></li>
                     <li class="dropdown"><a href="#"><span>Dropdown</span> <i
@@ -74,7 +74,7 @@
                             <li><a href="#">Dropdown 4</a></li>
                         </ul>
                     </li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#contact">Contact</a></li> --}}
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
@@ -90,19 +90,20 @@
             <div class="container">
                 <div class="row gy-4">
                     <div class="col-lg-4 order-lg-last hero-img" data-aos="zoom-out">
-                        <img src="{{ asset('landing_assets/assets/img/phone_1.png') }}" alt="Phone 1" class="phone-1">
-                        <img src="{{ asset('landing_assets/assets/img/phone_2.png') }}" alt="Phone 2" class="phone-2">
+                        {{-- <img src="{{ asset('own_assets/images/banner.jpeg') }}" alt="Phone 1" class="phone-1"> --}}
                     </div>
                     <div class="col-lg-8 d-flex flex-column justify-content-center align-items text-center text-md-start"
                         data-aos="fade-up">
-                        <h2>Promote Your App with SoftLand</h2>
-                        <p>We are team of talented designers making websites with Bootstrap</p>
+                        <h2>PENGUATAN TATA KELOLA MENUJU INTERNASIONALISASI UIN SUMATERA UTARA MEDAN</h2>
+                        <p>HOTEL NIAGARA PARAPAT, 02-04 FEBRUARI 2025</p>
                         <div class="d-flex mt-4 justify-content-center justify-content-md-start">
                             <a href="{{ asset('landing_assets/google_play_link') }}" class="download-btn">
-                                <i class="bi bi-google-play"></i> <span>Google Play</span>
+                                {{-- <i class="bi bi-google-play"></i> --}}
+                                <span>Registrasi</span>
                             </a>
                             <a href="{{ asset('landing_assets/app_store_link') }}" class="download-btn">
-                                <i class="bi bi-apple"></i> <span>App Store</span>
+                                {{-- <i class="bi bi-apple"></i> --}}
+                                <span>Absensi</span>
                             </a>
                         </div>
                     </div>
@@ -113,7 +114,7 @@
         <!-- /Hero Section -->
 
 
-        <!-- About Section -->
+        {{-- <!-- About Section -->
         <section id="about" class="about section">
 
             <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -707,12 +708,12 @@
               </div>
           </div>
       </div>
-  </section>
+  </section> --}}
   
 
     </main>
 
-    <footer id="footer" class="footer dark-background">
+    {{-- <footer id="footer" class="footer dark-background">
         <div class="container">
             <h3 class="sitename">SoftLand</h3>
             <p>Et aut eum quis fuga eos sunt ipsa nihil. Labore corporis magni eligendi fuga maxime saepe commodi
@@ -738,7 +739,7 @@
                 </div>
             </div>
         </div>
-    </footer>
+    </footer> --}}
 
     <!-- Scroll Top -->
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i

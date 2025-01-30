@@ -16,3 +16,13 @@
 <!-- Page level custom scripts -->
 <script src="{{ asset('dashboard_assets/js/demo/chart-area-demo.js') }}"></script>
 <script src="{{ asset('dashboard_assets/js/demo/chart-pie-demo.js') }}"></script>
+
+<!-- Page level plugins -->
+<script src="{{asset('dashboard_assets/vendor/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('dashboard_assets/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+
+<!-- Page level custom scripts -->
+<script src="{{asset('dashboard_assets/js/demo/datatables-demo.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@yield('own_scripts')

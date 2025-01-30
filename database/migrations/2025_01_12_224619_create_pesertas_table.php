@@ -15,16 +15,17 @@ return new class extends Migration
             $table->id();
             $table->string('role');
             $table->string('nama');
-            $table->string('nip')->unique();
+            $table->string('nip')->nullable();
             $table->string('instansi');
-            $table->string('unit_kerja');
-            $table->string('jabatan');
+            $table->foreignId('unit_kerja_id')->nullable();
+            $table->foreignId('jabatan_id')->nullable();
             $table->string('golongan');
-            $table->boolean('jenis_kelamin');
+            $table->string('jenis_kelamin')->nullable()->unique();
             $table->string('no_wa')->nullable()->unique();
             $table->string('no_rek')->nullable()->unique();
             $table->string('nama_bank')->nullable();
             $table->string('ukuran_baju', 5)->nullable();
+            $table->foreignId('kamar_id')->nullable();
             $table->timestamps();
         });
     }

@@ -16,34 +16,22 @@ class PesertaSeeder extends Seeder
         Peserta::create([
             'role' => 'Peserta',
             'nama' => 'Ali Imran',
-            'nip' => '1980000001',
             'instansi' => 'UIN SU',
-            'unit_kerja' => 'Unit Pusat',
-            'jabatan' => 'Kepala Divisi',
             'golongan' => 'IV/a',
-            'jenis_kelamin' => 1,
         ]);
 
         Peserta::create([
             'role' => 'Peserta',
             'nama' => 'Irham Fauzan',
-            'nip' => '1980000003',
             'instansi' => 'UIN SU',
-            'unit_kerja' => 'Unit Pusat',
-            'jabatan' => 'Kepala Divisi',
             'golongan' => 'IV/b',
-            'jenis_kelamin' => 1,
         ]);
 
         Peserta::create([
             'role' => 'Peserta',
             'nama' => 'Dina Afriani',
-            'nip' => '1980000002',
             'instansi' => 'UIN SU',
-            'unit_kerja' => 'Unit Pusat',
-            'jabatan' => 'Kepala Divisi',
             'golongan' => 'IV/a',
-            'jenis_kelamin' => 0,
         ]);
     }
 }

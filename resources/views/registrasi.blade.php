@@ -35,7 +35,6 @@
 				},
 			}).then((result) => {
 				if (result.isConfirmed) {
-					location.reload();
 					sessionStorage.removeItem('success');
 				}
 			})
@@ -51,20 +50,21 @@
       ========================= -->
                 <div class="col-md-4">
                     <div class="hero-wrap h-100">
-                        <div class="hero-mask opacity-8" style="background-color: #22a1a7"></div>
+                        <div class="hero-mask opacity-8" style="background-color: #b1b1b1"></div>
                         <div class="hero-bg hero-bg-scroll"></div>
                         <div class="hero-content mx-auto w-100 h-100">
                             <div class="container d-flex flex-column h-100">
                                 <div class="row g-0">
                                     <div class="col-11 col-lg-9 mx-auto">
-                                        <div class="logo mt-5 mb-5">
-                                            <a class="d-flex" href="/" title="Logo RAKER"><img src="{{asset("own_assets/images/foodku.png")}}" alt="Logo RAKER" width="40%" /></a>
+                                        <div class="logo mt-5">
+                                            <a class="d-flex" href="/pendaftaran" title="Logo RAKER"><img src="{{asset("own_assets/images/logo.png")}}" alt="Logo RAKER"/></a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row g-0 mt-3">
-                                    <div class="col-11 col-lg-10 mx-auto">
-                                        <h1 class="text-9 text-dark fw-300 mb-5">Pendaftaran <span class="fw-500">RAKER UINSU</span></h1>
+                                <div class="row g-0">
+                                    <div class="col-12 col-lg-12 mx-auto">
+                                        <img src="{{asset("own_assets/images/banner.jpeg")}}" style="width: 100%">
+                                        <h1 class="text-9 text-dark fw-300 mb-5 text-center">PENGUATAN TATA KELOLA MENUJU INTERNASIONALISASI UIN SUMATERA UTARA MEDAN HOTEL NIAGARA PARAPAT <br>02-04 FEBRUARI 2025</h1>
                                     </div>
                                 </div>
                             </div>
@@ -96,6 +96,7 @@
                                     <div class="row mb-3">
                                         <button class="btn btn-primary shadow-none my-2" id="cari_data" type="button">Temukan Data Anda</button>
                                     </div>
+                                    <input type="hidden" id="id" name="id">
                                     <div class="row">
                                         <div class="col-md-4"><hr></div>
                                         <div class="col-md-4 d-flex justify-content-center">Biodata</div>
@@ -110,27 +111,8 @@
                                         <input type="text" class="form-control" name="nama" id="nama" readonly placeholder="Nama Peserta/Panitia" value="{{ old('nama') }}"/>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label text-light" for="nip">NIP</label>
-                                        <input type="text" class="form-control" name="nip" id="nip" readonly placeholder="NIP Peserta/Panitia" value="{{ old('nip') }}" />
-                                        @error('nip')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label text-light" for="jenis_kelamin">Jenis Kelamin</label>
-                                        <input type="text" class="form-control" name="jenis_kelamin" id="jenis_kelamin" readonly placeholder="Jenis Kelamin Peserta/Panitia" value="{{ old('jenis_kelamin') }}"/>
-                                    </div>
-                                    <div class="mb-3">
                                         <label class="form-label text-light" for="asal_instansi">Asal Instansi</label>
                                         <input type="text" class="form-control" name="asal_instansi" id="asal_instansi" readonly placeholder="Asal Instansi Peserta/Panitia" value="{{ old('asal_instansi') }}"/>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label text-light" for="unit_kerja">Unit Kerja</label>
-                                        <input type="text" class="form-control" name="unit_kerja" id="unit_kerja" readonly placeholder="Unit Kerja Peserta/Panitia" value="{{ old('unit_kerja') }}"/>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label text-light" for="jabatan">Jabatan</label>
-                                        <input type="text" class="form-control" name="jabatan" id="jabatan" readonly placeholder="Jabatan Peserta/Panitia" value="{{ old('jabatan') }}"/>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label text-light" for="golongan">Golongan</label>
@@ -140,6 +122,47 @@
                                         <div class="col-md-4"><hr></div>
                                         <div class="col-md-4 d-flex justify-content-center">Entry Data</div>
                                         <div class="col-md-4"><hr></div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label text-light" for="jenis_kelamin">Jenis Kelamin</label>
+                                        <select name="jenis_kelamin" class="form-control" name="jenis_kelamin" id="jenis_kelamin" required>
+                                            <option value="Laki-laki">Laki-laki</option>
+                                            <option value="Perempuan">Perempuan</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label text-light" for="nip">NIP</label>
+                                        <input type="text" class="form-control" name="nip" id="nip" required placeholder="NIP Peserta/Panitia" value="{{ old('nip') }}" maxlength="15"/>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="mb-3">
+                                            <label class="form-label text-light" for="unit_kerja">Unit Kerja</label>
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-grow-1 me-2">
+                                                    <input type="hidden" name="unit_kerja_id" id="unit_kerja_id">
+                                                    <input type="text" class="form-control" name="unit_kerja" id="unit_kerja" required readonly placeholder="Silahkan Pilih Unit Kerja" value="{{ old('unit_kerja') }}" />
+                                                </div>
+                                                <button type="button" class="btn btn-primary" id="pilih_unit_kerja" data-toggle="modal" data-target="#daftar_unit_kerja">Pilih</button>
+                                            </div>
+                                            @error('unit_kerja')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="mb-3">
+                                            <label class="form-label text-light" for="jabatan">Jabatan</label>
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-grow-1 me-2">
+                                                    <input type="hidden" name="jabatan_id" id="jabatan_id">
+                                                    <input type="text" class="form-control" name="jabatan" id="jabatan" required readonly placeholder="Silahkan Pilih Jabatan" value="{{ old('jabatan') }}" />
+                                                </div>
+                                                <button type="button" class="btn btn-primary" id="pilih_jabatan" data-toggle="modal" data-target="#daftar_jabatan">Pilih</button>
+                                            </div>
+                                            @error('jabatan')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label text-light" for="no_wa">No. Whatsapp</label>
@@ -211,6 +234,100 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="modal fade" id="daftar_jabatan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header border-secondary">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Daftar Jabatan</h5>
+                                                    <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered table-striped" id="jabatan_table" width="100%" cellspacing="0">
+                                                            <thead class="thead-dark">
+                                                                <tr>
+                                                                    <th style="width: 10%">No</th>
+                                                                    <th>Nama Jabatan</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tfoot class="thead-dark">
+                                                                <tr>
+                                                                    <th style="width: 10%">No</th>
+                                                                    <th>Nama Jabatan</th>
+                                                                </tr>
+                                                            </tfoot>
+                                                            <tbody>
+                                                                @php
+                                                                    $index = 1;
+                                                                @endphp
+                                                                @foreach ($jabatans as $jabatan)
+                                                                    <tr data-nama="{{ $jabatan->nama }}" data-id="{{ $jabatan->id }}" class="row-jabatan" style="cursor: pointer">
+                                                                        <td>{{ $index++ }}</td>
+                                                                        <td>{{ $jabatan->nama }}</td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer border-secondary">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                        Close
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal fade" id="daftar_unit_kerja" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header border-secondary">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Daftar Unit Kerja</h5>
+                                                    <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered table-striped" id="unit_kerja_table" width="100%" cellspacing="0">
+                                                            <thead class="thead-dark">
+                                                                <tr>
+                                                                    <th style="width: 10%">No</th>
+                                                                    <th>Nama unit Kerja</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tfoot class="thead-dark">
+                                                                <tr>
+                                                                    <th style="width: 10%">No</th>
+                                                                    <th>Nama unit Kerja</th>
+                                                                </tr>
+                                                            </tfoot>
+                                                            <tbody>
+                                                                @php
+                                                                    $index = 1;
+                                                                @endphp
+                                                                @foreach ($unit_kerjas as $unit_kerja)
+                                                                    <tr data-nama="{{ $unit_kerja->nama }}" data-id="{{ $unit_kerja->id }}" class="row-unit_kerja" style="cursor: pointer">
+                                                                        <td>{{ $index++ }}</td>
+                                                                        <td>{{ $unit_kerja->nama }}</td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer border-secondary">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                        Close
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     
                                     <div class="mb-3">
                                         <label class="form-label text-light" for="no_rek">No. Rekening</label>
@@ -247,7 +364,7 @@
     </div>
 
     <div class="modal fade" id="daftar_peserta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header border-secondary">
                     <h5 class="modal-title" id="exampleModalLabel">Daftar Peserta</h5>
@@ -263,10 +380,7 @@
                                     <th style="width: 7%">No</th>
                                     <th>Peserta</th>
                                     <th>Role</th>
-                                    <th>Jenis Kelamin</th>
                                     <th>Asal Instansi</th>
-                                    <th>Unit Kerja</th>
-                                    <th>Jabatan</th>
                                     <th>Golongan</th>
                                 </tr>
                             </thead>
@@ -275,10 +389,7 @@
                                     <th style="width: 7%">No</th>
                                     <th>Peserta</th>
                                     <th>Role</th>
-                                    <th>Jenis Kelamin</th>
                                     <th>Asal Instansi</th>
-                                    <th>Unit Kerja</th>
-                                    <th>Jabatan</th>
                                     <th>Golongan</th>
                                 </tr>
                             </tfoot>
@@ -287,20 +398,11 @@
                                     $index = 1;
                                 @endphp
                                 @foreach ($pesertas as $peserta)
-                                    <tr data-nama="{{ $peserta->nama }}" data-role="{{ $peserta->role }}" data-nip="{{ $peserta->nip }}" data-instansi="{{ $peserta->instansi }}" data-uker="{{ $peserta->unit_kerja }}" data-jabatan="{{ $peserta->jabatan }}" data-golongan="{{ $peserta->golongan }}" data-jk="{{ $peserta->jenis_kelamin }}" data-wa="{{ $peserta->no_wa }}" data-rek="{{ $peserta->no_rek }}" data-bank="{{ $peserta->nama_bank }}" data-baju="{{ $peserta->ukuran_baju }}" class="row-peserta" style="cursor: pointer">
+                                    <tr data-id="{{ $peserta->id }}" data-nama="{{ $peserta->nama }}" data-role="{{ $peserta->role }}" data-nip="{{ $peserta->nip }}" data-instansi="{{ $peserta->instansi }}" data-ukerid="{{ $peserta->unitKerja->id ?? '' }}" data-uker="{{ $peserta->unitKerja->nama ?? '' }}" data-jabatanid="{{ $peserta->jabatan->id ?? ''}}" data-jabatan="{{ $peserta->jabatan->nama ?? ''}}" data-golongan="{{ $peserta->golongan }}" data-jk="{{ $peserta->jenis_kelamin }}" data-wa="{{ $peserta->no_wa }}" data-rek="{{ $peserta->no_rek }}" data-bank="{{ $peserta->nama_bank }}" data-baju="{{ $peserta->ukuran_baju }}" class="row-peserta" style="cursor: pointer">
                                         <td>{{ $index++ }}</td>
-                                        <td>{{ $peserta->nama }} <br> <small>({{ $peserta->nip }})</small></td>
+                                        <td>{{ $peserta->nama }}</td>
                                         <td>{{ $peserta->role }}</td>
-                                        <td>
-                                            @if ($peserta->jenis_kelamin == 1)
-                                                Laki-laki
-                                            @else
-                                                Perempuan
-                                            @endif
-                                        </td>
                                         <td>{{ $peserta->instansi }}</td>
-                                        <td>{{ $peserta->unit_kerja }}</td>
-                                        <td>{{ $peserta->jabatan }}</td>
                                         <td>{{ $peserta->golongan }}</td>
                                     </tr>
                                 @endforeach
@@ -359,13 +461,16 @@
             })
 
             $(".row-peserta").on("click", function(){
+                $("#id").val($(this).data('id'));
                 $("#nama").val($(this).data('nama'));
                 $("#role").val($(this).data('role'));
                 $("#nip").val($(this).data('nip'));
                 $("#asal_instansi").val($(this).data('instansi'));
-                $("#jenis_kelamin").val(($(this).data('jk') == 1) ? "Laki-laki" : "Perempuan");
+                $("#jenis_kelamin").val($(this).data('jk'));
                 $("#unit_kerja").val($(this).data('uker'));
+                $("#unit_kerja_id").val($(this).data('ukerid'));
                 $("#jabatan").val($(this).data('jabatan'));
+                $("#jabatan_id").val($(this).data('jabatanid'));
                 $("#golongan").val($(this).data('golongan'));
                 $("#no_wa").val($(this).data('wa'));
                 $("#bank").val($(this).data('bank'));
@@ -374,11 +479,27 @@
                 $("#daftar_peserta").modal("hide");
             })
 
+            $(".row-jabatan").on("click", function(){
+                $("#jabatan_id").val($(this).data('id'));
+                $("#jabatan").val($(this).data('nama'));
+                $("#daftar_jabatan").modal("hide");
+            })
+
+            $(".row-unit_kerja").on("click", function(){
+                $("#unit_kerja_id").val($(this).data('id'));
+                $("#unit_kerja").val($(this).data('nama'));
+                $("#daftar_unit_kerja").modal("hide");
+            })
+
             document.getElementById('no_wa').addEventListener('input', function (e) {
                 this.value = this.value.replace(/[^0-9]/g, '').slice(0, 15);
             });
 
             document.getElementById('no_rek').addEventListener('input', function (e) {
+                this.value = this.value.replace(/[^0-9]/g, '').slice(0, 50);
+            });
+
+            document.getElementById('nip').addEventListener('input', function (e) {
                 this.value = this.value.replace(/[^0-9]/g, '').slice(0, 50);
             });
         </script>
