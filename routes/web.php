@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JabatanController;
+use App\Http\Controllers\KamarController;
 use App\Http\Controllers\MateriRapatController;
 use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\RegistrasiController;
@@ -26,7 +27,7 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index']); 
+    Route::get('/dashboard', [DashboardController::class, 'index']);
 
     Route::get('/unit-kerja', [UnitKerjaController::class, 'index']);
     Route::post('/unit-kerja/store', [UnitKerjaController::class, 'store']);
@@ -51,6 +52,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/bank/edit', [BankController::class, 'edit']);
     Route::post('/bank/update', [BankController::class, 'update']);
     Route::post('/bank/delete', [BankController::class, 'delete']);
+
+    Route::get('/kamar', [KamarController::class, 'index']);
+    Route::post('/kamar/store', [KamarController::class, 'store']);
+    Route::get('/kamar/edit', [KamarController::class, 'edit']);
+    Route::post('/kamar/update', [KamarController::class, 'update']);
+    Route::post('/kamar/delete', [KamarController::class, 'delete']);
 
     Route::get('/daftar-peserta', [PesertaController::class, 'index']);
     Route::post('/daftar-peserta/store', [PesertaController::class, 'store']);
