@@ -6,7 +6,7 @@
         <!-- Page Heading -->
         <div class="row mb-2">
             <div class="col-md-6">
-                <h1 class="h3 mb-2 text-gray-800">Daftar Peserta</h1>
+                <h1 class="h3 mb-2 text-gray-800">{{ $pageTitle }}</h1>
             </div>
             <div class="col-md-6 d-flex justify-content-end">
                 <button class="btn btn-success" id="tambah-data">Tambah Data</button>
@@ -16,9 +16,9 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header">
-                <h6 class="m-0 font-weight-bold text-primary">Peserta</h6>
+                <h6 class="m-0 font-weight-bold text-primary">{{ $pageTitle }}</h6>
             </div>
-            
+
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -52,17 +52,22 @@
                             @endphp
                             @foreach ($pesertas as $peserta)
                                 <tr>
-                                    <td style="font-size: 16px" class="text-center">{{$index++}}</td>
-                                    <td style="font-size: 16px" class="">{{$peserta->nama}} <br><small class="{{$peserta->nip ? '' : 'text-danger'}}">({{$peserta->nip ?? "Belum Mendaftar"}})</small></td>
-                                    <td style="font-size: 16px"><span class="badge badge-pill badge-{{$peserta->role == 'PANITIA' ? 'primary' : 'success'}}">{{$peserta->role}}</span></td>
-                                    <td style="font-size: 16px">{{$peserta->instansi}}</td>
-                                    <td style="font-size: 16px">{{$peserta->unitKerja->nama ?? ""}}</td>
-                                    <td style="font-size: 16px">{{$peserta->jabatan->nama ?? ""}}</td>
-                                    <td style="font-size: 16px" class="text-center">{{$peserta->golongan}}</td>
+                                    <td style="font-size: 16px" class="text-center">{{ $index++ }}</td>
+                                    <td style="font-size: 16px" class="">{{ $peserta->nama }} <br><small
+                                            class="{{ $peserta->nip ? '' : 'text-danger' }}">({{ $peserta->nip ?? 'Belum Mendaftar' }})</small>
+                                    </td>
+                                    <td style="font-size: 16px"><span
+                                            class="badge badge-pill badge-{{ $peserta->role == 'PANITIA' ? 'primary' : 'success' }}">{{ $peserta->role }}</span>
+                                    </td>
+                                    <td style="font-size: 16px">{{ $peserta->instansi }}</td>
+                                    <td style="font-size: 16px">{{ $peserta->unitKerja->nama ?? '' }}</td>
+                                    <td style="font-size: 16px">{{ $peserta->jabatan->nama ?? '' }}</td>
+                                    <td style="font-size: 16px" class="text-center">{{ $peserta->golongan }}</td>
                                     <td style="font-size: 16px" class="text-center">
-                                        <button class="btn btn-success detail" data-id="{{$peserta->id}}">Detail</button>
-                                        <button class="btn btn-primary edit" data-id="{{$peserta->id}}">Edit</button>
-                                        <button class="btn btn-danger delete" data-id="{{$peserta->id}}">Hapus</button>
+                                        <button class="btn btn-success"
+                                            data-id="{{ $peserta->id }}" id="btn-detail">Detail</button>
+                                        <button class="btn btn-primary edit" data-id="{{ $peserta->id }}">Edit</button>
+                                        <button class="btn btn-danger delete" data-id="{{ $peserta->id }}">Hapus</button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -80,47 +85,62 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="myExtraLargeModal">Tambah Peserta</h4>
-                    <button class="btn-close py-0 cancel-add" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button class="btn-close py-0 cancel-add" type="button" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body dark-modal">
                     <div class="card">
                         <form class="form theme-form dark-inputs">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-4"><hr></div>
+                                    <div class="col-md-4">
+                                        <hr>
+                                    </div>
                                     <div class="col-md-4 d-flex justify-content-center">Biodata</div>
-                                    <div class="col-md-4"><hr></div>
+                                    <div class="col-md-4">
+                                        <hr>
+                                    </div>
                                 </div>
                                 <div class="">
                                     <label class="form-label text-light" for="nama">Nama Lengkap</label>
-                                    <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama Lengkap" value="{{ old('nama') }}"/>
+                                    <input type="text" class="form-control" name="nama" id="nama"
+                                        placeholder="Nama Lengkap" value="{{ old('nama') }}" />
                                 </div>
                                 <div class="">
                                     <label class="form-label text-light" for="nip">NIP</label>
-                                    <input type="text" class="form-control" name="nip" id="nip" required placeholder="NIP Peserta/Panitia" value="{{ old('nip') }}" maxlength="15"/>
+                                    <input type="text" class="form-control" name="nip" id="nip" required
+                                        placeholder="NIP Peserta/Panitia" value="{{ old('nip') }}" maxlength="15" />
                                 </div>
                                 <div class="">
                                     <label class="form-label text-light" for="jenis_kelamin">Jenis Kelamin</label>
-                                    <select name="jenis_kelamin" class="form-control" name="jenis_kelamin" id="jenis_kelamin" required>
+                                    <select name="jenis_kelamin" class="form-control" name="jenis_kelamin"
+                                        id="jenis_kelamin" required>
                                         <option value="Laki-laki">Laki-laki</option>
                                         <option value="Perempuan">Perempuan</option>
                                     </select>
                                 </div>
                                 <div class="">
                                     <label class="form-label text-light" for="no_wa">No. Whatsapp</label>
-                                    <input type="text" class="form-control" name="no_wa" id="no_wa" required placeholder="Masukkan No. Whatsapp" value="{{ old('no_wa') }}" maxlength="15"/>
+                                    <input type="text" class="form-control" name="no_wa" id="no_wa" required
+                                        placeholder="Masukkan No. Whatsapp" value="{{ old('no_wa') }}"
+                                        maxlength="15" />
                                     @error('no_wa')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="row mt-4">
-                                    <div class="col-md-4"><hr></div>
+                                    <div class="col-md-4">
+                                        <hr>
+                                    </div>
                                     <div class="col-md-4 d-flex justify-content-center">Data Kepegawaian</div>
-                                    <div class="col-md-4"><hr></div>
+                                    <div class="col-md-4">
+                                        <hr>
+                                    </div>
                                 </div>
                                 <div class="">
                                     <label class="form-label text-light" for="role">Jenis Kepesertaan</label>
-                                    <select class="form-control" name="role" id="role" value="{{ old('role') }}">
+                                    <select class="form-control" name="role" id="role"
+                                        value="{{ old('role') }}">
                                         <option value="PESERTA">PESERTA</option>
                                         <option value="PANITIA">PANITIA</option>
                                         <option value="NARASUMBER">NARASUMBER</option>
@@ -128,59 +148,35 @@
                                 </div>
                                 <div class="">
                                     <label class="form-label text-light" for="asal_instansi">Asal Instansi</label>
-                                    <input type="text" class="form-control" name="asal_instansi" id="asal_instansi" placeholder="Asal Instansi" value="{{ old('asal_instansi') }}"/>
+                                    <input type="text" class="form-control" name="asal_instansi" id="asal_instansi"
+                                        placeholder="Asal Instansi" value="{{ old('asal_instansi') }}" />
                                 </div>
 
                                 <div class="">
                                     <label class="form-label text-light" for="unit_kerja">Unit Kerja</label>
-                                    <select class="form-control" name="unit_kerja" id="unit_kerja" required value="{{ old('unit_kerja') }}" >
+                                    <select class="form-control" name="unit_kerja" id="unit_kerja" required
+                                        value="{{ old('unit_kerja') }}">
                                         @foreach ($unit_kerjas as $unit_kerja)
-                                            <option value="{{$unit_kerja->id}}">{{$unit_kerja->nama}}</option>
+                                            <option value="{{ $unit_kerja->id }}">{{ $unit_kerja->nama }}</option>
                                         @endforeach
                                     </select>
                                 </div>
 
-                                {{-- <div class="">
-                                    <div class="">
-                                        <label class="form-label text-light" for="unit_kerja">Unit Kerja</label>
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-grow-1 me-2">
-                                                <input type="hidden" name="unit_kerja_id" id="unit_kerja_id">
-                                                <input type="text" class="form-control" name="unit_kerja" id="unit_kerja" required readonly placeholder="Silahkan Pilih Unit Kerja" value="{{ old('unit_kerja') }}" />
-                                            </div>
-                                            <button type="button" class="btn btn-primary ml-2" id="pilih_unit_kerja" data-toggle="modal" data-target="#daftar_unit_kerja">Pilih</button>
-                                        </div>
-                                    </div>
-                                </div> --}}
 
                                 <div class="">
                                     <label class="form-label text-light" for="jabatan">Jabatan</label>
-                                    <select class="form-control" name="jabatan" id="jabatan" required value="{{ old('jabatan') }}">
+                                    <select class="form-control" name="jabatan" id="jabatan" required
+                                        value="{{ old('jabatan') }}">
                                         @foreach ($jabatans as $jabatan)
-                                            <option value="{{$jabatan->id}}">{{$jabatan->nama}}</option>
+                                            <option value="{{ $jabatan->id }}">{{ $jabatan->nama }}</option>
                                         @endforeach
                                     </select>
                                 </div>
 
-                                {{-- <div class="">
-                                    <div class="">
-                                        <label class="form-label text-light" for="jabatan">Jabatan</label>
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-grow-1 me-2">
-                                                <input type="hidden" name="jabatan_id" id="jabatan_id">
-                                                <input type="text" class="form-control" name="jabatan" id="jabatan" required readonly placeholder="Silahkan Pilih Jabatan" value="{{ old('jabatan') }}" />
-                                            </div>
-                                            <button type="button" class="btn btn-primary ml-2" id="pilih_jabatan" data-toggle="modal" data-target="#daftar_jabatan">Pilih</button>
-                                        </div>
-                                        @error('jabatan')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div> --}}
-                                
                                 <div class="">
                                     <label class="form-label text-light" for="golongan">Golongan</label>
-                                    <select class="form-control" class="form-control" name="golongan" id="golongan" value="{{ old('golongan') }}">
+                                    <select class="form-control" class="form-control" name="golongan" id="golongan"
+                                        value="{{ old('golongan') }}">
                                         <option value="I">Golongan I</option>
                                         <option value="II">Golongan II</option>
                                         <option value="III">Golongan III</option>
@@ -189,55 +185,56 @@
                                 </div>
 
                                 <div class="row mt-4">
-                                    <div class="col-md-4"><hr></div>
+                                    <div class="col-md-4">
+                                        <hr>
+                                    </div>
                                     <div class="col-md-4 d-flex justify-content-center">Data Raker</div>
-                                    <div class="col-md-4"><hr></div>
+                                    <div class="col-md-4">
+                                        <hr>
+                                    </div>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label text-light" for="ukuran-baju">Ukuran Baju</label>
+                                    <select class="form-control" id="ukuran-baju" name="ukuran-baju">
+                                        <option value="s">s</option>
+                                        <option value="m">m</option>
+                                        <option value="l">l</option>
+                                        <option value="xl">xl</option>
+                                        <option value="xxl">xxl</option>
+                                        <option value="xxxl">xxxl</option>
+                                    </select>
                                 </div>
 
                                 <div class="">
                                     <label class="form-label text-light" for="bank">Bank</label>
-                                    <select class="form-control" name="bank" id="bank" required value="{{ old('bank') }}">
+                                    <select class="form-control" name="bank" id="bank" required
+                                        value="{{ old('bank') }}">
                                         @foreach ($banks as $bank)
-                                            <option value="{{$bank->nama_bank}}">{{$bank->nama_bank}}</option>
+                                            <option value="{{ $bank->nama_bank }}">{{ $bank->nama_bank }}</option>
                                         @endforeach
                                     </select>
                                 </div>
 
-                                {{-- <div class="">
-                                    <label class="form-label text-light" for="bank">Bank</label>
-                                    <div class="d-flex align-items-center">
-                                        <div class="flex-grow-1 me-2">
-                                            <input type="text" class="form-control" name="bank" id="bank" required readonly placeholder="Silahkan Pilih Bank" value="{{ old('bank') }}" />
-                                        </div>
-                                        <button type="button" class="btn btn-primary ml-2" id="pilih_bank" data-toggle="modal" data-target="#daftar_bank">Pilih</button>
-                                    </div>
-                                    @error('bank')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div> --}}
-                                
                                 <div class="">
                                     <label class="form-label text-light" for="no_rek">No. Rekening</label>
-                                    <input type="text" class="form-control" name="no_rek" id="no_rek" required placeholder="Masukkan No. Rekening" value="{{ old('no_rek') }}" maxlength="50"/>
+                                    <input type="text" class="form-control" name="no_rek" id="no_rek" required
+                                        placeholder="Masukkan No. Rekening" value="{{ old('no_rek') }}"
+                                        maxlength="50" />
                                     @error('no_rek')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                {{-- <div class="">
-                                    <label class="form-label text-light" for="ukuran_baju">Ukuran Baju</label>
-                                    <select class="form-control" name="ukuran_baju" id="ukuran_baju" required>
-                                        <option value="">Pilih Ukuran</option>
-                                        <option value="S" {{ old('ukuran_baju') == 'S' ? 'selected' : '' }}>S</option>
-                                        <option value="M" {{ old('ukuran_baju') == 'M' ? 'selected' : '' }}>M</option>
-                                        <option value="L" {{ old('ukuran_baju') == 'L' ? 'selected' : '' }}>L</option>
-                                        <option value="XL" {{ old('ukuran_baju') == 'XL' ? 'selected' : '' }}>XL</option>
-                                        <option value="XXL" {{ old('ukuran_baju') == 'XXL' ? 'selected' : '' }}>XXL</option>
-                                        <option value="XXXL" {{ old('ukuran_baju') == 'XXXL' ? 'selected' : '' }}>XXXL</option>
+
+
+                                <div class="">
+                                    <label class="form-label text-light" for="kamar">Kamar Peserta</label>
+                                    <select class="form-control" id="kamar" name="kamar">
+                                        @foreach ($kamars as $k)
+                                            <option value="{{ $k->id }}">Nomor: {{ $k->no_kamar }}</option>
+                                        @endforeach
                                     </select>
-                                    @error('ukuran_baju')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div> --}}
+                                </div>
                                 <hr>
                             </div>
                             <div class="card-footer text-end">
@@ -251,40 +248,160 @@
         </div>
     </div>
 
-    <div class="modal fade bd-example-modal-lg" id="edit-data-modal" tabindex="-1" role="dialog"
+    <div class="modal fade bd-example-modal-xl" id="edit-data-modal" tabindex="-1" role="dialog"
         aria-labelledby="myExtraLargeModal" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myExtraLargeModal">Edit jabatan</h4>
-                    <button class="btn-close py-0 cancel-edit" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h4 class="modal-title" id="myExtraLargeModal">Edit Peserta</h4>
+                    <button class="btn-close py-0 cancel-add" type="button" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body dark-modal">
                     <div class="card">
                         <form class="form theme-form dark-inputs">
-                            <input type="hidden" name="" id="id">
                             <div class="card-body">
+                                <input type="hidden" id="id" name="id">
+
                                 <div class="row">
-                                    <div class="col">
-                                        <div class="mb-3">
-                                            <label class="form-label" for="edit_kode">Kode Jabatan</label>
-                                            <input type="text" class="form-control input-air-primary" id="edit_kode"
-                                                placeholder="Kode Jabatan" required>
-                                        </div>
+                                    <div class="col-md-4">
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-4 d-flex justify-content-center">Biodata</div>
+                                    <div class="col-md-4">
+                                        <hr>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="mb-3">
-                                            <label class="form-label" for="edit_nama">Nama Jabatan</label>
-                                            <input type="text" class="form-control input-air-primary" id="edit_nama"
-                                                placeholder="Nama Jabatan" required>
-                                        </div>
+
+                                <div class="">
+                                    <label class="form-label text-light" for="edit-nama">Nama Lengkap</label>
+                                    <input type="text" class="form-control" id="edit-nama" name="edit-nama"
+                                        placeholder="Nama Lengkap">
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label text-light" for="edit-nip">NIP</label>
+                                    <input type="text" class="form-control" id="edit-nip" name="edit-nip"
+                                        placeholder="NIP Peserta/Panitia" maxlength="15">
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label text-light" for="edit-jenis-kelamin">Jenis Kelamin</label>
+                                    <select class="form-control" id="edit-jenis-kelamin" name="edit-jenis-kelamin">
+                                        <option value="Laki-laki">Laki-laki</option>
+                                        <option value="Perempuan">Perempuan</option>
+                                    </select>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label text-light" for="edit-no-wa">No. Whatsapp</label>
+                                    <input type="text" class="form-control" id="edit-no-wa" name="edit-no-wa"
+                                        placeholder="Masukkan No. Whatsapp" maxlength="15">
+                                </div>
+
+                                <div class="row mt-4">
+                                    <div class="col-md-4">
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-4 d-flex justify-content-center">Data Kepegawaian</div>
+                                    <div class="col-md-4">
+                                        <hr>
                                     </div>
                                 </div>
+
+                                <div class="">
+                                    <label class="form-label text-light" for="edit-role">Jenis Kepesertaan</label>
+                                    <select class="form-control" id="edit-role" name="edit-role">
+                                        <option value="PESERTA">PESERTA</option>
+                                        <option value="PANITIA">PANITIA</option>
+                                        <option value="NARASUMBER">NARASUMBER</option>
+                                    </select>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label text-light" for="edit-instansi">Asal Instansi</label>
+                                    <input type="text" class="form-control" id="edit-instansi" name="edit-instansi"
+                                        placeholder="Asal Instansi">
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label text-light" for="edit-unit-kerja">Unit Kerja</label>
+                                    <select class="form-control" id="edit-unit-kerja" name="edit-unit-kerja">
+                                        @foreach ($unit_kerjas as $unit_kerja)
+                                            <option value="{{ $unit_kerja->id }}">{{ $unit_kerja->nama }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label text-light" for="edit-jabatan">Jabatan</label>
+                                    <select class="form-control" id="edit-jabatan" name="edit-jabatan">
+                                        @foreach ($jabatans as $jabatan)
+                                            <option value="{{ $jabatan->id }}">{{ $jabatan->nama }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label text-light" for="edit-golongan">Golongan</label>
+                                    <select class="form-control" id="edit-golongan" name="edit-golongan">
+                                        <option value="I">Golongan I</option>
+                                        <option value="II">Golongan II</option>
+                                        <option value="III">Golongan III</option>
+                                        <option value="IV">Golongan IV</option>
+                                    </select>
+                                </div>
+
+                                <div class="row mt-4">
+                                    <div class="col-md-4">
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-4 d-flex justify-content-center">Data Raker</div>
+                                    <div class="col-md-4">
+                                        <hr>
+                                    </div>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label text-light" for="edit-ukuran-baju">Ukuran Baju</label>
+                                    <select class="form-control" id="edit-ukuran-baju" name="edit-ukuran-baju">
+                                        <option value="s">s</option>
+                                        <option value="m">m</option>
+                                        <option value="l">l</option>
+                                        <option value="xl">xl</option>
+                                        <option value="xxl">xxl</option>
+                                        <option value="xxxl">xxxl</option>
+                                    </select>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label text-light" for="edit-bank">Bank</label>
+                                    <select class="form-control" id="edit-bank" name="edit-bank">
+                                        @foreach ($banks as $bank)
+                                            <option value="{{ $bank->nama_bank }}">{{ $bank->nama_bank }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label text-light" for="edit-kamar">Kamar Peserta</label>
+                                    <select class="form-control" id="edit-kamar" name="edit-kamar">
+                                        @foreach ($kamars as $k)
+                                            <option value="{{ $k->id }}">Nomor: {{ $k->no_kamar }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label text-light" for="edit-no-rek">No. Rekening</label>
+                                    <input type="text" class="form-control" id="edit-no-rek" name="edit-no-rek"
+                                        placeholder="Masukkan No. Rekening" maxlength="50">
+                                </div>
+
+                                <hr>
                             </div>
                             <div class="card-footer text-end">
-                                <input class="btn btn-light cancel-edit" type="button" id="cancel-edit" value="Cancel">
+                                <input class="btn btn-light cancel-add" type="button" id="cancel-edit" value="Cancel">
                                 <button class="btn btn-primary me-3" type="button" id="update">Update</button>
                             </div>
                         </form>
@@ -293,6 +410,135 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade bd-example-modal-xl" id="detail-data-modal" tabindex="-1" role="dialog"
+        aria-labelledby="myExtraLargeModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myExtraLargeModal">Detail Peserta</h4>
+                    <button class="btn-close py-0 cancel-add" type="button" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body dark-modal">
+                    <div class="card">
+                        <form class="form theme-form dark-inputs">
+                            <div class="card-body">
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-4 d-flex justify-content-center">Biodata</div>
+                                    <div class="col-md-4">
+                                        <hr>
+                                    </div>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label text-black" for="detail-nama">Nama Lengkap</label>
+                                    <input type="text" class="form-control" id="detail-nama" name="detail-nama"
+                                        placeholder="Nama Lengkap" readonly>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label text-black" for="detail-nip">NIP</label>
+                                    <input type="text" class="form-control" id="detail-nip" name="detail-nip"
+                                        placeholder="NIP Peserta/Panitia" maxlength="15" readonly>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label text-black" for="detail-jenis-kelamin">Jenis Kelamin</label>
+                                    <input type="text" class="form-control" id="detail-jenis-kelamin"
+                                        name="detail-jenis-kelamin" readonly>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label text-black" for="detail-no-wa">No. Whatsapp</label>
+                                    <input type="text" class="form-control" id="detail-no-wa" name="detail-no-wa"
+                                        placeholder="Masukkan No. Whatsapp" maxlength="15" readonly>
+                                </div>
+
+                                <div class="row mt-4">
+                                    <div class="col-md-4">
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-4 d-flex justify-content-center">Data Kepegawaian</div>
+                                    <div class="col-md-4">
+                                        <hr>
+                                    </div>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label text-black" for="detail-role">Jenis Kepesertaan</label>
+                                    <input type="text" class="form-control" id="detail-role" name="detail-role" readonly>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label text-black" for="detail-instansi">Asal Instansi</label>
+                                    <input type="text" class="form-control" id="detail-instansi" name="detail-instansi"
+                                        placeholder="Asal Instansi" readonly>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label text-black" for="detail-unit-kerja">Unit Kerja</label>
+                                    <input type="text" class="form-control" id="detail-unit-kerja"
+                                        name="detail-unit-kerja" readonly>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label text-black" for="detail-jabatan">Jabatan</label>
+                                    <input type="text" class="form-control" id="detail-jabatan" name="detail-jabatan"
+                                        readonly>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label text-black" for="detail-golongan">Golongan</label>
+                                    <input type="text" class="form-control" id="detail-golongan" name="detail-golongan"
+                                        readonly>
+                                </div>
+
+                                <div class="row mt-4">
+                                    <div class="col-md-4">
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-4 d-flex justify-content-center">Data Raker</div>
+                                    <div class="col-md-4">
+                                        <hr>
+                                    </div>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label text-black" for="detail-kamar">Kamar Peserta</label>
+                                    <input type="text" class="form-control" id="detail-kamar" name="detail-kamar" readonly>
+                                </div>
+                                <div class="">
+                                    <label class="form-label text-black" for="detail-baju">Ukuran Baju</label>
+                                    <input type="text" class="form-control" id="detail-baju" name="detail-baju" readonly>
+                                </div>
+                                <div class="">
+                                    <label class="form-label text-black" for="detail-bank">Bank</label>
+                                    <input type="text" class="form-control" id="detail-bank" name="detail-bank" readonly>
+                                </div>
+
+                                <div class="">
+                                    <label class="form-label text-black" for="detail-no-rek">No. Rekening</label>
+                                    <input type="text" class="form-control" id="detail-no-rek" name="detail-no-rek"
+                                        placeholder="Masukkan No. Rekening" maxlength="50" readonly>
+                                </div>
+
+                                <hr>
+                            </div>
+                            <div class="card-footer text-end">
+                                <input class="btn btn-info cancel-add" type="button" id="btn-close-detail" value="Close">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="modal fade modal-alert" id="alert" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenter1" aria-hidden="true">

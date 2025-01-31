@@ -62,6 +62,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/daftar-peserta', [PesertaController::class, 'index']);
     Route::post('/daftar-peserta/store', [PesertaController::class, 'store']);
     Route::get('/daftar-peserta/edit', [PesertaController::class, 'edit']);
+    Route::get('/daftar-peserta/detail', [PesertaController::class, 'detail']);
     Route::post('/daftar-peserta/update', [PesertaController::class, 'update']);
     Route::post('/daftar-peserta/delete', [PesertaController::class, 'delete']);
 
