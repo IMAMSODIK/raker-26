@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('dokumentasis', function (Blueprint $table) {
             $table->id();
+            $table->string('hari');
+            $table->longText('foto');
+            $table->string('judul');
             $table->timestamps();
         });
     }

@@ -13,3 +13,4 @@
 
 <link href="{{ asset('dashboard_assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
 <link href="{{ asset('dashboard_assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+@yield('own_style')
