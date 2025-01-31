@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no" />
-    <title>Pendaftaran | RAKER UIN SU</title>
+    <title>Absensi | RAKER UIN SU</title>
     <meta name="description" content="Login and Register Form Html Template" />
     <meta name="author" content="harnishdesign.net" />
 
@@ -42,21 +42,6 @@
         }
     </script>
 
-    <style>
-        .form-wizard-step {
-            display: none;
-        }
-
-        .form-wizard-step.active-step {
-            display: block;
-        }
-
-        .border-canvas {
-            border: 2px solid #000;
-            border-radius: 5px;
-        }
-    </style>
-
 <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
@@ -84,8 +69,7 @@
                                 <div class="row g-0">
                                     <div class="col-12 col-lg-12 mx-auto">
                                         <img src="{{ asset('own_assets/images/banner.jpeg') }}" style="width: 100%">
-                                        <h1 class="text-9 text-dark fw-300 mb-5 text-center">REGISTRASI PESERTA
-                                        </h1>
+                                        <h1 class="text-9 text-dark fw-300 mb-5 text-center">ABSENSI</h1>
                                     </div>
                                 </div>
                             </div>
@@ -150,28 +134,8 @@
                                             id="asal_instansi" readonly placeholder="Asal Instansi Peserta/Panitia"
                                             value="{{ old('asal_instansi') }}" />
                                     </div>
-                                    <hr>
-                                    <div class="mb-3">
-                                        <label class="form-label text-light" for="foto">Upload Foto</label>
-                                        <input type="file" accept="" class="form-control" name="foto"
-                                            id="foto" />
-                                    </div>
-                                    <div class="mb-3">
-                                        <div class="border-canvas" style="background-color: white">
-                                            <canvas width="850" height="400" id="signature-pad"
-                                                class="signature-pad"></canvas>
-                                        </div>
-                                        <div class="row d-flex justify-content-center mt-3">
-                                            <button id="reset-canvas" class="btn btn-danger mr-1"
-                                                type="button">Hapus
-                                                TTD</button>
-                                            {{-- <button class="btn btn-success" type="button" id="simpan">
-                                                Simpan
-                                            </button> --}}
-                                        </div>
-                                    </div>
                                     <button class="btn btn-primary shadow-none my-2 btn-submit"
-                                        type="button">Submit</button>
+                                        type="button">Absen Hari 1</button>
                                 </form>
                             </div>
                         </div>
@@ -324,99 +288,18 @@
                 $("#daftar_unit_kerja").modal("hide");
             })
 
-        // fungsi untuk tanda tangan
-        document.addEventListener("DOMContentLoaded", function() {
-            var canvas = document.getElementById("signature-pad");
-            var context = canvas.getContext("2d");
-
-            var drawing = false;
-            var lastPos = null;
-
-            function getMousePos(canvas, evt) {
-                var rect = canvas.getBoundingClientRect();
-                return {
-                    x: evt.clientX - rect.left,
-                    y: evt.clientY - rect.top,
-                };
-            }
-
-            function drawLine(context, x1, y1, x2, y2) {
-                context.beginPath();
-                context.moveTo(x1, y1);
-                context.lineTo(x2, y2);
-                context.stroke();
-            }
-
-            function mouseDownHandler(e) {
-                drawing = true;
-                lastPos = getMousePos(canvas, e);
-            }
-
-            function mouseMoveHandler(e) {
-                if (drawing) {
-                    var mousePos = getMousePos(canvas, e);
-                    drawLine(context, lastPos.x, lastPos.y, mousePos.x, mousePos.y);
-                    lastPos = mousePos;
-                }
-            }
-
-            function endDrawing() {
-                drawing = false;
-            }
-
-            canvas.addEventListener("mousedown", mouseDownHandler);
-            canvas.addEventListener("mousemove", mouseMoveHandler);
-            canvas.addEventListener("mouseup", endDrawing);
-            canvas.addEventListener("mouseleave", endDrawing);
-
-            canvas.addEventListener(
-                "touchstart",
-                function(e) {
-                    mouseDownHandler(e.touches[0]);
-                },
-                false
-            );
-
-            canvas.addEventListener(
-                "touchmove",
-                function(e) {
-                    mouseMoveHandler(e.touches[0]);
-                    e.preventDefault();
-                },
-                false
-            );
-
-            canvas.addEventListener("touchend", endDrawing, false);
-
-            document
-                .getElementById("reset-canvas")
-                .addEventListener("click", function() {
-                    context.clearRect(0, 0, canvas.width, canvas.height);
-                });
-        });
-
-        // fungsi untuk mendapatkan tanda tangan
-        function getSignatureData() {
-            var canvas = document.getElementById("signature-pad");
-            return canvas.toDataURL("image/png");
-        }
-
         $(".btn-submit").click(function() {
             let btn = $(this);
             btn.prop('disabled', true);
-            var signatureData = getSignatureData();
 
             let formData = new FormData();
             let token = $('meta[name="csrf-token"]').attr("content");
 
             formData.append("_token", token);
-            formData.append("signature", signatureData);
             formData.append("id", $("#id").val());
-            formData.append("nip", $("#nip").val());
-            formData.append("foto", $("#foto")[0].files[0]);
 
             $.ajax({
-                url: "/registrasi/store",
+                url: "/absensi/store",
                 method: "POST",
                 data: formData,
                 processData: false,
@@ -428,7 +311,7 @@
                         //     jid: response.data.hp,
                         //     imageUrl: "https://siprent.com/storage/id_card/" + response.data
                         //         .id_card,
-                        //     caption: `Assalammualaikum Wr, Wb Terima Kasih telah melakukan Registrasi Kegiatan Koordinasi Penguatan Tatakelola. Nomor Kamar anda ${response.no_kamar}. Simpan File Id Card anda Selama Mengikuti Kegiatan`,
+                        //     caption: `Assalammualaikum Wr, Wb Terima Kasih telah melakukan Absensi Kegiatan Koordinasi Penguatan Tatakelola. Nomor Kamar anda ${response.no_kamar}. Simpan File Id Card anda Selama Mengikuti Kegiatan`,
                         // });
                         // var requestOptions = {
                         //     method: "POST",
@@ -439,7 +322,7 @@
                         // fetch("https://whatsva.id/api/sendImageUrl", requestOptions);
                         Swal.fire({
                             title: "Success",
-                            text: "Berhasil Melakukan Registrasi",
+                            text: "Berhasil Melakukan Absensi",
                             icon: "success",
                             confirmButtonColor: "#3085d6",
                             confirmButtonText: "OK",

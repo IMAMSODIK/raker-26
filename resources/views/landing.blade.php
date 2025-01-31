@@ -28,6 +28,7 @@
 
     <!-- Main CSS File -->
     <link href="{{ asset('landing_assets/assets/css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('dashboard_assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 
     <!-- =======================================================
   * Template Name: SoftLand
@@ -101,7 +102,7 @@
                                 {{-- <i class="bi bi-google-play"></i> --}}
                                 <span>Registrasi</span>
                             </a>
-                            <a href="{{ asset('landing_assets/app_store_link') }}" class="download-btn">
+                            <a href="/absensi" class="download-btn">
                                 {{-- <i class="bi bi-apple"></i> --}}
                                 <span>Absensi</span>
                             </a>
@@ -112,6 +113,252 @@
 
         </section>
         <!-- /Hero Section -->
+
+        <section id="faq" class="faq section">
+            <div class="container section-title" data-aos="fade-up">
+                <h2>Daftar Peserta Rapat</h2>
+                <p>PENGUATAN TATA KELOLA MENUJU INTERNASIONALISASI UIN SUMATERA UTARA</p>
+            </div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10" data-aos="fade-up" data-aos-delay="100">
+                        <div class="faq-container">
+                            <div class="card shadow mb-4">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 5%" class="text-center">No</th>
+                                                    <th style="width: 20%" class="text-center">Nama Peserta</th>
+                                                    <th class="text-center">Role</th>
+                                                    <th class="text-center">Instansi</th>
+                                                    <th class="text-center">Unit Kerja</th>
+                                                    <th class="text-center">Jabatan</th>
+                                                    <th class="text-center">Golongan</th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th style="width: 5%" class="text-center">No</th>
+                                                    <th style="width: 20%" class="text-center">Nama Peserta</th>
+                                                    <th class="text-center">Role</th>
+                                                    <th class="text-center">Instansi</th>
+                                                    <th class="text-center">Unit Kerja</th>
+                                                    <th class="text-center">Jabatan</th>
+                                                    <th class="text-center">Golongan</th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody>
+                                                @php
+                                                    $index = 1;
+                                                @endphp
+                                                @foreach ($pesertas as $peserta)
+                                                    <tr>
+                                                        <td style="font-size: 16px" class="text-center">{{ $index++ }}</td>
+                                                        <td style="font-size: 16px" class="">{{ $peserta->nama }} <br><small
+                                                                class="{{ $peserta->nip ? '' : 'text-danger' }}">({{ $peserta->nip ?? 'Belum Mendaftar' }})</small>
+                                                        </td>
+                                                        <td style="font-size: 16px"><span
+                                                                class="badge badge-pill badge-{{ $peserta->role == 'PANITIA' ? 'primary' : 'success' }}">{{ $peserta->role }}</span>
+                                                        </td>
+                                                        <td style="font-size: 16px">{{ $peserta->instansi }}</td>
+                                                        <td style="font-size: 16px">{{ $peserta->unitKerja->nama ?? '' }}</td>
+                                                        <td style="font-size: 16px">{{ $peserta->jabatan->nama ?? '' }}</td>
+                                                        <td style="font-size: 16px" class="text-center">{{ $peserta->golongan }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="faq section">
+            <div class="container section-title" data-aos="fade-up">
+                <h2>Daftar Registrasi Peserta Rapat</h2>
+                <p>PENGUATAN TATA KELOLA MENUJU INTERNASIONALISASI UIN SUMATERA UTARA</p>
+            </div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10" data-aos="fade-up" data-aos-delay="100">
+                        <div class="faq-container">
+                            <div class="card shadow mb-4">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 5%" class="text-center">No</th>
+                                                    <th style="width: 20%" class="text-center">Nama Peserta</th>
+                                                    <th class="text-center">Role</th>
+                                                    <th class="text-center">Instansi</th>
+                                                    <th class="text-center">Unit Kerja</th>
+                                                    <th class="text-center">Jabatan</th>
+                                                    <th class="text-center">Golongan</th>
+                                                    <th class="text-center">Status Registrasi</th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th style="width: 5%" class="text-center">No</th>
+                                                    <th style="width: 20%" class="text-center">Nama Peserta</th>
+                                                    <th class="text-center">Role</th>
+                                                    <th class="text-center">Instansi</th>
+                                                    <th class="text-center">Unit Kerja</th>
+                                                    <th class="text-center">Jabatan</th>
+                                                    <th class="text-center">Golongan</th>
+                                                    <th class="text-center">Status Registrasi</th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody>
+                                                @php
+                                                    $index = 1;
+                                                @endphp
+                                                @foreach ($pesertas as $peserta)
+                                                    <tr>
+                                                        <td style="font-size: 16px" class="text-center">{{ $index++ }}</td>
+                                                        <td style="font-size: 16px" class="">{{ $peserta->nama }} <br><small
+                                                                class="{{ $peserta->nip ? '' : 'text-danger' }}">({{ $peserta->nip ?? 'Belum Mendaftar' }})</small>
+                                                        </td>
+                                                        <td style="font-size: 16px"><span
+                                                                class="badge badge-pill badge-{{ $peserta->role == 'PANITIA' ? 'primary' : 'success' }}">{{ $peserta->role }}</span>
+                                                        </td>
+                                                        <td style="font-size: 16px">{{ $peserta->instansi }}</td>
+                                                        <td style="font-size: 16px">{{ $peserta->unitKerja->nama ?? '' }}</td>
+                                                        <td style="font-size: 16px">{{ $peserta->jabatan->nama ?? '' }}</td>
+                                                        <td style="font-size: 16px" class="text-center">{{ $peserta->golongan }}</td>
+                                                        <td>
+                                                            @if ($peserta->registrasi == 1)
+                                                                <button type="button" class="text-white btn btn-success">Sudah Registrasi</button>
+                                                            @else
+                                                                <button type="button" class="text-white btn btn-danger">Belum Registrasi</button>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="faq section">
+            <div class="container section-title" data-aos="fade-up">
+                <h2>Daftar Absensi Peserta Rapat</h2>
+                <p>PENGUATAN TATA KELOLA MENUJU INTERNASIONALISASI UIN SUMATERA UTARA</p>
+            </div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10" data-aos="fade-up" data-aos-delay="100">
+                        <div class="faq-container">
+                            <div class="card shadow mb-4">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable3" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 5%" class="text-center">No</th>
+                                                    <th style="width: 20%" class="text-center">Nama Peserta</th>
+                                                    <th class="text-center">Role</th>
+                                                    <th class="text-center">Instansi</th>
+                                                    <th class="text-center">Unit Kerja</th>
+                                                    <th class="text-center">Jabatan</th>
+                                                    <th class="text-center">Golongan</th>
+                                                    <th class="text-center">Status Absensi 1</th>
+                                                    <th class="text-center">Status Absensi 2</th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th style="width: 5%" class="text-center">No</th>
+                                                    <th style="width: 20%" class="text-center">Nama Peserta</th>
+                                                    <th class="text-center">Role</th>
+                                                    <th class="text-center">Instansi</th>
+                                                    <th class="text-center">Unit Kerja</th>
+                                                    <th class="text-center">Jabatan</th>
+                                                    <th class="text-center">Golongan</th>
+                                                    <th class="text-center">Status Absensi 1</th>
+                                                    <th class="text-center">Status Absensi 2</th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody>
+                                                @php
+                                                    $index = 1;
+                                                @endphp
+                                                @foreach ($pesertas as $peserta)
+                                                    <tr>
+                                                        <td style="font-size: 16px" class="text-center">{{ $index++ }}</td>
+                                                        <td style="font-size: 16px" class="">{{ $peserta->nama }} <br><small
+                                                                class="{{ $peserta->nip ? '' : 'text-danger' }}">({{ $peserta->nip ?? 'Belum Mendaftar' }})</small>
+                                                        </td>
+                                                        <td style="font-size: 16px"><span
+                                                                class="badge badge-pill badge-{{ $peserta->role == 'PANITIA' ? 'primary' : 'success' }}">{{ $peserta->role }}</span>
+                                                        </td>
+                                                        <td style="font-size: 16px">{{ $peserta->instansi }}</td>
+                                                        <td style="font-size: 16px">{{ $peserta->unitKerja->nama ?? '' }}</td>
+                                                        <td style="font-size: 16px">{{ $peserta->jabatan->nama ?? '' }}</td>
+                                                        <td style="font-size: 16px" class="text-center">{{ $peserta->golongan }}</td>
+                                                        <td>
+                                                            @if ($peserta->absensi1 == 1)
+                                                                <button type="button" class="text-white btn btn-success">Hadir</button>
+                                                            @else
+                                                                <button type="button" class="text-white btn btn-danger">Tidak Hadir</button>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if ($peserta->absensi1 == 2)
+                                                                <button type="button" class="text-white btn btn-success">Hadir</button>
+                                                            @else
+                                                                <button type="button" class="text-white btn btn-danger">Tidak Hadir</button>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="faq section">
+            <div class="container section-title" data-aos="fade-up">
+                <h2>Materi Rapat</h2>
+                <p>Silahkan download Dokumen Materi Rapat dibawah ini</p>
+            </div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10" data-aos="fade-up" data-aos-delay="100">
+                        <div class="faq-container">
+                            @foreach ($materis as $materi)
+                                <div class="faq-item faq-active">
+                                    <h3>{{$materi->deskripsi}}</h3>
+                                    <div class="faq-content">
+                                        <a href="{{asset('storage/materi') . '/' . $materi->file}}" class="btn btn-success" download>Download</a>
+                                    </div>
+                                    <i class="faq-toggle bi bi-chevron-right"></i>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
 
         {{-- <!-- About Section -->
@@ -592,64 +839,6 @@
               </div>
           </div>
       </section>
-      
-
-      <section id="faq" class="faq section">
-        <div class="container section-title" data-aos="fade-up">
-            <h2>Frequently Asked Questions</h2>
-            <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-        </div>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-10" data-aos="fade-up" data-aos-delay="100">
-                    <div class="faq-container">
-                        <div class="faq-item faq-active">
-                            <h3>Non consectetur a erat nam at lectus urna duis?</h3>
-                            <div class="faq-content">
-                                <p>Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.</p>
-                            </div>
-                            <i class="faq-toggle bi bi-chevron-right"></i>
-                        </div>
-                        <div class="faq-item">
-                            <h3>Feugiat scelerisque varius morbi enim nunc faucibus?</h3>
-                            <div class="faq-content">
-                                <p>Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium.</p>
-                            </div>
-                            <i class="faq-toggle bi bi-chevron-right"></i>
-                        </div>
-                        <div class="faq-item">
-                            <h3>Dolor sit amet consectetur adipiscing elit pellentesque?</h3>
-                            <div class="faq-content">
-                                <p>Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit.</p>
-                            </div>
-                            <i class="faq-toggle bi bi-chevron-right"></i>
-                        </div>
-                        <div class="faq-item">
-                            <h3>Ac odio tempor orci dapibus. Aliquam eleifend mi in nulla?</h3>
-                            <div class="faq-content">
-                                <p>Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium.</p>
-                            </div>
-                            <i class="faq-toggle bi bi-chevron-right"></i>
-                        </div>
-                        <div class="faq-item">
-                            <h3>Tempus quam pellentesque nec nam aliquam sem et tortor?</h3>
-                            <div class="faq-content">
-                                <p>Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in est ante in. Nunc vel risus commodo viverra maecenas accumsan.</p>
-                            </div>
-                            <i class="faq-toggle bi bi-chevron-right"></i>
-                        </div>
-                        <div class="faq-item">
-                            <h3>Perspiciatis quod quo quos nulla quo illum ullam?</h3>
-                            <div class="faq-content">
-                                <p>Enim ea facilis quaerat voluptas quidem et dolorem. Quis et consequatur non sed in suscipit sequi. Distinctio ipsam dolore et.</p>
-                            </div>
-                            <i class="faq-toggle bi bi-chevron-right"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
     
 
     <section id="contact" class="contact section">
@@ -755,8 +944,20 @@
     <script src="{{asset('landing_assets/assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
     <script src="{{asset('landing_assets/assets/vendor/glightbox/js/glightbox.min.js')}}"></script>
 
+    <script src="{{ asset('dashboard_assets/vendor/jquery/jquery.min.js') }}"></script>
     <!-- Main JS File -->
     <script src="{{asset('landing_assets/assets/js/main.js')}}"></script>
+    <script src="{{asset('dashboard_assets/vendor/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('dashboard_assets/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+
+<!-- Page level custom scripts -->
+
+<script src="{{asset('dashboard_assets/js/demo/datatables-demo.js')}}"></script>
+<script>
+    let table = $("#basic-1").DataTable();
+    let table2 = $("#dataTable2").DataTable();
+    let table3 = $("#dataTable3").DataTable();
+</script>
 
 </body>
 

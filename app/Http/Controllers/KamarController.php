@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kamar;
 use App\Http\Requests\StoreKamarRequest;
 use App\Http\Requests\UpdateKamarRequest;
+use App\Models\Peserta;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -156,5 +157,13 @@ class KamarController extends Controller
                 'message' => $e->getMessage()
             ]);
         }
+    }
+
+    public function pengaturanKamar(){
+        $data = [
+            'pageTitle' => "Pengaturan Kamar",
+            'kamars' => Kamar::with(['peserta'])->get(),
+        ];
+        return view('kamar.pengaturan', $data);
     }
 }

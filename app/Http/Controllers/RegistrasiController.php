@@ -55,6 +55,24 @@ class RegistrasiController extends Controller
         return view('peserta.narasumber_absensi', $data);
     }
 
+    public function absensi(){
+        $data = [
+            'pesertas' => Peserta::with(['jabatan', 'unitKerja'])->get()
+        ];
+        return view('absensi', $data);
+    }
+
+    public function absensiStore(Request $r){
+        $data = Peserta::where("id", $r->id)->first();
+
+        $data->absensi1 = 1;
+        $data->save();
+
+        return response()->json([
+            'status' => 1
+        ]);
+    }
+
     public function registrasi(){
         $data = [
             'banks' => DB::table('banks')

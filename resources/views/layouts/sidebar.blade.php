@@ -123,6 +123,13 @@
         </a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link" href="/pengaturan-kamar">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Pengaturan Kamar</span>
+        </a>
+    </li>
+
     <hr class="sidebar-divider">
 
     <div class="sidebar-heading">
