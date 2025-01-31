@@ -10,10 +10,51 @@ use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class RegistrasiController extends Controller
 {
+    public function index(){
+        $data = [
+            'pageTitle' => "Peserta Terdaftar",
+            'pesertas' => Peserta::with(['jabatan', 'unitKerja'])->get()
+        ];
+        return view('peserta.peserta_terdaftar', $data);
+    }
+
+    public function indexRegistrasi(){
+        $data = [
+            'pageTitle' => "Peserta Teregistrasi",
+            'pesertas' => Peserta::with(['jabatan', 'unitKerja'])->get()
+        ];
+        return view('peserta.peserta_teregistrasi', $data);
+    }
+
+    public function indexAbsensi(){
+        $data = [
+            'pageTitle' => "Data Absensi",
+            'pesertas' => Peserta::with(['jabatan', 'unitKerja'])->get()
+        ];
+        return view('peserta.peserta_absensi', $data);
+    }
+
+    public function indexRegistrasiNarasumber(){
+        $data = [
+            'pageTitle' => "Peserta Teregistrasi",
+            'pesertas' => Peserta::with(['jabatan', 'unitKerja'])->where("role", 'NARSUMBER')->get()
+        ];
+        return view('peserta.narasumber_teregistrasi', $data);
+    }
+
+    public function indexAbsensiNarasumber(){
+        $data = [
+            'pageTitle' => "Data Absensi",
+            'pesertas' => Peserta::with(['jabatan', 'unitKerja'])->where("role", 'NARSUMBER')->get()
+        ];
+        return view('peserta.narasumber_absensi', $data);
+    }
+
     public function registrasi(){
         $data = [
             'banks' => DB::table('banks')
@@ -88,5 +129,52 @@ class RegistrasiController extends Controller
                 ->withInput()
                 ->with('error', 'Terjadi kesalahan tak terduga. Silakan coba lagi.');
         }
+    }
+
+    public function registrasiPeserta(){
+        $data = [
+            'pesertas' => Peserta::with(['jabatan', 'unitKerja'])->get()
+        ];
+        return view('registrasiPeserta', $data);
+    }
+
+    public function registrasiStore(Request $r){
+        $data = Peserta::where("id", $r->id)->first();
+
+        if ($r->hasFile('foto')) {
+            $file = $r->file('foto');
+            $fileMimeType = $file->getClientMimeType();
+            if ($fileMimeType != 'image/png' && $fileMimeType != 'image/jpg' && $fileMimeType != 'image/jpeg') {
+                return response()->json([
+                    'status' => false,
+                    'message' => "Jenis File Tidak Didukung"
+                ]);
+            }
+            $namaFile = bin2hex(random_bytes(10)) . '.' . $file->getClientOriginalExtension();
+            $file->storePubliclyAs('foto', $namaFile, 'public');
+            $data->foto = $namaFile;
+        }
+
+        if ($r->signature) {
+            $signature = $r->signature;
+            $decodedData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signature));
+            $filename = 'signature-' . $r->nip . '.png';
+
+            // Pastikan folder ada atau buat folder
+            $folderPath = 'ttd';
+            if (!Storage::disk('public')->exists($folderPath)) {
+                Storage::disk('public')->makeDirectory($folderPath);
+            }
+
+            Storage::disk('public')->put($folderPath . '/' . $filename, $decodedData);
+            $data->ttd = $filename;
+        }
+
+        $data->registrasi = 1;
+        $data->save();
+
+        return response()->json([
+            'status' => 1
+        ]);
     }
 }

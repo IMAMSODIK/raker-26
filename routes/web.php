@@ -63,6 +63,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/materi-raker/edit', [MateriRapatController::class, 'edit']);
     Route::post('/materi-raker/update', [MateriRapatController::class, 'update']);
     Route::post('/materi-raker/delete', [MateriRapatController::class, 'delete']);
+
+    Route::get('/data-pendaftaran', [RegistrasiController::class, 'index']);
+    Route::get('/data-registrasi', [RegistrasiController::class, 'indexRegistrasi']);
+    Route::get('/data-absensi', [RegistrasiController::class, 'indexAbsensi']);
+
+    Route::get('/data-registrasi-narasumber', [RegistrasiController::class, 'indexRegistrasiNarasumber']);
+    Route::get('/data-absensi-narasumber', [RegistrasiController::class, 'indexAbsensiNarasumber']);
 });
 
 Route::middleware('guest')->group(function () {
@@ -73,6 +80,9 @@ Route::middleware('guest')->group(function () {
 
 Route::get('/pendaftaran', [RegistrasiController::class, 'registrasi']);
 Route::post('/pendaftaran', [RegistrasiController::class, 'registrasiProccess']);
+
+Route::get('/registrasi', [RegistrasiController::class, 'registrasiPeserta']);
+Route::post('/registrasi/store', [RegistrasiController::class, 'registrasiStore']);
 
 Route::fallback(function () {
     return redirect('/pendaftaran');

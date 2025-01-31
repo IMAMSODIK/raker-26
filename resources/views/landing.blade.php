@@ -97,7 +97,7 @@
                         <h2>PENGUATAN TATA KELOLA MENUJU INTERNASIONALISASI UIN SUMATERA UTARA MEDAN</h2>
                         <p>HOTEL NIAGARA PARAPAT, 02-04 FEBRUARI 2025</p>
                         <div class="d-flex mt-4 justify-content-center justify-content-md-start">
-                            <a href="{{ asset('landing_assets/google_play_link') }}" class="download-btn">
+                            <a href="/registrasi" class="download-btn">
                                 {{-- <i class="bi bi-google-play"></i> --}}
                                 <span>Registrasi</span>
                             </a>
