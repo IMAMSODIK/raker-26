@@ -26,6 +26,11 @@ return new class extends Migration
             $table->string('nama_bank')->nullable();
             $table->string('ukuran_baju', 5)->nullable();
             $table->foreignId('kamar_id')->nullable();
+            $table->boolean('registrasi')->nullable();
+            $table->boolean('absensi1')->nullable();
+            $table->boolean('absensi2')->nullable();
+            $table->string('foto')->nullable();
+            $table->string('ttd')->nullable();
             $table->timestamps();
         });
     }

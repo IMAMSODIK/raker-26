@@ -74,21 +74,21 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="/pendaftaran">
+        <a class="nav-link" href="/data-pendaftaran">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Pendaftaran</span>
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="/registrasi">
+        <a class="nav-link" href="/data-registrasi">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Registrasi</span>
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="/absensi">
+        <a class="nav-link" href="/data-absensi">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Absensi</span>
         </a>
@@ -123,6 +123,13 @@
         </a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link" href="/pengaturan-kamar">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Pengaturan Kamar</span>
+        </a>
+    </li>
+
     <hr class="sidebar-divider">
 
     <div class="sidebar-heading">
@@ -130,14 +137,14 @@
     </div>
 
     <li class="nav-item">
-        <a class="nav-link" href="/registrasi-narasumber">
+        <a class="nav-link" href="/data-registrasi-narasumber">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Registrasi Narasumber</span>
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="/absensi-narasumber">
+        <a class="nav-link" href="/data-absensi-narasumber">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Absensi Narasumber</span>
         </a>

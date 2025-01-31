@@ -10,6 +10,8 @@ use App\Http\Controllers\MateriRapatController;
 use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\RegistrasiController;
 use App\Http\Controllers\UnitKerjaController;
+use App\Models\MateriRapat;
+use App\Models\Peserta;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,7 +26,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('landing');
+    $data = [
+        'materis' => MateriRapat::all(),
+        'pesertas' => Peserta::with(['jabatan', 'unitKerja'])->get(),
+    ];
+    return view('landing', $data);
 });
 
 Route::middleware('auth')->group(function () {
@@ -78,6 +84,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/materi-raker/edit', [MateriRapatController::class, 'edit']);
     Route::post('/materi-raker/update', [MateriRapatController::class, 'update']);
     Route::post('/materi-raker/delete', [MateriRapatController::class, 'delete']);
+
+    Route::get('/data-pendaftaran', [RegistrasiController::class, 'index']);
+    Route::get('/data-registrasi', [RegistrasiController::class, 'indexRegistrasi']);
+    Route::get('/data-absensi', [RegistrasiController::class, 'indexAbsensi']);
+
+    Route::get('/data-registrasi-narasumber', [RegistrasiController::class, 'indexRegistrasiNarasumber']);
+    Route::get('/data-absensi-narasumber', [RegistrasiController::class, 'indexAbsensiNarasumber']);
+
+    Route::get('/pengaturan-kamar', [KamarController::class, 'pengaturanKamar']);
 });
 
 Route::middleware('guest')->group(function () {
@@ -88,6 +103,12 @@ Route::middleware('guest')->group(function () {
 
 Route::get('/pendaftaran', [RegistrasiController::class, 'registrasi']);
 Route::post('/pendaftaran', [RegistrasiController::class, 'registrasiProccess']);
+
+Route::get('/registrasi', [RegistrasiController::class, 'registrasiPeserta']);
+Route::post('/registrasi/store', [RegistrasiController::class, 'registrasiStore']);
+
+Route::get('/absensi', [RegistrasiController::class, 'absensi']);
+Route::post('/absensi/store', [RegistrasiController::class, 'absensiStore']);
 
 Route::fallback(function () {
     return redirect('/pendaftaran');
