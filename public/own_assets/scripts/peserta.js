@@ -1,48 +1,49 @@
 let table = $("#basic-1").DataTable();
 
 $("#cancel-edit").on("click", function () {
-    $("#edit-data-modal").modal("hide")
-})
+    $("#edit-data-modal").modal("hide");
+});
 
 $("#cancel-add").on("click", function () {
-    $("#tambah-data-modal").modal("hide")
-})
+    $("#tambah-data-modal").modal("hide");
+});
 
 $("#tambah-data").on("click", function () {
     $("#tambah-data-modal").modal("show");
 });
 
-$('#store').click(function (e) {
+$("#store").click(function (e) {
     $("#tambah-data-modal").modal("hide");
     let formData = new FormData();
 
-    formData.append('nip', $("#nip").val());
-    formData.append('nama', $("#nama").val());
-    formData.append('jenis_kelamin', $("#jenis_kelamin").val());
-    formData.append('no_wa', $("#no_wa").val());
-    formData.append('role', $("#role").val());
-    formData.append('asal_instansi', $("#asal_instansi").val());
-    formData.append('unit_kerja', $("#unit_kerja").val());
-    formData.append('jabatan', $("#jabatan").val());
-    formData.append('golongan', $("#golongan").val());
-    formData.append('bank', $("#bank").val());
-    formData.append('no_rek', $("#no_rek").val());
-    formData.append('_token', $("meta[name='csrf-token']").attr('content'));
+    formData.append("nip", $("#nip").val());
+    formData.append("nama", $("#nama").val());
+    formData.append("jenis_kelamin", $("#jenis_kelamin").val());
+    formData.append("no_wa", $("#no_wa").val());
+    formData.append("role", $("#role").val());
+    formData.append("asal_instansi", $("#asal_instansi").val());
+    formData.append("unit_kerja", $("#unit_kerja").val());
+    formData.append("jabatan", $("#jabatan").val());
+    formData.append("golongan", $("#golongan").val());
+    formData.append("bank", $("#bank").val());
+    formData.append("no_rek", $("#no_rek").val());
+    formData.append("ukuran_baju", $("#ukuran-baju").val());
+    formData.append("kamar", $("#kamar").val());
+    formData.append("_token", $("meta[name='csrf-token']").attr("content"));
 
     $.ajax({
-        url: '/daftar-peserta/store',
-        method: 'POST',
+        url: "/daftar-peserta/store",
+        method: "POST",
         data: formData,
         contentType: false,
         processData: false,
         success: function (response) {
             if (response.status) {
-
                 Swal.fire({
                     title: "Berhasil",
                     text: "Simpan Data Berhasil",
-                    icon: "success"
-                  });
+                    icon: "success",
+                });
 
                 setTimeout(() => {
                     location.reload();
@@ -51,133 +52,233 @@ $('#store').click(function (e) {
                 Swal.fire({
                     title: "Gagal",
                     text: "Simpan Data Gagal",
-                    icon: "error"
-                  });
+                    icon: "error",
+                });
             }
         },
         error: function (xhr) {
             Swal.fire({
                 title: "Gagal",
                 text: "Simpan Data Gagal",
-                icon: "error"
+                icon: "error",
             });
-        }
-    })    
+        },
+    });
+});
+
+$(document).on("click", "#btn-detail", function () {
+    let id = $(this).data("id");
+
+    $.ajax({
+        url: "/daftar-peserta/detail",
+        method: "GET",
+        data: {
+            id: id,
+        },
+        success: function (response) {
+            if (response.status) {
+                // $("#id").val(response.data.id);
+                $("#detail-nama").val(response.data.nama);
+                $("#detail-nip").val(response.data.nip);
+                $("#detail-jenis-kelamin").val(response.data.jenis_kelamin);
+                $("#detail-no-wa").val(response.data.no_wa);
+                $("#detail-role").val(response.data.role);
+                $("#detail-instansi").val(response.data.instansi);
+                $("#detail-unit-kerja").val(
+                    response.data.unit_kerja
+                        ? response.data.unit_kerja.nama
+                        : `-`
+                );
+                $("#detail-jabatan").val(
+                    response.data.jabatan ? response.data.jabatan.nama : ""
+                );
+                $("#detail-golongan").val(response.data.golongan);
+                $("#detail-baju").val(response.data.ukuran_baju);
+                $("#detail-kamar").val(
+                    response.data.kamar ? response.data.kamar.no_kamar : ""
+                );
+                $("#detail-bank").val(response.data.nama_bank);
+                $("#detail-no-rek").val(response.data.no_rek);
+
+                $("#detail-data-modal").modal("show");
+            } else {
+                Swal.fire({
+                    title: "Gagal",
+                    text: "Terjadi Kesalahan Saat Mengambil Data",
+                    icon: "error",
+                });
+            }
+        },
+        error: function (xhr) {
+            Swal.fire({
+                title: "Gagal",
+                text: "data tidak ditemukan",
+                icon: "error",
+            });
+        },
+    });
+});
+
+$("#btn-close-detail").on("click", function () {
+    $("#detail-data-modal").modal("hide");
 });
 
 $(document).on("click", ".edit", function () {
-    let id = $(this).data('id');
+    let id = $(this).data("id");
 
     $.ajax({
-        url: '/jabatan/edit',
-        method: 'GET',
+        url: "/daftar-peserta/edit",
+        method: "GET",
         data: {
-            'id': id
+            id: id,
         },
         success: function (response) {
             if (response.status) {
                 $("#id").val(response.data.id);
-                $("#edit_kode").val(response.data.kode);
-                $("#edit_nama").val(response.data.nama);
+                $("#edit-nama").val(response.data.nama);
+                $("#edit-nip").val(response.data.nip);
+                $("#edit-jenis-kelamin").val(response.data.jenis_kelamin);
+                $("#edit-no-wa").val(response.data.no_wa);
+                $("#edit-role").val(response.data.role);
+                $("#edit-instansi").val(response.data.instansi);
+                $("#edit-unit-kerja").val(response.data.unit_kerja_id);
+                $("#edit-jabatan").val(response.data.jabatan_id);
+                $("#edit-golongan").val(response.data.golongan);
+                $("#edit-bank").val(response.data.nama_bank);
+                $("#edit-kamar").val(response.data.kamar_id);
+                $("#edit-ukuran-baju").val(response.data.ukuran_baju);
+                $("#edit-no-rek").val(response.data.no_rek);
 
                 $("#edit-data-modal").modal("show");
             } else {
                 Swal.fire({
                     title: "Gagal",
-                    text: "Terjadi Kesalah Saat Mengambil Data",
-                    icon: "error"
-                  });
+                    text: "Terjadi Kesalahan Saat Mengambil Data",
+                    icon: "error",
+                });
             }
         },
         error: function (xhr) {
             Swal.fire({
                 title: "Gagal",
-                text: "Terjadi Kesalah Saat Mengambil Data",
-                icon: "error"
-              });
-        }
-    })
-})
+                text: "data tidak ditemukan",
+                icon: "error",
+            });
+        },
+    });
+});
 
 $("#update").on("click", function () {
-    $("#edit-data-modal").modal("hide");
-    let formData = new FormData();
-
-    formData.append("_token", $("meta[name='csrf-token']").attr('content'));
-    formData.append("id", $("#id").val());
-    formData.append("kode", $("#edit_kode").val());
-    formData.append("nama", $("#edit_nama").val());
+    let formData = {
+        _token: $("meta[name='csrf-token']").attr("content"),
+        id: $("#id").val(),
+        nama: $("#edit-nama").val(),
+        nip: $("#edit-nip").val(),
+        jenis_kelamin: $("#edit-jenis-kelamin").val(),
+        no_wa: $("#edit-no-wa").val(),
+        role: $("#edit-role").val(),
+        instansi: $("#edit-instansi").val(),
+        unit_kerja_id: $("#edit-unit-kerja").val(),
+        kamar_id: $("#edit-kamar").val(),
+        jabatan_id: $("#edit-jabatan").val(),
+        golongan: $("#edit-golongan").val(),
+        ukuran_baju: $("#edit-ukuran-baju").val(),
+        bank: $("#edit-bank").val(),
+        no_rek: $("#edit-no-rek").val(),
+    };
 
     $.ajax({
-        url: '/jabatan/update',
-        method: 'POST',
-        processData: false,
-        contentType: false,
+        url: "/daftar-peserta/update",
+        method: "POST",
         data: formData,
         success: function (response) {
             if (response.status) {
                 Swal.fire({
                     title: "Berhasil",
-                    text: "Simpan Data Berhasil",
-                    icon: "success"
-                  });
+                    text: response.message,
+                    icon: "success",
+                });
                 setTimeout(() => {
                     location.reload();
                 }, 2000);
             } else {
                 Swal.fire({
                     title: "Gagal",
-                    text: "Simpan Data Gagal",
-                    icon: "error"
+                    text: response.message,
+                    icon: "error",
                 });
             }
         },
         error: function (xhr) {
+            let errors = xhr.responseJSON.errors;
+            let errorMessage = "Terjadi kesalahan!";
+
+            if (errors) {
+                errorMessage = Object.values(errors)
+                    .map((error) => error.join(",\n"))
+                    .join(",\n");
+            }
+
             Swal.fire({
                 title: "Gagal",
-                text: "Simpan Data Gagal",
-                icon: "error"
+                text: errorMessage,
+                icon: "error",
             });
-        }
-    })
-})
-
+        },
+    });
+});
 
 $(document).on("click", ".delete", function () {
-    $.ajax({
-        url: '/jabatan/delete',
-        method: 'POST',
-        data: {
-            '_token': $("meta[name='csrf-token']").attr("content"),
-            'id': $(this).data('id'),
-        },
-        success: function (response) {
-            if (response.status) {
-                Swal.fire({
-                    title: "Berhasil",
-                    text: "Simpan Data Berhasil",
-                    icon: "success"
-                  });
-                setTimeout(() => {
-                    location.reload();
-                }, 2000);
-            } else {
-                Swal.fire({
-                    title: "Gagal",
-                    text: "Simpan Data Gagal",
-                    icon: "error"
-                });
-            }
-        },
-        error: function (xhr) {
-            Swal.fire({
-                title: "Gagal",
-                text: "Simpan Data Gagal",
-                icon: "error"
+    let id = $(this).data("id");
+
+    Swal.fire({
+        title: "Apakah Anda yakin?",
+        text: "Data ini akan dihapus secara permanen!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Ya, Hapus!",
+        cancelButtonText: "Batal",
+        reverseButtons: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "/daftar-peserta/delete",
+                method: "POST",
+                data: {
+                    _token: $("meta[name='csrf-token']").attr("content"),
+                    id: id,
+                },
+                success: function (response) {
+                    if (response.status) {
+                        Swal.fire({
+                            title: "Berhasil",
+                            text: "Hapus Data Berhasil",
+                            icon: "success",
+                        });
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    } else {
+                        Swal.fire({
+                            title: "Gagal",
+                            text: "Hapus Data Gagal",
+                            icon: "error",
+                        });
+                    }
+                },
+                error: function (xhr) {
+                    Swal.fire({
+                        title: "Gagal",
+                        text: "Hapus Data Gagal: " + xhr.statusText,
+                        icon: "error",
+                    });
+                },
             });
         }
-    })
-})
+    });
+});
 
 // $("#pilih_bank").on("click", function(){
 //     $("#daftar_bank").modal("show");
@@ -202,14 +303,14 @@ $(document).on("click", ".delete", function () {
 //     $("#daftar_unit_kerja").modal("hide");
 // })
 
-document.getElementById('no_wa').addEventListener('input', function (e) {
-    this.value = this.value.replace(/[^0-9]/g, '').slice(0, 15);
+document.getElementById("no_wa").addEventListener("input", function (e) {
+    this.value = this.value.replace(/[^0-9]/g, "").slice(0, 15);
 });
 
-document.getElementById('no_rek').addEventListener('input', function (e) {
-    this.value = this.value.replace(/[^0-9]/g, '').slice(0, 50);
+document.getElementById("no_rek").addEventListener("input", function (e) {
+    this.value = this.value.replace(/[^0-9]/g, "").slice(0, 50);
 });
 
-document.getElementById('nip').addEventListener('input', function (e) {
-    this.value = this.value.replace(/[^0-9]/g, '').slice(0, 50);
+document.getElementById("nip").addEventListener("input", function (e) {
+    this.value = this.value.replace(/[^0-9]/g, "").slice(0, 50);
 });

@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Kamar;
 use App\Http\Requests\StoreKamarRequest;
 use App\Http\Requests\UpdateKamarRequest;
+use Exception;
+use Illuminate\Http\Request;
 
 class KamarController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $data = [
             'pageTitle' => "Kamar",
             'kamars' => Kamar::all()
@@ -16,144 +19,142 @@ class KamarController extends Controller
         return view('kamar.index', $data);
     }
 
-    // public function store(Request $r){
-    //     $validatedData = $r->validate([
-    //         'kode' => 'required|string',
-    //         'nama' => 'required|string'
-    //     ], [
-    //         'kode.required' => 'Kode Unit Kerja wajib diisi.',
-    //         'kode.string' => 'Kode Unit Kerja harus berupa text.',
-    //         'nama.required' => 'Nama Unit Kerja wajib diisi.',
-    //         'nama.string' => 'Nama Unit Kerja harus berupa text.',
-    //     ]);
+    public function store(Request $r)
+    {
+        $validatedData = $r->validate([
+            'no_kamar' => 'required|numeric'
+        ], [
+            'no_kamar.required' => 'nomor kamar wajib diisi.',
+            'no_kamar.numeric' => 'nomor kamar harus berupa angka.',
+        ]);
 
-    //     try{
-    //         $unitKerja = UnitKerja::create([
-    //             'kode' => $r->kode,
-    //             'nama' => $r->nama
-    //         ]);
+        try {
+            $kamar = Kamar::create([
+                // 'kode' => $r->kode,
+                'no_kamar' => $r->no_kamar
+            ]);
 
-    //         if($unitKerja){
-    //             return response()->json([
-    //                 'status' => true,
-    //                 'data' => $unitKerja
-    //             ]);    
-    //         }
+            if ($kamar) {
+                return response()->json([
+                    'status' => true,
+                    'data' => $kamar
+                ]);
+            }
 
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => "Terjadi kesalahan saat menyimpan data"
-    //         ]);
-    //     }catch(Exception $e){
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => $e->getMessage()
-    //         ]);
-    //     }
-    // }
+            return response()->json([
+                'status' => false,
+                'message' => "Terjadi kesalahan saat menyimpan data"
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
 
-    // public function edit(Request $r){
-    //     $validatedData = $r->validate([
-    //         'id' => 'required|numeric',
-    //     ], [
-    //         'id.required' => 'Data belum dipilih.',
-    //         'id.numeric' => 'Data belum dipilih.',
-    //     ]);
+    public function edit(Request $r)
+    {
+        $validatedData = $r->validate([
+            'id' => 'required|numeric',
+        ], [
+            'id.required' => 'Data belum dipilih.',
+            'id.numeric' => 'Data belum dipilih.',
+        ]);
 
-    //     try{
-    //         $unitKerja = UnitKerja::select('id', 'kode', 'nama')
-    //                         ->where('id', $r->id)
-    //                         ->first();
+        try {
+            $kamar = kamar::select('id', 'no_kamar')
+                ->where('id', $r->id)
+                ->first();
 
-    //         if($unitKerja){
-    //             return response()->json([
-    //                 'status' => true,
-    //                 'data' => $unitKerja
-    //             ]);    
-    //         }
+            if ($kamar) {
+                return response()->json([
+                    'status' => true,
+                    'data' => $kamar
+                ]);
+            }
 
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => "Data tidak ditemukan"
-    //         ]);
-    //     }catch(Exception $e){
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => $e->getMessage()
-    //         ]);
-    //     }
-    // }
+            return response()->json([
+                'status' => false,
+                'message' => "Data tidak ditemukan"
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
 
-    // public function update(Request $r){
-    //     $validatedData = $r->validate([
-    //         'kode' => 'required|string',
-    //         'nama' => 'required|string',
-    //         'id' => 'required|numeric',
-    //     ], [
-    //         'kode.required' => 'Kode Unit Kerja wajib diisi.',
-    //         'kode.string' => 'Kode Unit Kerja harus berupa text.',
-    //         'nama.required' => 'Nama Unit Kerja wajib diisi.',
-    //         'nama.string' => 'Nama Unit Kerja harus berupa text.',
-    //         'id.required' => 'Data belum dipilih.',
-    //         'id.numeric' => 'Data belum dipilih.',
-    //     ]);
+    public function update(Request $r)
+    {
+        $validatedData = $r->validate([
+            // 'kode' => 'required|string',
+            'no_kamar' => 'required|numeric',
+            'id' => 'required|numeric',
+        ], [
+            'no_kamar.required' => 'nomor kamar wajib diisi.',
+            'no_kamar.numeric' => 'nomor kamar harus berupa angka.',
+            'id.required' => 'Data belum dipilih.',
+            'id.numeric' => 'Data belum dipilih.',
+        ]);
 
-    //     try{
-    //         $unitKerja = UnitKerja::where('id', $r->id)->first();
+        try {
+            $kamar = Kamar::where('id', $r->id)->first();
 
-    //         if($unitKerja){
-    //             $unitKerja->kode = $r->kode;
-    //             $unitKerja->nama = $r->nama;
-    //             $unitKerja->save();
+            if ($kamar) {
+                $kamar->no_kamar = $r->no_kamar;
+                $kamar->save();
 
-    //             return response()->json([
-    //                 'status' => true,
-    //                 'data' => $unitKerja
-    //             ]);    
-    //         }
+                return response()->json([
+                    'status' => true,
+                    'data' => $kamar
+                ]);
+            }
 
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => "Terjadi kesalahan saat menyimpan data"
-    //         ]);
-    //     }catch(Exception $e){
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => $e->getMessage()
-    //         ]);
-    //     }
-    // }
+            return response()->json([
+                'status' => false,
+                'message' => "Terjadi kesalahan saat menyimpan data"
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
 
-    // public function delete(Request $r){
-    //     $validatedData = $r->validate([
-    //         'id' => 'required|numeric',
-    //     ], [
-    //         'id.required' => 'Data belum dipilih.',
-    //         'id.numeric' => 'Data belum dipilih.',
-    //     ]);
+    public function delete(Request $r)
+    {
+        $validatedData = $r->validate([
+            'id' => 'required|numeric',
+        ], [
+            'id.required' => 'Data belum dipilih.',
+            'id.numeric' => 'Data belum dipilih.',
+        ]);
 
-    //     try{
-    //         $unitKerja = UnitKerja::select('id')
-    //                         ->where('id', $r->id)
-    //                         ->first();
+        try {
+            $kamar = Kamar::select('id')
+                ->where('id', $r->id)
+                ->first();
 
-    //         if($unitKerja){
-    //             $unitKerja->delete();
-                
-    //             return response()->json([
-    //                 'status' => true,
-    //             ]);    
-    //         }
+            if ($kamar) {
+                $kamar->delete();
 
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => "Data tidak ditemukan"
-    //         ]);
-    //     }catch(Exception $e){
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => $e->getMessage()
-    //         ]);
-    //     }
-    // }
+                return response()->json([
+                    'status' => true,
+                ]);
+            }
+
+            return response()->json([
+                'status' => false,
+                'message' => "Data tidak ditemukan"
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
 }
