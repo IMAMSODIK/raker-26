@@ -3,7 +3,6 @@ let table = $("#basic-1").DataTable();
 $("#cancel-edit").on("click", function () {
     $("#edit-data-modal").modal("hide");
 });
-
 $("#cancel-add").on("click", function () {
     $("#tambah-data-modal").modal("hide");
 });
@@ -15,7 +14,7 @@ $("#btn-tambah-dokumentasi").on("click", function () {
 $(document).ready(function () {
     $("#foto").on("change", function (event) {
         let previewContainer = $("#preview-container");
-        previewContainer.empty(); // Kosongkan container sebelumnya
+        previewContainer.empty();
 
         Array.from(event.target.files).forEach((file) => {
             if (file.type.startsWith("image/")) {
@@ -23,9 +22,8 @@ $(document).ready(function () {
                 reader.onload = function (e) {
                     let imgElement = $("<img>")
                         .attr("src", e.target.result)
-                        .addClass("m-2 border rounded") // Tambahkan kelas untuk styling
-                        .css("width", "300px")
-                        .css("height", "300px")
+                        .addClass("m-2 border rounded")
+                        .css({ width: "300px", height: "300px" })
                         .on("click", function () {
                             showLargeImage(e.target.result);
                         });
@@ -50,10 +48,10 @@ $(document).ready(function () {
                 display: "flex",
                 "justify-content": "center",
                 "align-items": "center",
-                "z-index": "9999", // Pastikan modal ada di atas elemen lain
+                "z-index": "9999",
             })
             .on("click", function () {
-                $(this).remove(); // Hapus modal saat diklik
+                $(this).remove();
             });
 
         let img = $("<img>").attr("src", src).css({
@@ -61,7 +59,7 @@ $(document).ready(function () {
             height: "350px",
             "object-fit": "cover",
             "border-radius": "10px",
-            "box-shadow": "0 4px 10px rgba(0, 0, 0, 0.5)", // Tambahkan shadow
+            "box-shadow": "0 4px 10px rgba(0, 0, 0, 0.5)",
         });
 
         modal.append(img);
@@ -71,16 +69,15 @@ $(document).ready(function () {
     $(document).on("click", ".thumb", function () {
         let images = JSON.parse($(this).attr("data-images"));
         let modalContent = $("#modalContent");
-        modalContent.html(""); // Kosongkan modal sebelum menampilkan gambar
+        modalContent.html("");
 
         let rowDiv = $("<div>").addClass(
-            "d-flex flex-wrap justify-content-start gap-2"
+            "d-flex flex-wrap justify-content-start gap-3"
         );
-
-        $.each(images, function (index, img) {
-            rowDiv.append(`<img src="${img}" class="modal-img">`);
+        $.each(images, function (index, filename) {
+            let fullPath = "storage/dokumentasi/" + filename;
+            rowDiv.append(`<img src="${fullPath}" class="modal-img">`);
         });
-
         modalContent.append(rowDiv);
         $("#imageModal").modal("show");
     });
@@ -130,9 +127,8 @@ $("#btn-store").on("click", function () {
                 let errors = xhr.responseJSON.errors;
                 let errorMessage = "";
                 $.each(errors, function (key, value) {
-                    errorMessage += "" + value[0] + "<br>";
+                    errorMessage += value[0] + "<br>";
                 });
-
                 Swal.fire({
                     title: "Validasi Gagal!",
                     html: errorMessage,
@@ -165,14 +161,15 @@ $(document).on("click", ".edit", function () {
                 let imageContainer = $("#edit-preview-images");
                 imageContainer.html("");
 
-                response.data.foto.forEach(function (imgPath, index) {
+                response.data.foto.forEach(function (filename, index) {
+                    let fullPath = "storage/dokumentasi/" + filename;
                     let imgElement = `
                         <div class="m-2 position-relative">
-                            <img src="${imgPath}" class="border rounded edit-thumb"
+                            <img src="${fullPath}" class="border rounded edit-thumb"
                                 style="width: 150px; height: 150px; cursor: pointer;"
-                                data-full="${imgPath}">
+                                data-full="${fullPath}">
                             <button class="btn btn-danger btn-sm remove-image"
-                                    data-index="${index}" data-img="${imgPath}"
+                                    data-index="${index}" data-img="${filename}"
                                     style="position: absolute; top: 5px; right: 5px;">X</button>
                         </div>`;
                     imageContainer.append(imgElement);
@@ -196,6 +193,7 @@ $(document).on("click", ".edit", function () {
         },
     });
 });
+
 $("#edit-foto-baru").on("change", function (event) {
     let previewContainer = $("#preview-container-edit");
     previewContainer.empty();
@@ -207,12 +205,10 @@ $("#edit-foto-baru").on("change", function (event) {
                 let imgElement = $("<img>")
                     .attr("src", e.target.result)
                     .addClass("m-2 border rounded")
-                    .css("width", "300px")
-                    .css("height", "300px")
+                    .css({ width: "300px", height: "300px" })
                     .on("click", function () {
                         showLargeImage(e.target.result);
                     });
-
                 previewContainer.append(imgElement);
             };
             reader.readAsDataURL(file);
@@ -223,6 +219,7 @@ $("#edit-foto-baru").on("change", function (event) {
 $("#btn-cancel-edit").on("click", function () {
     $("#edit-data-modal").modal("hide");
 });
+
 $(document).on("click", ".remove-image", function () {
     $(this).parent().remove();
 });
@@ -244,7 +241,13 @@ $("#save-edit").on("click", function () {
 
     let remainingImages = [];
     $("#edit-preview-images img").each(function () {
-        remainingImages.push($(this).attr("src"));
+        let src = $(this).attr("src");
+
+        if (src.indexOf("storage/dokumentasi/") !== -1) {
+            remainingImages.push(src.replace("storage/dokumentasi/", ""));
+        } else {
+            remainingImages.push(src);
+        }
     });
 
     let formData = new FormData();

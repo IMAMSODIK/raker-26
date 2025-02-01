@@ -45,7 +45,7 @@
                                             $images = json_decode($d->foto, true);
                                         @endphp
                                         @foreach ($images as $img)
-                                            <img src="{{ asset($img) }}" class="thumb" data-images="{{ json_encode($images) }}" width="300" height="300">
+                                            <img src="{{ asset('storage/dokumentasi/' . $img) }}" class="thumb" data-images="{{ json_encode($images) }}" width="300" height="300">
                                         @endforeach
                                     </td>
                                     <td style="font-size: 16px" class="text-center">
