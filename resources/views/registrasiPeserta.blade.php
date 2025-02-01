@@ -57,7 +57,7 @@
         }
     </style>
 
-<meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
@@ -280,49 +280,49 @@
     <script src="{{ asset('dashboard_assets/js/demo/datatables-demo.js') }}"></script>
 
     <script>
-         $("#pilih_bank").on("click", function(){
-                $("#daftar_bank").modal("show");
-            })
+        $("#pilih_bank").on("click", function() {
+            $("#daftar_bank").modal("show");
+        })
 
-            $("#cari_data").on("click", function(){
-                $("#daftar_peserta").modal("show");
-            })
+        $("#cari_data").on("click", function() {
+            $("#daftar_peserta").modal("show");
+        })
 
-            $(".row-data").on("click", function(){
-                $("#bank").val($(this).data('nama'));
-                $("#daftar_bank").modal("hide");
-            })
+        $(".row-data").on("click", function() {
+            $("#bank").val($(this).data('nama'));
+            $("#daftar_bank").modal("hide");
+        })
 
-            $(".row-peserta").on("click", function(){
-                $("#id").val($(this).data('id'));
-                $("#nama").val($(this).data('nama'));
-                $("#role").val($(this).data('role'));
-                $("#nip").val($(this).data('nip'));
-                $("#asal_instansi").val($(this).data('instansi'));
-                $("#jenis_kelamin").val($(this).data('jk'));
-                $("#unit_kerja").val($(this).data('uker'));
-                $("#unit_kerja_id").val($(this).data('ukerid'));
-                $("#jabatan").val($(this).data('jabatan'));
-                $("#jabatan_id").val($(this).data('jabatanid'));
-                $("#golongan").val($(this).data('golongan'));
-                $("#no_wa").val($(this).data('wa'));
-                $("#bank").val($(this).data('bank'));
-                $("#no_rek").val($(this).data('rek'));
-                $("#ukuran_baju").val($(this).data('baju'));
-                $("#daftar_peserta").modal("hide");
-            })
+        $(".row-peserta").on("click", function() {
+            $("#id").val($(this).data('id'));
+            $("#nama").val($(this).data('nama'));
+            $("#role").val($(this).data('role'));
+            $("#nip").val($(this).data('nip'));
+            $("#asal_instansi").val($(this).data('instansi'));
+            $("#jenis_kelamin").val($(this).data('jk'));
+            $("#unit_kerja").val($(this).data('uker'));
+            $("#unit_kerja_id").val($(this).data('ukerid'));
+            $("#jabatan").val($(this).data('jabatan'));
+            $("#jabatan_id").val($(this).data('jabatanid'));
+            $("#golongan").val($(this).data('golongan'));
+            $("#no_wa").val($(this).data('wa'));
+            $("#bank").val($(this).data('bank'));
+            $("#no_rek").val($(this).data('rek'));
+            $("#ukuran_baju").val($(this).data('baju'));
+            $("#daftar_peserta").modal("hide");
+        })
 
-            $(".row-jabatan").on("click", function(){
-                $("#jabatan_id").val($(this).data('id'));
-                $("#jabatan").val($(this).data('nama'));
-                $("#daftar_jabatan").modal("hide");
-            })
+        $(".row-jabatan").on("click", function() {
+            $("#jabatan_id").val($(this).data('id'));
+            $("#jabatan").val($(this).data('nama'));
+            $("#daftar_jabatan").modal("hide");
+        })
 
-            $(".row-unit_kerja").on("click", function(){
-                $("#unit_kerja_id").val($(this).data('id'));
-                $("#unit_kerja").val($(this).data('nama'));
-                $("#daftar_unit_kerja").modal("hide");
-            })
+        $(".row-unit_kerja").on("click", function() {
+            $("#unit_kerja_id").val($(this).data('id'));
+            $("#unit_kerja").val($(this).data('nama'));
+            $("#daftar_unit_kerja").modal("hide");
+        })
 
         // fungsi untuk tanda tangan
         document.addEventListener("DOMContentLoaded", function() {
@@ -423,31 +423,49 @@
                 contentType: false,
                 success: function(response) {
                     if (response.status) {
-                        // var raw = JSON.stringify({
-                        //     instance_key: "ib1ka7XyyTnP",
-                        //     jid: response.data.hp,
-                        //     imageUrl: "https://siprent.com/storage/id_card/" + response.data
-                        //         .id_card,
-                        //     caption: `Assalammualaikum Wr, Wb Terima Kasih telah melakukan Registrasi Kegiatan Koordinasi Penguatan Tatakelola. Nomor Kamar anda ${response.no_kamar}. Simpan File Id Card anda Selama Mengikuti Kegiatan`,
-                        // });
-                        // var requestOptions = {
-                        //     method: "POST",
-                        //     body: raw,
-                        //     redirect: "follow",
-                        //     mode: "no-cors",
-                        // };
-                        // fetch("https://whatsva.id/api/sendImageUrl", requestOptions);
-                        Swal.fire({
-                            title: "Success",
-                            text: "Berhasil Melakukan Registrasi",
-                            icon: "success",
-                            confirmButtonColor: "#3085d6",
-                            confirmButtonText: "OK",
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
+                        let teman = "";
+                        response.kamar.peserta.forEach(element => {
+                            teman += element.nama + '\n';
                         });
+                        var raw = JSON.stringify({
+                            instance_key: "BEgvA2XxV14a",
+                            jid: response.data.no_wa,
+                            message: `Terimakasih sudah melakukan proses registrasi\nNomor Kamar anda ${response.kamar.no_kamar}\nTeman satu kamar ${teman}`
+                        });
+                        var requestOptions = {
+                            method: 'POST',
+                            body: raw,
+                            redirect: 'follow'
+                        };
+
+                        fetch("https://whatsva.id/api/sendMessageText", requestOptions)
+                            .then((response) => {
+                                if (response.ok) {
+                                    Swal.fire({
+                                        title: "Success",
+                                        text: "Berhasil Melakukan Registrasi",
+                                        icon: "success",
+                                        confirmButtonColor: "#3085d6",
+                                        confirmButtonText: "OK",
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            location.reload();
+                                        }
+                                    });
+                                } else {
+                                    throw new Error("Gagal mengirim pesan WhatsApp.");
+                                }
+                            })
+                            .catch((error) => {
+                                Swal.fire({
+                                    title: "Error",
+                                    text: error.message,
+                                    icon: "error",
+                                    confirmButtonColor: "#d33",
+                                    confirmButtonText: "OK",
+                                });
+                            });
+
                     } else {
                         Swal.fire({
                             icon: "error",

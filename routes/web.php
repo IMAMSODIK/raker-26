@@ -10,6 +10,7 @@ use App\Http\Controllers\MateriRapatController;
 use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\RegistrasiController;
 use App\Http\Controllers\UnitKerjaController;
+use App\Models\Dokumentasi;
 use App\Models\MateriRapat;
 use App\Models\Peserta;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,7 @@ Route::get('/', function () {
     $data = [
         'materis' => MateriRapat::all(),
         'pesertas' => Peserta::with(['jabatan', 'unitKerja'])->get(),
+        'dokuments' => Dokumentasi::all()
     ];
     return view('landing', $data);
 });
@@ -112,4 +114,11 @@ Route::post('/absensi/store', [RegistrasiController::class, 'absensiStore']);
 
 Route::fallback(function () {
     return redirect('/pendaftaran');
+});
+
+
+Route::get('/storage-link', function () {
+    $targetStorage = storage_path('app/public');
+    $linkFolder = $_SERVER['DOCUMENT_ROOT'] . '/storage';
+    symlink($targetStorage, $linkFolder);
 });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jabatan;
+use App\Models\Kamar;
 use App\Models\Peserta;
 use App\Models\UnitKerja;
 use App\Models\User;
@@ -191,8 +192,12 @@ class RegistrasiController extends Controller
         $data->registrasi = 1;
         $data->save();
 
+        $kamar = Kamar::with(['peserta'])->where('no_kamar', $data->kamar_id)->first();
+
         return response()->json([
-            'status' => 1
+            'status' => 1,
+            'kamar' => $kamar,
+            'data' => $data
         ]);
     }
 }

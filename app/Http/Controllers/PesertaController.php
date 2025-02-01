@@ -133,66 +133,66 @@ class PesertaController extends Controller
 
     public function update(Request $r)
     {
-        $validatedData = $r->validate([
-            'id' => 'required|numeric',
-            'nama' => 'required|string|max:255',
-            'nip' => 'required|numeric|digits_between:1,50',
-            'jenis_kelamin' => 'required|string',
-            'no_wa' => 'required|numeric|digits_between:1,15',
-            'role' => 'required|string',
-            'instansi' => 'nullable|string',
-            'unit_kerja_id' => 'required|numeric',
-            'kamar_id' => 'required|numeric',
-            'jabatan_id' => 'required|numeric',
-            'golongan' => 'required|string',
-            'ukuran_baju' => 'required|string',
-            'no_rek' => 'required|numeric|digits_between:1,50',
-        ], [
-            'id.required' => 'ID tidak dapat ditemukan',
-            'id.numeric' => 'ID harus berupa angka',
+        // $validatedData = $r->validate([
+        //     'id' => 'required|numeric',
+        //     'nama' => 'required|string|max:255',
+        //     'nip' => 'required|numeric|digits_between:1,50',
+        //     'jenis_kelamin' => 'required|string',
+        //     'no_wa' => 'required|numeric|digits_between:1,15',
+        //     'role' => 'required|string',
+        //     'instansi' => 'nullable|string',
+        //     'unit_kerja_id' => 'required|numeric',
+        //     'kamar_id' => 'required|numeric',
+        //     'jabatan_id' => 'required|numeric',
+        //     'golongan' => 'required|string',
+        //     'ukuran_baju' => 'required|string',
+        //     'no_rek' => 'required|numeric|digits_between:1,50',
+        // ], [
+        //     'id.required' => 'ID tidak dapat ditemukan',
+        //     'id.numeric' => 'ID harus berupa angka',
 
-            'nama.required' => 'Nama harus diisi',
-            'nama.string' => 'Nama harus berupa huruf',
-            'nama.max' => 'Nama tidak boleh lebih dari 255 karakter',
+        //     'nama.required' => 'Nama harus diisi',
+        //     'nama.string' => 'Nama harus berupa huruf',
+        //     'nama.max' => 'Nama tidak boleh lebih dari 255 karakter',
 
-            'nip.required' => 'NIP harus diisi',
-            'nip.numeric' => 'NIP harus berupa angka',
-            'nip.digits_between' => 'NIP harus antara 1 hingga 50 angka',
+        //     'nip.required' => 'NIP harus diisi',
+        //     'nip.numeric' => 'NIP harus berupa angka',
+        //     'nip.digits_between' => 'NIP harus antara 1 hingga 50 angka',
 
-            'jenis_kelamin.required' => 'Jenis kelamin harus diisi',
-            'jenis_kelamin.string' => 'Jenis kelamin harus berupa huruf',
+        //     'jenis_kelamin.required' => 'Jenis kelamin harus diisi',
+        //     'jenis_kelamin.string' => 'Jenis kelamin harus berupa huruf',
 
-            'no_wa.required' => 'Nomor WA harus diisi',
-            'no_wa.numeric' => 'Nomor WA harus berupa angka',
-            'no_wa.digits_between' => 'Nomor WA harus antara 1 hingga 15 angka',
+        //     'no_wa.required' => 'Nomor WA harus diisi',
+        //     'no_wa.numeric' => 'Nomor WA harus berupa angka',
+        //     'no_wa.digits_between' => 'Nomor WA harus antara 1 hingga 15 angka',
 
-            'role.required' => 'Role harus diisi',
-            'role.string' => 'Role harus berupa huruf',
+        //     'role.required' => 'Role harus diisi',
+        //     'role.string' => 'Role harus berupa huruf',
 
-            'instansi.string' => 'Instansi harus berupa huruf',
+        //     'instansi.string' => 'Instansi harus berupa huruf',
 
-            'unit_kerja_id.required' => 'Unit kerja harus diisi',
-            'unit_kerja_id.numeric' => 'Unit kerja harus berupa angka',
+        //     'unit_kerja_id.required' => 'Unit kerja harus diisi',
+        //     'unit_kerja_id.numeric' => 'Unit kerja harus berupa angka',
 
-            'jabatan_id.required' => 'Jabatan harus diisi',
-            'jabatan_id.numeric' => 'Jabatan harus berupa angka',
+        //     'jabatan_id.required' => 'Jabatan harus diisi',
+        //     'jabatan_id.numeric' => 'Jabatan harus berupa angka',
 
-            'kamar_id.required' => 'kamar harus diisi',
-            'kamar_id.numeric' => 'kamar harus berupa angka',
+        //     'kamar_id.required' => 'kamar harus diisi',
+        //     'kamar_id.numeric' => 'kamar harus berupa angka',
 
-            'golongan.required' => 'Golongan harus diisi',
-            'golongan.string' => 'Golongan harus berupa huruf',
+        //     'golongan.required' => 'Golongan harus diisi',
+        //     'golongan.string' => 'Golongan harus berupa huruf',
 
-            'ukuran_baju.required' => 'ukuran baju harus diisi',
-            'ukuran_baju.string' => 'ukuran baju harus berupa huruf',
+        //     'ukuran_baju.required' => 'ukuran baju harus diisi',
+        //     'ukuran_baju.string' => 'ukuran baju harus berupa huruf',
 
-            // 'nama_bank.required' => 'Bank harus diisi',
-            // 'nama_bank.string' => 'Bank harus berupa huruf',
+        //     // 'nama_bank.required' => 'Bank harus diisi',
+        //     // 'nama_bank.string' => 'Bank harus berupa huruf',
 
-            'no_rek.required' => 'Nomor rekening harus diisi',
-            'no_rek.numeric' => 'Nomor rekening harus berupa angka',
-            'no_rek.digits_between' => 'Nomor rekening harus antara 1 hingga 50 angka',
-        ]);
+        //     'no_rek.required' => 'Nomor rekening harus diisi',
+        //     'no_rek.numeric' => 'Nomor rekening harus berupa angka',
+        //     'no_rek.digits_between' => 'Nomor rekening harus antara 1 hingga 50 angka',
+        // ]);
 
 
         try {

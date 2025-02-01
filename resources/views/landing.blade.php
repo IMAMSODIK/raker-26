@@ -360,6 +360,37 @@
             </div>
         </section>
 
+        <!-- Featured Section -->
+        <section id="featured" class="featured section">
+
+            <!-- Section Title -->
+            <div class="container section-title" data-aos="fade-up">
+                <h2>Save your time to using SoftLand</h2>
+                <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+            </div><!-- End Section Title -->
+
+            <div class="container">
+
+                <div class="row gy-4" data-aos="fade-up" data-aos-delay="100">
+
+                    @foreach ($dokuments as $dokumen)
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="img">
+                                    <img src="{{ asset('landing_assets/assets/img/cards-4.png') }}" alt=""
+                                        class="img-fluid">
+                                    <div class="icon"><i class="bi bi-hdd-stack"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
+                </div>
+
+            </div>
+
+        </section><!-- /Featured Section -->
+
 
         {{-- <!-- About Section -->
         <section id="about" class="about section">
@@ -429,78 +460,7 @@
 
         </section><!-- /About Section -->
 
-        <!-- Featured Section -->
-        <section id="featured" class="featured section">
-
-            <!-- Section Title -->
-            <div class="container section-title" data-aos="fade-up">
-                <h2>Save your time to using SoftLand</h2>
-                <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-            </div><!-- End Section Title -->
-
-            <div class="container">
-
-                <div class="row gy-4" data-aos="fade-up" data-aos-delay="100">
-
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="img">
-                                <img src="{{ asset('landing_assets/assets/img/cards-4.png') }}" alt=""
-                                    class="img-fluid">
-                                <div class="icon"><i class="bi bi-hdd-stack"></i></div>
-                            </div>
-                            <h2 class="title">Explore Your Team</h2>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor ut labore et dolore
-                                magna
-                                aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                aliquip ex ea
-                                commodo consequat.
-                            </p>
-                        </div>
-                    </div><!-- End Card Item -->
-
-                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
-                        <div class="card">
-                            <div class="img">
-                                <img src="{{ asset('landing_assets/assets/img/cards-2.png') }}" alt=""
-                                    class="img-fluid">
-                                <div class="icon"><i class="bi bi-brightness-high"></i></div>
-                            </div>
-                            <h2 class="title">Digital Whiteboard</h2>
-                            <p>
-                                Sed ut perspiciatis unde omnis iste natus error sit voluptatem doloremque laudantium,
-                                totam rem
-                                aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
-                                dicta sunt
-                                explicabo.
-                            </p>
-                        </div>
-                    </div><!-- End Card Item -->
-
-                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
-                        <div class="card">
-                            <div class="img">
-                                <img src="{{ asset('landing_assets/assets/img/cards-6.png') }}" alt=""
-                                    class="img-fluid">
-                                <div class="icon"><i class="bi bi-calendar4-week"></i></div>
-                            </div>
-                            <h2 class="title">Design To Development</h2>
-                            <p>
-                                Nemo enim ipsam voluptatem quia voluptas sit aut odit aut fugit, sed quia magni dolores
-                                eos qui
-                                ratione voluptatem sequi nesciunt Neque porro quisquam est, qui dolorem ipsum quia dolor
-                                sit
-                                amet.
-                            </p>
-                        </div>
-                    </div><!-- End Card Item -->
-
-                </div>
-
-            </div>
-
-        </section><!-- /Featured Section -->
+        
 
 
         <!-- Cards Section -->

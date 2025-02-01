@@ -42,3 +42,16 @@ dompet masjid diganti jadi wd
 7199051703
 081262328999
 198108122009011013
+
+
+
+dokumentasi di landing page
+otp registrasi
+pesan otp
+dashboard
+tidak bisa registrasi jika belum daftar
+tidak bisa absen jika belum registrasi
+absensi sampai 3 hari
+delete banner
+
+berisihkan
