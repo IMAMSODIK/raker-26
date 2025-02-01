@@ -52,11 +52,8 @@ class DokumentasiController extends Controller
             $fotoNames = [];
             if ($r->hasFile('foto')) {
                 foreach ($r->file('foto') as $file) {
-                    // Buat nama file unik
                     $filename = time() . '-' . $file->getClientOriginalName();
-                    // Simpan file ke folder storage/app/public/dokumentasi
                     $file->storeAs('public/dokumentasi', $filename);
-                    // Simpan hanya nama file ke dalam array
                     $fotoNames[] = $filename;
                 }
             }
@@ -64,7 +61,6 @@ class DokumentasiController extends Controller
             $dokumentasi = Dokumentasi::create([
                 'judul' => $r->judul,
                 'hari'  => $r->hari,
-                // Simpan nama file dalam JSON
                 'foto'  => json_encode($fotoNames),
             ]);
 
@@ -106,8 +102,6 @@ class DokumentasiController extends Controller
                         'id'    => $dokumentasi->id,
                         'judul' => $dokumentasi->judul,
                         'hari'  => $dokumentasi->hari,
-                        // Decode JSON; karena yang tersimpan hanya nama file,
-                        // nanti di view kita akan tambahkan prefix 'storage/dokumentasi/'
                         'foto'  => json_decode($dokumentasi->foto, true)
                     ]
                 ]);
@@ -135,7 +129,6 @@ class DokumentasiController extends Controller
                 'id'    => 'required|exists:dokumentasis,id',
                 'judul' => 'required|string|max:255',
                 'hari'  => 'required|date',
-                // Jika ada gambar baru, validasi setiap file
                 'foto.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             ], [
                 'id.required'    => 'ID Dokumentasi tidak ditemukan!',
@@ -151,11 +144,8 @@ class DokumentasiController extends Controller
             $dokumentasi = Dokumentasi::find($r->id);
 
             if ($dokumentasi) {
-                // Ambil gambar lama yang masih ada (yang belum dihapus) dari input hidden
-                // Pastikan input "existing_images" dikirim sebagai JSON array berisi nama file (tanpa prefix)
                 $existingImages = json_decode($r->existing_images, true) ?? [];
 
-                // Upload gambar baru jika ada, simpan hanya nama filenya
                 if ($r->hasFile('foto')) {
                     foreach ($r->file('foto') as $file) {
                         $filename = time() . '-' . $file->getClientOriginalName();
@@ -164,7 +154,6 @@ class DokumentasiController extends Controller
                     }
                 }
 
-                // Update data (simpan nama file dalam JSON)
                 $dokumentasi->update([
                     'judul' => $validatedData['judul'],
                     'hari'  => $validatedData['hari'],
