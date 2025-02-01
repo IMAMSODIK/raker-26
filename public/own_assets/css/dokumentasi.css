@@ -1,0 +1,25 @@
+.modal-img {
+    width: 200px;
+    /* Ukuran gambar di modal */
+    height: 200px;
+    object-fit: cover;
+    /* Supaya gambar tidak terdistorsi */
+    border-radius: 10px;
+    /* Biar lebih smooth */
+    cursor: pointer;
+    /* Bisa diklik kalau mau ditambah aksi */
+    transition: transform 0.3s ease-in-out;
+}
+
+.modal-img:hover {
+    transform: scale(1.05);
+    /* Efek zoom saat hover */
+}
+
+#modalContent {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: start;
+    /* Gambar tersusun dari kiri ke kanan */
+}

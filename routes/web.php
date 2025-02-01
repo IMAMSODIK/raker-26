@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DokumentasiController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KamarController;
 use App\Http\Controllers\MateriRapatController;
@@ -58,6 +59,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/bank/edit', [BankController::class, 'edit']);
     Route::post('/bank/update', [BankController::class, 'update']);
     Route::post('/bank/delete', [BankController::class, 'delete']);
+
+    Route::get('/dokumentasi', [DokumentasiController::class, 'index']);
+    Route::post('/dokumentasi/store', [DokumentasiController::class, 'store']);
+    Route::get('/dokumentasi/edit', [DokumentasiController::class, 'edit']);
+    Route::post('/dokumentasi/update', [DokumentasiController::class, 'update']);
+    Route::post('/dokumentasi/delete', [DokumentasiController::class, 'delete']);
 
     Route::get('/kamar', [KamarController::class, 'index']);
     Route::post('/kamar/store', [KamarController::class, 'store']);
