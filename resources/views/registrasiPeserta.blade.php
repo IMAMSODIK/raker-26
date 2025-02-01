@@ -159,7 +159,7 @@
                                     <div class="mb-3">
                                         <div class="border-canvas" style="background-color: white">
                                             <canvas width="850" height="400" id="signature-pad"
-                                                class="signature-pad"></canvas>
+                                                class="signature-pad" style="border:1px solid #000;"></canvas>
                                         </div>
                                         <div class="row d-flex justify-content-center mt-3">
                                             <button id="reset-canvas" class="btn btn-danger mr-1"
@@ -332,6 +332,10 @@
             var drawing = false;
             var lastPos = null;
 
+            context.lineWidth = 5;  // Ubah angka ini untuk menyesuaikan ketebalan
+            context.lineCap = "round"; // Membuat ujung garis lebih halus
+            context.strokeStyle = "#000";
+
             function getMousePos(canvas, evt) {
                 var rect = canvas.getBoundingClientRect();
                 return {
@@ -430,7 +434,7 @@
                         var raw = JSON.stringify({
                             instance_key: "BEgvA2XxV14a",
                             jid: response.data.no_wa,
-                            message: `Terimakasih sudah melakukan proses registrasi\nNomor Kamar anda ${response.kamar.no_kamar}\nTeman satu kamar ${teman}`
+                            message: `Terima kasih sudah melakukan Registrasi\nNomor Kamar anda ${response.kamar.no_kamar}\nTeman satu kamar \n${teman}\nSelamat mengikuti rangkaian kegiatan`
                         });
                         var requestOptions = {
                             method: 'POST',

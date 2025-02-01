@@ -27,10 +27,23 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    $gambar = Dokumentasi::all();
+
+    $arrGambar = [];
+
+    foreach ($gambar as $g) {
+        $cleanedFoto = trim($g->foto, '[]"');
+        $fotos = explode('","', $cleanedFoto);
+
+        foreach ($fotos as $foto) {
+            $arrGambar[] = $foto;
+        }
+    }
+
     $data = [
         'materis' => MateriRapat::all(),
         'pesertas' => Peserta::with(['jabatan', 'unitKerja'])->get(),
-        'dokuments' => Dokumentasi::all()
+        'dokuments' => $arrGambar
     ];
     return view('landing', $data);
 });

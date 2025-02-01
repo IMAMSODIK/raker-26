@@ -317,7 +317,7 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            @if ($peserta->absensi1 == 2)
+                                                            @if ($peserta->absensi2 == 2)
                                                                 <button type="button" class="text-white btn btn-success">Hadir</button>
                                                             @else
                                                                 <button type="button" class="text-white btn btn-danger" style="font-size: 14px">Belum Absensi</button>
@@ -365,8 +365,8 @@
 
             <!-- Section Title -->
             <div class="container section-title" data-aos="fade-up">
-                <h2>Save your time to using SoftLand</h2>
-                <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+                <h2>Dokumentasi Rapat</h2>
+                <p>Silahkan download Dokumen Materi Rapat dibawah ini</p>
             </div><!-- End Section Title -->
 
             <div class="container">
@@ -377,9 +377,9 @@
                         <div class="col-md-4">
                             <div class="card">
                                 <div class="img">
-                                    <img src="{{ asset('landing_assets/assets/img/cards-4.png') }}" alt=""
+                                    <img src="{{ asset('storage/dokumentasi') . '/' . $dokumen }}" alt=""
                                         class="img-fluid">
-                                    <div class="icon"><i class="bi bi-hdd-stack"></i></div>
+                                    {{-- <div class="icon"><i class="bi bi-hdd-stack"></i></div> --}}
                                 </div>
                             </div>
                         </div>

@@ -66,6 +66,13 @@ class RegistrasiController extends Controller
     public function absensiStore(Request $r){
         $data = Peserta::where("id", $r->id)->first();
 
+        if(!$data->registrasi){
+            return response()->json([
+                'status' => false,
+                'message' => "Anda belum melakukan proses registrasi"
+            ]);
+        }
+
         $data->absensi1 = 1;
         $data->save();
 
@@ -159,6 +166,12 @@ class RegistrasiController extends Controller
 
     public function registrasiStore(Request $r){
         $data = Peserta::where("id", $r->id)->first();
+        if(!$data->nip){
+            return response()->json([
+                'status' => false,
+                'message' => "Anda belum melakukan proses pendaftaran"
+            ]);
+        }
 
         if ($r->hasFile('foto')) {
             $file = $r->file('foto');
@@ -172,12 +185,17 @@ class RegistrasiController extends Controller
             $namaFile = bin2hex(random_bytes(10)) . '.' . $file->getClientOriginalExtension();
             $file->storePubliclyAs('foto', $namaFile, 'public');
             $data->foto = $namaFile;
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => "Silahkan upload foto terlebih dahulu"
+            ]);
         }
 
         if ($r->signature) {
             $signature = $r->signature;
             $decodedData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signature));
-            $filename = 'signature-' . $r->nip . '.png';
+            $filename = 'signature-' . $r->nip . uniqid() . '.png';
 
             // Pastikan folder ada atau buat folder
             $folderPath = 'ttd';
@@ -187,6 +205,11 @@ class RegistrasiController extends Controller
 
             Storage::disk('public')->put($folderPath . '/' . $filename, $decodedData);
             $data->ttd = $filename;
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => "Silahkan masukkan tanda tangan terlebih dahulu"
+            ]);
         }
 
         $data->registrasi = 1;
