@@ -313,14 +313,14 @@
                                                             @if ($peserta->absensi1 == 1)
                                                                 <button type="button" class="text-white btn btn-success">Hadir</button>
                                                             @else
-                                                                <button type="button" class="text-white btn btn-danger">Tidak Hadir</button>
+                                                                <button type="button" class="text-white btn btn-danger" style="font-size: 14px">Belum Absensi</button>
                                                             @endif
                                                         </td>
                                                         <td>
                                                             @if ($peserta->absensi1 == 2)
                                                                 <button type="button" class="text-white btn btn-success">Hadir</button>
                                                             @else
-                                                                <button type="button" class="text-white btn btn-danger">Tidak Hadir</button>
+                                                                <button type="button" class="text-white btn btn-danger" style="font-size: 14px">Belum Absensi</button>
                                                             @endif
                                                         </td>
                                                     </tr>
