@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DokumentasiController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KamarController;
 use App\Http\Controllers\MateriRapatController;
@@ -108,6 +109,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/data-absensi-narasumber', [RegistrasiController::class, 'indexAbsensiNarasumber']);
 
     Route::get('/pengaturan-kamar', [KamarController::class, 'pengaturanKamar']);
+    Route::get('/export', [ExportController::class, 'exportLaporan']);
 });
 
 Route::middleware('guest')->group(function () {

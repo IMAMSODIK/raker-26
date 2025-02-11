@@ -59,8 +59,17 @@ berisihkan
 admin_raker
 adminraker25Uinsu_
 
-email
-    nByeAQN7LRAgniW
 
-rumah web
-    PasswordRumahWeb#1
+
+
+
+perjadin
+
+role => super admin, operator, verifikator, approval, pengguna
+
+operator input usulan -> verifikator(kepala unit kerja) menyetujui -> approval(kepala biro) 
+
+filter tahun
+tambah tombol approval
+tambah tombol verifkasi
+1 akun bisa 2 role
