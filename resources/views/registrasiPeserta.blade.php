@@ -158,7 +158,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <div class="border-canvas" style="background-color: white">
-                                            <canvas width="850" height="400" id="signature-pad"
+                                            <canvas width="460" height="300" id="signature-pad"
                                                 class="signature-pad" style="border:1px solid #000;"></canvas>
                                         </div>
                                         <div class="row d-flex justify-content-center mt-3">
@@ -278,6 +278,7 @@
 
     <!-- Page level custom scripts -->
     <script src="{{ asset('dashboard_assets/js/demo/datatables-demo.js') }}"></script>
+    
 
     <script>
         $("#pilih_bank").on("click", function() {

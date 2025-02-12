@@ -280,6 +280,65 @@ $(document).on("click", ".delete", function () {
     });
 });
 
+
+
+$(".absensi").on("click", function(){
+    let idxAbsensi = $(this).data("absensi")
+    let id = $(this).data("id");
+
+    $("#hari-ke").text(idxAbsensi);
+    $("#id_absensi").val(id);
+    $("#idx_absensi").val(idxAbsensi);
+
+    $("#absensi-modal").modal("show");
+})
+
+$("#simpan-absensi").on("click", function(){
+    let formData = new FormData();
+    let token = $('meta[name="csrf-token"]').attr("content");
+
+    formData.append("_token", token);
+    formData.append("id", $("#id_absensi").val());
+    formData.append("idx", $("#idx_absensi").val());
+    formData.append("date", $("#date").val());
+    formData.append("time", $("#time").val());
+
+    $.ajax({
+        url: "/data-absensi/store",
+        method: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            if (response.status) {
+                $("#absensi-modal").modal("hide");
+                Swal.fire({
+                    title: "Berhasil",
+                    text: "Simpan Data Berhasil",
+                    icon: "success",
+                });
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            } else {
+                Swal.fire({
+                    title: "Gagal",
+                    text: response.message,
+                    icon: "error",
+                });
+            }
+        },
+        error: function(response) {
+            Swal.fire({
+                title: "Gagal",
+                text: "Simpan Data Gagal",
+                icon: "error",
+            });
+        },
+    });
+})
+
+
 // $("#pilih_bank").on("click", function(){
 //     $("#daftar_bank").modal("show");
 //     $("#tambah-data-modal").modal("hide");
@@ -303,14 +362,149 @@ $(document).on("click", ".delete", function () {
 //     $("#daftar_unit_kerja").modal("hide");
 // })
 
-document.getElementById("no_wa").addEventListener("input", function (e) {
-    this.value = this.value.replace(/[^0-9]/g, "").slice(0, 15);
+// document.getElementById("no_wa").addEventListener("input", function (e) {
+//     this.value = this.value.replace(/[^0-9]/g, "").slice(0, 15);
+// });
+
+// document.getElementById("no_rek").addEventListener("input", function (e) {
+//     this.value = this.value.replace(/[^0-9]/g, "").slice(0, 50);
+// });
+
+// document.getElementById("nip").addEventListener("input", function (e) {
+//     this.value = this.value.replace(/[^0-9]/g, "").slice(0, 50);
+// });
+
+// fungsi untuk tanda tangan
+document.addEventListener("DOMContentLoaded", function() {
+    var canvas = document.getElementById("signature-pad");
+    var context = canvas.getContext("2d");
+
+    var drawing = false;
+    var lastPos = null;
+
+    context.lineWidth = 5;  // Ubah angka ini untuk menyesuaikan ketebalan
+    context.lineCap = "round"; // Membuat ujung garis lebih halus
+    context.strokeStyle = "#000";
+
+    function getMousePos(canvas, evt) {
+        var rect = canvas.getBoundingClientRect();
+        return {
+            x: evt.clientX - rect.left,
+            y: evt.clientY - rect.top,
+        };
+    }
+
+    function drawLine(context, x1, y1, x2, y2) {
+        context.beginPath();
+        context.moveTo(x1, y1);
+        context.lineTo(x2, y2);
+        context.stroke();
+    }
+
+    function mouseDownHandler(e) {
+        drawing = true;
+        lastPos = getMousePos(canvas, e);
+    }
+
+    function mouseMoveHandler(e) {
+        if (drawing) {
+            var mousePos = getMousePos(canvas, e);
+            drawLine(context, lastPos.x, lastPos.y, mousePos.x, mousePos.y);
+            lastPos = mousePos;
+        }
+    }
+
+    function endDrawing() {
+        drawing = false;
+    }
+
+    canvas.addEventListener("mousedown", mouseDownHandler);
+    canvas.addEventListener("mousemove", mouseMoveHandler);
+    canvas.addEventListener("mouseup", endDrawing);
+    canvas.addEventListener("mouseleave", endDrawing);
+
+    canvas.addEventListener(
+        "touchstart",
+        function(e) {
+            mouseDownHandler(e.touches[0]);
+        },
+        false
+    );
+
+    canvas.addEventListener(
+        "touchmove",
+        function(e) {
+            mouseMoveHandler(e.touches[0]);
+            e.preventDefault();
+        },
+        false
+    );
+
+    canvas.addEventListener("touchend", endDrawing, false);
+
+    document
+        .getElementById("reset-canvas")
+        .addEventListener("click", function() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+        });
 });
 
-document.getElementById("no_rek").addEventListener("input", function (e) {
-    this.value = this.value.replace(/[^0-9]/g, "").slice(0, 50);
-});
+// fungsi untuk mendapatkan tanda tangan
+function getSignatureData() {
+    var canvas = document.getElementById("signature-pad");
+    return canvas.toDataURL("image/png");
+}
 
-document.getElementById("nip").addEventListener("input", function (e) {
-    this.value = this.value.replace(/[^0-9]/g, "").slice(0, 50);
-});
+$(document).on("click", ".registrasi", function(){
+    let id = $(this).data('id');
+    $("#id_ttd").val(id);
+
+    $("#ttd").modal('show');
+})
+
+$("#simpan-dokumen").on("click", function(){
+    var signatureData = getSignatureData();
+
+    let formData = new FormData();
+    let token = $('meta[name="csrf-token"]').attr("content");
+
+    formData.append("_token", token);
+    formData.append("signature", signatureData);
+    formData.append("id", $("#id_ttd").val());
+    formData.append("foto", $("#foto")[0].files[0]);
+    formData.append("date", $("#date").val());
+    formData.append("time", $("#time").val());
+
+    $.ajax({
+        url: "/data-registrasi/store",
+        method: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            if (response.status) {
+                Swal.fire({
+                    title: "Berhasil",
+                    text: "Simpan Data Berhasil",
+                    icon: "success",
+                });
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            } else {
+                Swal.fire({
+                    title: "Gagal",
+                    text: "Simpan Data Gagal",
+                    icon: "error",
+                });
+            }
+        },
+        error: function(response) {
+            Swal.fire({
+                title: "Gagal",
+                text: "Simpan Data Gagal",
+                icon: "error",
+            });
+        },
+    });
+})

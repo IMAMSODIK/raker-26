@@ -7,6 +7,7 @@ use App\Models\Kamar;
 use App\Models\Peserta;
 use App\Models\UnitKerja;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -220,6 +221,90 @@ class RegistrasiController extends Controller
         return response()->json([
             'status' => 1,
             'kamar' => $kamar,
+            'data' => $data
+        ]);
+    }
+
+    public function store(Request $r){
+        $data = Peserta::where("id", $r->id)->first();
+
+        if ($r->hasFile('foto')) {
+            $file = $r->file('foto');
+            $fileMimeType = $file->getClientMimeType();
+            if ($fileMimeType != 'image/png' && $fileMimeType != 'image/jpg' && $fileMimeType != 'image/jpeg') {
+                return response()->json([
+                    'status' => false,
+                    'message' => "Jenis File Tidak Didukung"
+                ]);
+            }
+            $namaFile = bin2hex(random_bytes(10)) . '.' . $file->getClientOriginalExtension();
+            $file->storePubliclyAs('foto', $namaFile, 'public');
+            $data->foto = $namaFile;
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => "Silahkan upload foto terlebih dahulu"
+            ]);
+        }
+
+        if ($r->signature) {
+            $signature = $r->signature;
+            $decodedData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signature));
+            $filename = 'signature-' . uniqid() . '.png';
+
+            $folderPath = 'ttd';
+            if (!Storage::disk('public')->exists($folderPath)) {
+                Storage::disk('public')->makeDirectory($folderPath);
+            }
+
+            Storage::disk('public')->put($folderPath . '/' . $filename, $decodedData);
+            $data->ttd = $filename;
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => "Silahkan masukkan tanda tangan terlebih dahulu"
+            ]);
+        }
+
+        $data->registrasi = 1;
+        $waktu = Carbon::parse($data["date"] . ' ' . $data["time"])
+            ->setTimezone('Asia/Jakarta')
+            ->format('Y-m-d H:i:s');
+        $data->tgl_registrasi = $waktu;
+        $data->save();
+
+        return response()->json([
+            'status' => 1,
+            'data' => $data
+        ]);   
+    }
+
+    public function storeAbsensi(Request $r){
+        $data = Peserta::where("id", $r->id)->first();
+        if($data->registrasi != 1){
+            return response()->json([
+                'status' => 0,
+                'message' => "Peserta Belum Registrasi"
+            ]);
+        }
+        $waktu = Carbon::parse($data["date"] . ' ' . $data["time"])
+            ->setTimezone('Asia/Jakarta')
+            ->format('Y-m-d H:i:s');
+
+        if($r->idx == "1"){
+            $data->absensi1 = 1;  
+            $data->tgl_absensi1 = $waktu;
+        }elseif($r->idx == "2"){
+            $data->absensi2 = 1;  
+            $data->tgl_absensi2 = $waktu;
+        }elseif($r->idx == "3"){
+            $data->absensi3 = 1;  
+            $data->tgl_absensi3 = $waktu;
+        }
+        $data->save();
+
+        return response()->json([
+            'status' => 1,
             'data' => $data
         ]);
     }

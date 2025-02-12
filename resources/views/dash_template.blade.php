@@ -5,6 +5,21 @@
 
     @include('layouts.head')
 
+    <style>
+        .form-wizard-step {
+            display: none;
+        }
+
+        .form-wizard-step.active-step {
+            display: block;
+        }
+
+        .border-canvas {
+            border: 2px solid #000;
+            border-radius: 5px;
+        }
+    </style>
+
 </head>
 
 
