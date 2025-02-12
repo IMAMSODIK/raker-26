@@ -46,7 +46,9 @@
                                 <tr>
                                     <td style="font-size: 16px" class="text-center">{{$index++}}</td>
                                     <td style="font-size: 16px" class="text-center">{{$materi->deskripsi}}</td>
-                                    <td style="font-size: 16px" class="text-center"><button class="btn btn-success" type="button" data-file="{{$materi->file}}"><i class="fa fa-file" aria-hidden="true"></i></button></td>
+                                    <td style="font-size: 16px" class="text-center">
+                                        <a class="btn btn-success" type="button" href="{{asset('storage/materi' . '/' . $materi->file)}}" data-file="{{$materi->file}}" download=""><i class="fa fa-file" aria-hidden="true"></i></a>
+                                    </td>
                                     <td style="font-size: 16px" class="text-center">
                                         <button class="btn btn-primary edit" data-id="{{$materi->id}}">Edit</button>
                                         <button class="btn btn-danger delete" data-id="{{$materi->id}}">Hapus</button>
@@ -114,13 +116,13 @@
                 <div class="modal-body dark-modal">
                     <div class="card">
                         <form class="form theme-form dark-inputs">
-                            <input type="hidden" name="" id="id">
+                            <input type="hidden" name="" id="id_dokumen">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
                                         <div class="mb-3">
-                                            <label class="form-label" for="deskripsi">Deskripsi Materi</label>
-                                            <textarea class="form-control input-air-primary" id="deskripsi"
+                                            <label class="form-label" for="edit_deskripsi">Deskripsi Materi</label>
+                                            <textarea class="form-control input-air-primary" id="edit_deskripsi"
                                             placeholder="Deskripsi Materi" required cols="10" rows="5"></textarea>
                                         </div>
                                     </div>
@@ -128,8 +130,8 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="mb-3">
-                                            <label class="form-label" for="file">File Materi <small class="text-danger">.pdf, .pptx</small></label>
-                                            <input type="file" class="form-control input-air-primary" id="file"
+                                            <label class="form-label" for="edit_file">File Materi <small class="text-danger">.pdf, .pptx</small></label>
+                                            <input type="file" class="form-control input-air-primary" id="edit_file"
                                                 placeholder="File Materi" required accept=".pdf,.pptx,.ppt">
                                         </div>
                                     </div>

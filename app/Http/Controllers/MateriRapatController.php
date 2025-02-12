@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MateriRapat;
 use App\Http\Requests\StoreMateriRapatRequest;
 use App\Http\Requests\UpdateMateriRapatRequest;
+use App\Models\Dokumentasi;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -76,108 +77,125 @@ class MateriRapatController extends Controller
         }
     }
 
-    // public function edit(Request $r){
-    //     $validatedData = $r->validate([
-    //         'id' => 'required|numeric',
-    //     ], [
-    //         'id.required' => 'Data belum dipilih.',
-    //         'id.numeric' => 'Data belum dipilih.',
-    //     ]);
+    public function edit(Request $r){
+        $validatedData = $r->validate([
+            'id' => 'required|numeric',
+        ], [
+            'id.required' => 'Data belum dipilih.',
+            'id.numeric' => 'Data belum dipilih.',
+        ]);
 
-    //     try{
-    //         $unitKerja = Jabatan::select('id', 'kode', 'nama')
-    //                         ->where('id', $r->id)
-    //                         ->first();
+        try{
+            $dokumen = MateriRapat::select('id', 'deskripsi')
+                            ->where('id', $r->id)
+                            ->first();
 
-    //         if($unitKerja){
-    //             return response()->json([
-    //                 'status' => true,
-    //                 'data' => $unitKerja
-    //             ]);    
-    //         }
+            if($dokumen){
+                return response()->json([
+                    'status' => true,
+                    'data' => $dokumen
+                ]);    
+            }
 
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => "Data tidak ditemukan"
-    //         ]);
-    //     }catch(Exception $e){
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => $e->getMessage()
-    //         ]);
-    //     }
-    // }
+            return response()->json([
+                'status' => false,
+                'message' => "Data tidak ditemukan"
+            ]);
+        }catch(Exception $e){
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
 
-    // public function update(Request $r){
-    //     $validatedData = $r->validate([
-    //         'kode' => 'required|string',
-    //         'nama' => 'required|string',
-    //         'id' => 'required|numeric',
-    //     ], [
-    //         'kode.required' => 'Kode Unit Kerja wajib diisi.',
-    //         'kode.string' => 'Kode Unit Kerja harus berupa text.',
-    //         'nama.required' => 'Nama Unit Kerja wajib diisi.',
-    //         'nama.string' => 'Nama Unit Kerja harus berupa text.',
-    //         'id.required' => 'Data belum dipilih.',
-    //         'id.numeric' => 'Data belum dipilih.',
-    //     ]);
+    public function update(Request $r){
+        $validatedData = $r->validate([
+            'deskripsi' => 'required|string',
+            'id' => 'required|numeric',
+        ], [
+            'deskripsi.required' => 'Deskripsi Unit Kerja wajib diisi.',
+            'deskripsi.string' => 'Deskripsi Unit Kerja harus berupa text.',
+            'id.required' => 'Data belum dipilih.',
+            'id.numeric' => 'Data belum dipilih.',
+        ]);
 
-    //     try{
-    //         $unitKerja = Jabatan::where('id', $r->id)->first();
+        try{
+            $file = $r->file('file');
+            $fileMimeType = $file->getClientMimeType();
 
-    //         if($unitKerja){
-    //             $unitKerja->kode = $r->kode;
-    //             $unitKerja->nama = $r->nama;
-    //             $unitKerja->save();
+            if (!in_array($fileMimeType, [
+                'application/pdf',
+                'application/vnd.ms-powerpoint',
+                'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+            ])) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Jenis File Tidak Didukung',
+                ]);
+            }
 
-    //             return response()->json([
-    //                 'status' => true,
-    //                 'data' => $unitKerja
-    //             ]);    
-    //         }
+            $materi = bin2hex(random_bytes(10)) . '.' . $file->getClientOriginalExtension();
+            try {
+                $file->storePubliclyAs('materi', $materi, 'public');
+            } catch (\Exception $e) {
+                return null;
+            }
 
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => "Terjadi kesalahan saat menyimpan data"
-    //         ]);
-    //     }catch(Exception $e){
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => $e->getMessage()
-    //         ]);
-    //     }
-    // }
+            $dokumen = MateriRapat::where('id', $r->id)->first();
 
-    // public function delete(Request $r){
-    //     $validatedData = $r->validate([
-    //         'id' => 'required|numeric',
-    //     ], [
-    //         'id.required' => 'Data belum dipilih.',
-    //         'id.numeric' => 'Data belum dipilih.',
-    //     ]);
+            if($dokumen){
+                $dokumen->deskripsi = $r->deskripsi;
+                $dokumen->file = $materi;
+                $dokumen->save();
 
-    //     try{
-    //         $unitKerja = Jabatan::select('id')
-    //                         ->where('id', $r->id)
-    //                         ->first();
+                return response()->json([
+                    'status' => true
+                ]);    
+            }
 
-    //         if($unitKerja){
-    //             $unitKerja->delete();
+            return response()->json([
+                'status' => false,
+                'message' => "Terjadi kesalahan saat menyimpan data"
+            ]);
+        }catch(Exception $e){
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function delete(Request $r){
+        $validatedData = $r->validate([
+            'id' => 'required|numeric',
+        ], [
+            'id.required' => 'Data belum dipilih.',
+            'id.numeric' => 'Data belum dipilih.',
+        ]);
+
+        try{
+            $dokumen = MateriRapat::select('id')
+                            ->where('id', $r->id)
+                            ->first();
+
+            if($dokumen){
+                $dokumen->delete();
                 
-    //             return response()->json([
-    //                 'status' => true,
-    //             ]);    
-    //         }
+                return response()->json([
+                    'status' => true,
+                ]);    
+            }
 
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => "Data tidak ditemukan"
-    //         ]);
-    //     }catch(Exception $e){
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => $e->getMessage()
-    //         ]);
-    //     }
-    // }
+            return response()->json([
+                'status' => false,
+                'message' => "Data tidak ditemukan"
+            ]);
+        }catch(Exception $e){
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
 }

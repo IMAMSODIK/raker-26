@@ -61,16 +61,15 @@ $(document).on("click", ".edit", function () {
     let id = $(this).data('id');
 
     $.ajax({
-        url: '/jabatan/edit',
+        url: '/materi-raker/edit',
         method: 'GET',
         data: {
             'id': id
         },
         success: function (response) {
             if (response.status) {
-                $("#id").val(response.data.id);
-                $("#edit_kode").val(response.data.kode);
-                $("#edit_nama").val(response.data.nama);
+                $("#id_dokumen").val(response.data.id);
+                $("#edit_deskripsi").val(response.data.deskripsi);
 
                 $("#edit-data-modal").modal("show");
             } else {
@@ -78,7 +77,7 @@ $(document).on("click", ".edit", function () {
                     title: "Gagal",
                     text: "Terjadi Kesalah Saat Mengambil Data",
                     icon: "error"
-                  });
+                });
             }
         },
         error: function (xhr) {
@@ -86,7 +85,7 @@ $(document).on("click", ".edit", function () {
                 title: "Gagal",
                 text: "Terjadi Kesalah Saat Mengambil Data",
                 icon: "error"
-              });
+            });
         }
     })
 })
@@ -95,13 +94,14 @@ $("#update").on("click", function () {
     $("#edit-data-modal").modal("hide");
     let formData = new FormData();
 
-    formData.append("_token", $("meta[name='csrf-token']").attr('content'));
-    formData.append("id", $("#id").val());
-    formData.append("kode", $("#edit_kode").val());
-    formData.append("nama", $("#edit_nama").val());
+    let file = $('#edit_file')[0].files[0];
+    formData.append('deskripsi', $("#edit_deskripsi").val());
+    formData.append('file', file);
+    formData.append('id', $("#id_dokumen").val());
+    formData.append('_token', $("meta[name='csrf-token']").attr('content'));
 
     $.ajax({
-        url: '/jabatan/update',
+        url: '/materi-raker/update',
         method: 'POST',
         processData: false,
         contentType: false,
@@ -110,7 +110,7 @@ $("#update").on("click", function () {
             if (response.status) {
                 Swal.fire({
                     title: "Berhasil",
-                    text: "Simpan Data Berhasil",
+                    text: "Update Data Berhasil",
                     icon: "success"
                   });
                 setTimeout(() => {
@@ -119,7 +119,7 @@ $("#update").on("click", function () {
             } else {
                 Swal.fire({
                     title: "Gagal",
-                    text: "Simpan Data Gagal",
+                    text: "Update Data Gagal",
                     icon: "error"
                 });
             }
@@ -127,7 +127,7 @@ $("#update").on("click", function () {
         error: function (xhr) {
             Swal.fire({
                 title: "Gagal",
-                text: "Simpan Data Gagal",
+                text: "Update Data Gagal",
                 icon: "error"
             });
         }
@@ -137,7 +137,7 @@ $("#update").on("click", function () {
 
 $(document).on("click", ".delete", function () {
     $.ajax({
-        url: '/jabatan/delete',
+        url: '/materi-raker/delete',
         method: 'POST',
         data: {
             '_token': $("meta[name='csrf-token']").attr("content"),
@@ -147,7 +147,7 @@ $(document).on("click", ".delete", function () {
             if (response.status) {
                 Swal.fire({
                     title: "Berhasil",
-                    text: "Simpan Data Berhasil",
+                    text: "Hapus Data Berhasil",
                     icon: "success"
                   });
                 setTimeout(() => {
@@ -156,7 +156,7 @@ $(document).on("click", ".delete", function () {
             } else {
                 Swal.fire({
                     title: "Gagal",
-                    text: "Simpan Data Gagal",
+                    text: "Hapus Data Gagal",
                     icon: "error"
                 });
             }
