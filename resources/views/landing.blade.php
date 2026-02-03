@@ -90,20 +90,19 @@
 
             <div class="container">
                 <div class="row gy-4">
-                    <div class="col-lg-4 order-lg-last hero-img" data-aos="zoom-out">
-                        {{-- <img src="{{ asset('own_assets/images/banner.jpeg') }}" alt="Phone 1" class="phone-1"> --}}
+                    <div class="col-lg-6 order-lg-last hero-img" data-aos="zoom-out">
+                        <img src="{{ asset('own_assets/images/banner.jpeg') }}" alt="Phone 1" class="phone-1">
                     </div>
-                    <div class="col-lg-8 d-flex flex-column justify-content-center align-items text-center text-md-start"
+                    <div class="col-lg-6 d-flex flex-column justify-content-center align-items text-center text-md-start"
                         data-aos="fade-up">
-                        <h2>PENGUATAN TATA KELOLA MENUJU INTERNASIONALISASI UIN SUMATERA UTARA MEDAN</h2>
-                        <p>HOTEL NIAGARA PARAPAT, 02-04 FEBRUARI 2025</p>
+                        <h2>Rapat Kerja Pimpinan UINSU Medan</h2>
+                        <h3>Transformasi BLU UIN Sumatera Utara Medan Menuju Reputasi Dunia</h3>
+                        <p>Mariana Resort & Convention, 09-12 FEBRUARI 2026</p>
                         <div class="d-flex mt-4 justify-content-center justify-content-md-start">
                             <a href="/registrasi" class="download-btn">
-                                {{-- <i class="bi bi-google-play"></i> --}}
                                 <span>Registrasi</span>
                             </a>
                             <a href="/absensi" class="download-btn">
-                                {{-- <i class="bi bi-apple"></i> --}}
                                 <span>Absensi</span>
                             </a>
                         </div>
@@ -117,7 +116,7 @@
         <section id="faq" class="faq section">
             <div class="container section-title" data-aos="fade-up">
                 <h2>Daftar Peserta Rapat</h2>
-                <p>PENGUATAN TATA KELOLA MENUJU INTERNASIONALISASI UIN SUMATERA UTARA</p>
+                <p>Transformasi BLU UIN Sumatera Utara Medan Menuju Reputasi Dunia</p>
             </div>
             <div class="container">
                 <div class="row justify-content-center">
@@ -182,7 +181,7 @@
         <section id="faq" class="faq section">
             <div class="container section-title" data-aos="fade-up">
                 <h2>Daftar Registrasi Peserta Rapat</h2>
-                <p>PENGUATAN TATA KELOLA MENUJU INTERNASIONALISASI UIN SUMATERA UTARA</p>
+                <p>Transformasi BLU UIN Sumatera Utara Medan Menuju Reputasi Dunia</p>
             </div>
             <div class="container">
                 <div class="row justify-content-center">
@@ -256,7 +255,7 @@
         <section id="faq" class="faq section">
             <div class="container section-title" data-aos="fade-up">
                 <h2>Daftar Absensi Peserta Rapat</h2>
-                <p>PENGUATAN TATA KELOLA MENUJU INTERNASIONALISASI UIN SUMATERA UTARA</p>
+                <p>Transformasi BLU UIN Sumatera Utara Medan Menuju Reputasi Dunia</p>
             </div>
             <div class="container">
                 <div class="row justify-content-center">

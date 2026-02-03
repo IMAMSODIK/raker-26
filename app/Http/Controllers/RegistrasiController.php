@@ -44,7 +44,7 @@ class RegistrasiController extends Controller
     public function indexRegistrasiNarasumber(){
         $data = [
             'pageTitle' => "Peserta Teregistrasi",
-            'pesertas' => Peserta::with(['jabatan', 'unitKerja'])->where("role", 'NARSUMBER')->get()
+            'pesertas' => Peserta::with(['jabatan', 'unitKerja'])->where("role", 'NARASUMBER')->where('registrasi', 1)->get()
         ];
         return view('peserta.narasumber_teregistrasi', $data);
     }
@@ -52,7 +52,7 @@ class RegistrasiController extends Controller
     public function indexAbsensiNarasumber(){
         $data = [
             'pageTitle' => "Data Absensi",
-            'pesertas' => Peserta::with(['jabatan', 'unitKerja'])->where("role", 'NARSUMBER')->get()
+            'pesertas' => Peserta::with(['jabatan', 'unitKerja'])->where("role", 'NARASUMBER')->get()
         ];
         return view('peserta.narasumber_absensi', $data);
     }

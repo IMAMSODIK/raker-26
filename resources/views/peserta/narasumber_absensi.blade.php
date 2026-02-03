@@ -30,6 +30,7 @@
                                 <th class="text-center">Golongan</th>
                                 <th class="text-center">Status Absensi 1</th>
                                 <th class="text-center">Status Absensi 2</th>
+                                <th class="text-center">Status Absensi 3</th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -43,6 +44,7 @@
                                 <th class="text-center">Golongan</th>
                                 <th class="text-center">Status Absensi 1</th>
                                 <th class="text-center">Status Absensi 2</th>
+                                <th class="text-center">Status Absensi 3</th>
                             </tr>
                         </tfoot>
                         <tbody>
@@ -51,25 +53,35 @@
                             @endphp
                             @foreach ($pesertas as $peserta)
                                 <tr>
-                                    <td style="font-size: 16px" class="text-center">{{$index++}}</td>
-                                    <td style="font-size: 16px" class="">{{$peserta->nama}} <br><small class="{{$peserta->nip ? '' : 'text-danger'}}">({{$peserta->nip ?? "Belum Mendaftar"}})</small></td>
-                                    <td style="font-size: 16px"><span class="badge badge-pill badge-{{$peserta->role == 'PANITIA' ? 'primary' : 'success'}}">{{$peserta->role}}</span></td>
-                                    <td style="font-size: 16px">{{$peserta->instansi}}</td>
-                                    <td style="font-size: 16px">{{$peserta->unitKerja->nama ?? ""}}</td>
-                                    <td style="font-size: 16px">{{$peserta->jabatan->nama ?? ""}}</td>
-                                    <td style="font-size: 16px" class="text-center">{{$peserta->golongan}}</td>
-                                    <td style="font-size: 16px" class="text-center">
+                                    <td style="font-size: 16px" class="text-center align-middle">{{$index++}}</td>
+                                    <td style="font-size: 16px" class="align-middle">{{$peserta->nama}} <br><small class="{{$peserta->nip ? '' : 'text-danger'}}">({{$peserta->nip ?? "Belum Mendaftar"}})</small></td>
+                                    <td style="font-size: 16px" class="align-middle"><span class="badge badge-pill badge-{{$peserta->role == 'PANITIA' ? 'primary' : 'success'}}">{{$peserta->role}}</span></td>
+                                    <td style="font-size: 16px" class="align-middle">{{$peserta->instansi}}</td>
+                                    <td style="font-size: 16px" class="align-middle">{{$peserta->unitKerja->nama ?? ""}}</td>
+                                    <td style="font-size: 16px" class="align-middle">{{$peserta->jabatan->nama ?? ""}}</td>
+                                    <td style="font-size: 16px" class="text-center align-middle">{{$peserta->golongan}}</td>
+                                    <td style="font-size: 16px" class="text-center align-middle">
                                         @if ($peserta->absensi1 == 1)
                                             <span class="badge badge-pill badge-success">Sudah Absensi</span>
                                         @else
-                                            <span class="badge badge-pill badge-danger">Belum Absensi</span>    
+                                            <span class="badge badge-pill badge-danger">Belum Absensi</span><br>
+                                            <button class="btn btn-primary absensi" data-absensi="1" data-id="{{$peserta->id}}">Presensi</button>
                                         @endif
                                     </td>
-                                    <td style="font-size: 16px" class="text-center">
+                                    <td style="font-size: 16px" class="text-center align-middle">
                                         @if ($peserta->absensi2 == 1)
                                             <span class="badge badge-pill badge-success">Sudah Absensi</span>
                                         @else
                                             <span class="badge badge-pill badge-danger">Belum Absensi</span>    
+                                            <button class="btn btn-primary absensi" data-absensi="2" data-id="{{$peserta->id}}">Presensi</button>
+                                        @endif
+                                    </td>
+                                    <td style="font-size: 16px" class="text-center align-middle">
+                                        @if ($peserta->absensi3 == 1)
+                                            <span class="badge badge-pill badge-success">Sudah Absensi</span>
+                                        @else
+                                            <span class="badge badge-pill badge-danger">Belum Absensi</span> 
+                                            <button class="btn btn-primary absensi" data-absensi="3" data-id="{{$peserta->id}}">Presensi</button>   
                                         @endif
                                     </td>
                                 </tr>
@@ -166,6 +178,40 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="absensi-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Absensi Hari ke-<span id="hari-ke"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="id_absensi">
+                    <input type="hidden" id="idx_absensi">
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label" for="date">Tanggal</label>
+                                <input type="date" class="form-control" id="date" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="time">Waktu</label>
+                                <input type="time" class="form-control" id="time" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="simpan-absensi">Simpan</button>
                 </div>
             </div>
         </div>

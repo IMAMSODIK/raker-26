@@ -718,12 +718,12 @@ section,
 }
 
 .hero .hero-img .phone-1 {
-  margin-top: 20px;
+  margin-top: 120px;
   position: absolute;
   left: 0;
   box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.5);
   border-radius: 30px;
-  width: 250px;
+  width: 100%;
 }
 
 .hero .hero-img .phone-2 {

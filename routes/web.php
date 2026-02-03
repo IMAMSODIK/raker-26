@@ -107,6 +107,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/data-absensi', [RegistrasiController::class, 'indexAbsensi']);
     Route::post('/data-absensi/store', [RegistrasiController::class, 'storeAbsensi']);
 
+    Route::get('/daftar-registrasi-narasumber', [PesertaController::class, 'daftarNarasumber']);
     Route::get('/data-registrasi-narasumber', [RegistrasiController::class, 'indexRegistrasiNarasumber']);
     Route::get('/data-absensi-narasumber', [RegistrasiController::class, 'indexAbsensiNarasumber']);
 

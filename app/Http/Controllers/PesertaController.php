@@ -29,6 +29,21 @@ class PesertaController extends Controller
         return view('peserta.index', $data);
     }
 
+    public function daftarNarasumber()
+    {
+        $data = [
+            'pageTitle' => "Narasumber",
+            'pesertas' => Peserta::with(['jabatan', 'unitKerja', 'kamar'])->where('role', 'NARASUMBER')->get(),
+            'banks' => DB::table('banks')
+                ->select('nama_bank')
+                ->get(),
+            'jabatans' => Jabatan::all(),
+            'unit_kerjas' => UnitKerja::all(),
+            'kamars' => Kamar::all(),
+        ];
+        return view('peserta.index_narasumber', $data);
+    }
+
     public function store(Request $r)
     {
         try {
@@ -43,7 +58,7 @@ class PesertaController extends Controller
                 'golongan' => $r->golongan,
                 'jenis_kelamin' => $r->jenis_kelamin,
                 'no_wa' => $r->no_wa,
-                'ukuran_baju' => $r->ukuran_baju,
+                'ukuran_baju' => '0',
                 'no_rek' => $r->no_rek,
                 'nama_bank' => $r->bank,
             ]);

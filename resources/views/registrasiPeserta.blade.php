@@ -72,7 +72,7 @@
                         <div class="hero-bg hero-bg-scroll"></div>
                         <div class="hero-content mx-auto w-100 h-100">
                             <div class="container d-flex flex-column h-100">
-                                <div class="row g-0">
+                                {{-- <div class="row g-0">
                                     <div class="col-11 col-lg-9 mx-auto">
                                         <div class="logo mt-5">
                                             <a class="d-flex" href="/pendaftaran" title="Logo RAKER"><img
@@ -80,12 +80,14 @@
                                                     alt="Logo RAKER" /></a>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="row g-0">
                                     <div class="col-12 col-lg-12 mx-auto">
                                         <img src="{{ asset('own_assets/images/banner.jpeg') }}" style="width: 100%">
-                                        <h1 class="text-9 text-dark fw-300 mb-5 text-center">REGISTRASI PESERTA
-                                        </h1>
+                                        <h1 class="text-9 text-dark fw-300 mb-5 text-center">Registrasi Peserta</h1>
+                                        <h1 class="text-9 text-dark fw-300 mb-5 text-center">Transformasi BLU UIN Sumatera Utara Medan Menuju Reputasi Dunia</h1>
+                                        <h2 class="text-center">Mariana Resort & Convention</h2>
+                                        <h2 class="text-center">09-12 FEBRUARI 2026</h2>
                                     </div>
                                 </div>
                             </div>
@@ -114,6 +116,9 @@
                                 @endif
                                 <form class="form-dark" enctype="multipart/form-data">
                                     {{ csrf_field() }}
+                                    <div class="row mb-3">
+                                        <img src="{{asset('own_assets/images/header.jpeg')}}" alt="">
+                                    </div>
                                     <div class="row mb-3">
                                         <button class="btn btn-primary shadow-none my-2" id="cari_data"
                                             type="button">Temukan Data Anda</button>
@@ -428,14 +433,10 @@
                 contentType: false,
                 success: function(response) {
                     if (response.status) {
-                        let teman = "";
-                        response.kamar.peserta.forEach(element => {
-                            teman += element.nama + '\n';
-                        });
                         var raw = JSON.stringify({
-                            instance_key: "BEgvA2XxV14a",
+                            instance_key: "w8nPaB3RPMks",
                             jid: response.data.no_wa,
-                            message: `Terima kasih sudah melakukan Registrasi\nNomor Kamar anda ${response.kamar.no_kamar}\nTeman satu kamar \n${teman}\nSelamat mengikuti rangkaian kegiatan`
+                            message: `Terima kasih sudah melakukan Registrasi\n`
                         });
                         var requestOptions = {
                             method: 'POST',

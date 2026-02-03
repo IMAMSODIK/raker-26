@@ -15,7 +15,7 @@
             <div class="card-header">
                 <h6 class="m-0 font-weight-bold text-primary">Peserta</h6>
             </div>
-            
+
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -29,7 +29,9 @@
                                 <th class="text-center">Jabatan</th>
                                 <th class="text-center">Golongan</th>
                                 <th class="text-center">Status</th>
+                                <th class="text-center">Foto</th>
                                 <th class="text-center">Tanda Tangan</th>
+                                <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -42,7 +44,9 @@
                                 <th class="text-center">Jabatan</th>
                                 <th class="text-center">Golongan</th>
                                 <th class="text-center">Status</th>
+                                <th class="text-center">Foto</th>
                                 <th class="text-center">Tanda Tangan</th>
+                                <th class="text-center">Aksi</th>
                             </tr>
                         </tfoot>
                         <tbody>
@@ -51,22 +55,36 @@
                             @endphp
                             @foreach ($pesertas as $peserta)
                                 <tr>
-                                    <td style="font-size: 16px" class="text-center">{{$index++}}</td>
-                                    <td style="font-size: 16px" class="">{{$peserta->nama}} <br><small class="{{$peserta->nip ? '' : 'text-danger'}}">({{$peserta->nip ?? "Belum Mendaftar"}})</small></td>
-                                    <td style="font-size: 16px"><span class="badge badge-pill badge-{{$peserta->role == 'PANITIA' ? 'primary' : 'success'}}">{{$peserta->role}}</span></td>
-                                    <td style="font-size: 16px">{{$peserta->instansi}}</td>
-                                    <td style="font-size: 16px">{{$peserta->unitKerja->nama ?? ""}}</td>
-                                    <td style="font-size: 16px">{{$peserta->jabatan->nama ?? ""}}</td>
-                                    <td style="font-size: 16px" class="text-center">{{$peserta->golongan}}</td>
+                                    <td style="font-size: 16px" class="text-center">{{ $index++ }}</td>
+                                    <td style="font-size: 16px" class="">{{ $peserta->nama }} <br><small
+                                            class="{{ $peserta->nip ? '' : 'text-danger' }}">({{ $peserta->nip ?? 'Belum Mendaftar' }})</small>
+                                    </td>
+                                    <td style="font-size: 16px"><span
+                                            class="badge badge-pill badge-{{ $peserta->role == 'PANITIA' ? 'primary' : 'success' }}">{{ $peserta->role }}</span>
+                                    </td>
+                                    <td style="font-size: 16px">{{ $peserta->instansi }}</td>
+                                    <td style="font-size: 16px">{{ $peserta->unitKerja->nama ?? '' }}</td>
+                                    <td style="font-size: 16px">{{ $peserta->jabatan->nama ?? '' }}</td>
+                                    <td style="font-size: 16px" class="text-center">{{ $peserta->golongan }}</td>
                                     <td style="font-size: 16px" class="text-center">
                                         @if ($peserta->registrasi == 1)
                                             <span class="badge badge-pill badge-success">Sudah Registrasi</span>
                                         @else
-                                            <span class="badge badge-pill badge-danger">Belum Registrasi</span>    
+                                            <span class="badge badge-pill badge-danger">Belum Registrasi</span>
                                         @endif
                                     </td>
                                     <td style="font-size: 16px" class="text-center">
-                                        <img src="{{asset('storage/ttd') . '/' . $peserta->ttd}}" alt="" width="100%">
+                                        <img src="{{ asset('storage/foto') . '/' . $peserta->foto }}" alt=""
+                                            width="100%">
+                                    </td>
+                                    <td style="font-size: 16px" class="text-center">
+                                        <img src="{{ asset('storage/ttd') . '/' . $peserta->ttd }}" alt=""
+                                            width="100%">
+                                    </td>
+                                    <td class="text-center">
+                                        <button class="btn btn-primary registrasi"
+                                            data-id="{{ $peserta->id }}"
+                                            {{($peserta->registrasi == 1) ? "disabled" : "" }}>Registrasi</button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -121,8 +139,8 @@
         </div>
     </div> --}}
 
-    <div class="modal fade modal-alert" id="alert" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenter1" aria-hidden="true">
+    <div class="modal fade modal-alert" id="alert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter1"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body">
@@ -162,6 +180,53 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ttd" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Dokumen Pendukung</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="id_ttd">
+                    <div class="mb-3">
+                        <label class="form-label text-light" for="foto">Upload Foto</label>
+                        <input type="file" accept="" class="form-control" name="foto" id="foto" />
+                    </div>
+                    <div class="mb-3">
+                        <div class="border-canvas" style="background-color: white">
+                            <canvas width="460" height="350" id="signature-pad" class="signature-pad"
+                                style="border:1px solid #000;"></canvas>
+                        </div>
+                        <div class="row d-flex justify-content-center mt-3">
+                            <button id="reset-canvas" class="btn btn-danger mr-1" type="button">Hapus
+                                TTD</button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label" for="date">Tanggal</label>
+                                <input type="date" class="form-control" id="date" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="time">Waktu</label>
+                                <input type="time" class="form-control" id="time" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="simpan-dokumen">Simpan</button>
                 </div>
             </div>
         </div>

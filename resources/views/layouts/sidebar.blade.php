@@ -130,6 +130,13 @@
     </div>
 
     <li class="nav-item">
+        <a class="nav-link" href="/daftar-registrasi-narasumber">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Daftar Narasumber</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="/data-registrasi-narasumber">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Registrasi Narasumber</span>
