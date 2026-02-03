@@ -89,7 +89,7 @@
         <section id="hero" class="hero section dark-background">
 
             <div class="container">
-                <div class="row gy-4">
+                <div class="row gy-1">
                     <div class="col-lg-6 order-lg-last hero-img" data-aos="zoom-out">
                         <img src="{{ asset('own_assets/images/banner.jpeg') }}" alt="Phone 1" class="phone-1">
                     </div>
