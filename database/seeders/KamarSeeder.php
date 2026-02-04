@@ -13,12 +13,6 @@ class KamarSeeder extends Seeder
      */
     public function run(): void
     {
-        Kamar::create([
-            'no_kamar' => '1'
-        ]);
-
-        Kamar::create([
-            'no_kamar' => '2'
-        ]);
+        
     }
 }

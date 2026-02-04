@@ -119,10 +119,15 @@
                                         <label class="form-label text-light" for="asal_instansi">Asal Instansi</label>
                                         <input type="text" class="form-control" name="asal_instansi" id="asal_instansi" readonly placeholder="Asal Instansi Peserta/Panitia" value="{{ old('asal_instansi') }}"/>
                                     </div>
+
                                     <div class="mb-3">
                                         <label class="form-label text-light" for="golongan">Golongan</label>
-                                        <input type="text" class="form-control" name="golongan" id="golongan" readonly placeholder="Golongan Peserta/Panitia" value="{{ old('golongan') }}"/>
+                                        <select name="golongan" class="form-control" name="golongan" id="golongan" required>
+                                            <option value="III">III</option>
+                                            <option value="IV">IV</option>
+                                        </select>
                                     </div>
+
                                     <div class="row">
                                         <div class="col-md-4"><hr></div>
                                         <div class="col-md-4 d-flex justify-content-center">Entry Data</div>
@@ -342,7 +347,7 @@
                                         @enderror
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label text-light" for="ukuran_baju">Ukuran Baju</label>
+                                        <label class="form-label text-light" for="ukuran_baju">Ukuran Baju Kaos T-Shirt</label>
                                         <select class="form-control" name="ukuran_baju" id="ukuran_baju" required>
                                             <option value="">Pilih Ukuran</option>
                                             <option value="S" {{ old('ukuran_baju') == 'S' ? 'selected' : '' }}>S</option>
@@ -351,6 +356,7 @@
                                             <option value="XL" {{ old('ukuran_baju') == 'XL' ? 'selected' : '' }}>XL</option>
                                             <option value="XXL" {{ old('ukuran_baju') == 'XXL' ? 'selected' : '' }}>XXL</option>
                                             <option value="XXXL" {{ old('ukuran_baju') == 'XXXL' ? 'selected' : '' }}>XXXL</option>
+                                            <option value="XXXXL" {{ old('ukuran_baju') == 'XXXXL' ? 'selected' : '' }}>XXXXL</option>
                                         </select>
                                         @error('ukuran_baju')
                                             <span class="text-danger">{{ $message }}</span>

@@ -13,14 +13,46 @@ class JabatanSeeder extends Seeder
      */
     public function run(): void
     {
-        Jabatan::create([
-            'kode' => '001',
-            'nama' => 'Jabatan 1'
-        ]);
+        $nama = [
+            "REKTOR",
+            "SENAT",
+            "WAKIL REKTOR I",
+            "WAKIL REKTOR II",
+            "WAKIL REKTOR III",
+            "WAKIL REKTOR IV",
+            "DEKAN",
+            "KEPALA BIRO",
+            "DIREKTUR",
+            "WAKIL DIREKTUR",
+            "WAKIL DEKAN I",
+            "WAKIL DEKAN II",
+            "WAKIL DEKAN III",
+            "KETUA LEMBAGA",
+            "KEPALA PUSAT",
+            "KEPALA UPT",
+            "KEPALA SPI",
+            "KOORDINATOR",
+            "SEKRETARIS",
+            "KEPALA BAGIAN",
+            "KEPALA SUB BAGIAN",
+            "PEJABAT PEMBUAT KOMITMEN",
+            "PEJABAT PENGADAAN",
+            "KETUA TIM",
+            "JABATAN FUNGSIONAL AHLI PERTAMA",
+            "JABATAN FUNGSIONAL AHLI MUDA",
+            "JABATAN FUNGSIONAL MADYA",
+            "DOKTER",
+            "PERAWAT",
+            "STAF PELAKSANA",
+            "DRIVER",
+            "TENAGA TEKNIS"
+        ];
 
-        Jabatan::create([
-            'kode' => '002',
-            'nama' => 'Jabatan 2'
-        ]);
+        for($i = 0; $i < count($nama); $i++){
+            Jabatan::create([
+                'kode' => $i+1,
+                'nama' => $nama[$i]
+            ]);
+        }
     }
 }

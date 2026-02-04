@@ -99,6 +99,7 @@ class RegistrasiController extends Controller
             $validatedData = $r->validate([
                 'nip' => 'required|max:50|unique:pesertas,nip,'.$r->id,
                 'jenis_kelamin' => 'required|max:20',
+                'golongan' => 'required|max:20',
                 'unit_kerja_id' => 'required|string',
                 'jabatan_id' => 'required|string',
                 'no_wa' => 'required|max:15|unique:pesertas,no_wa,'.$r->id,
@@ -107,6 +108,7 @@ class RegistrasiController extends Controller
                 'ukuran_baju' => 'required|max:5',
             ], [
                 'nip.required' => 'NIP Wajib diisi',
+                'golongan.required' => 'Golongan Wajib dipilih',
                 'nip.max' => 'Nomor Handphone tidak boleh lebih dari 50 karakter.',
                 'nip.unique' => 'NIP sudah terdaftar.',
                 'jenis_kelamin.required' => 'Jenis Kelamin Wajib dipilih',
@@ -131,6 +133,7 @@ class RegistrasiController extends Controller
 
             if($peserta){
                 $peserta->nip = $r->nip;
+                $peserta->golongan = $r->golongan;
                 $peserta->unit_kerja_id = $r->unit_kerja_id;
                 $peserta->jabatan_id = $r->jabatan_id;
                 $peserta->jenis_kelamin = $r->jenis_kelamin;
