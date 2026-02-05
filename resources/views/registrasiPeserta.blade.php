@@ -147,7 +147,7 @@
                                         <label class="form-label text-light" for="nip">NIP</label>
                                         <input type="text" class="form-control" name="nip" id="nip"
                                             readonly required placeholder="NIP Peserta/Panitia"
-                                            value="{{ old('nip') }}" maxlength="15" />
+                                            value="{{ old('nip') }}" maxlength="30" />
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label text-light" for="asal_instansi">Asal Instansi</label>
