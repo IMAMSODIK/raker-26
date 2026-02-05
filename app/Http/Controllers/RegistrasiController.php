@@ -131,6 +131,12 @@ class RegistrasiController extends Controller
 
             $peserta = Peserta::where('id', $r->id)->first();
 
+            if($peserta->nip){
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'Anda sudah terdaftar Untuk Perubahan Data Silahkan Hubungi Panitia Terima Kasih');    
+            }
+
             if($peserta){
                 $peserta->nip = $r->nip;
                 $peserta->golongan = $r->golongan;
