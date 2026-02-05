@@ -147,9 +147,9 @@
                                     <label class="form-label text-light" for="role">Jenis Kepesertaan</label>
                                     <select class="form-control" name="role" id="role"
                                         value="{{ old('role') }}">
-                                        <option value="PESERTA">PESERTA</option>
-                                        <option value="PANITIA">PANITIA</option>
-                                        <option value="NARASUMBER">NARASUMBER</option>
+                                        <option value="Peserta">PESERTA</option>
+                                        <option value="Panitia">PANITIA</option>
+                                        <option value="Narasumber">NARASUMBER</option>
                                     </select>
                                 </div>
                                 <div class="">
