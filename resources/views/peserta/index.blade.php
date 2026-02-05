@@ -31,6 +31,7 @@
                                 <th class="text-center">Unit Kerja</th>
                                 <th class="text-center">Jabatan</th>
                                 <th class="text-center">Golongan</th>
+                                <th class="text-center">Ukuran Baju</th>
                                 <th style="width: 20%" class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -43,6 +44,7 @@
                                 <th class="text-center">Unit Kerja</th>
                                 <th class="text-center">Jabatan</th>
                                 <th class="text-center">Golongan</th>
+                                <th class="text-center">Ukuran Baju</th>
                                 <th style="width: 20%" class="text-center">Aksi</th>
                             </tr>
                         </tfoot>
@@ -63,6 +65,7 @@
                                     <td style="font-size: 16px">{{ $peserta->unitKerja->nama ?? '' }}</td>
                                     <td style="font-size: 16px">{{ $peserta->jabatan->nama ?? '' }}</td>
                                     <td style="font-size: 16px" class="text-center">{{ $peserta->golongan }}</td>
+                                    <td style="font-size: 16px" class="text-center">{{ $peserta->ukuran_baju }}</td>
                                     <td style="font-size: 16px" class="text-center">
                                         <button class="btn btn-success"
                                             data-id="{{ $peserta->id }}" id="btn-detail">Detail</button>
