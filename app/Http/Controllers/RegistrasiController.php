@@ -134,7 +134,7 @@ class RegistrasiController extends Controller
             if($peserta->nip){
                 return redirect()->back()
                     ->withInput()
-                    ->with('error', 'Anda sudah terdaftar Untuk Perubahan Data Silahkan Hubungi Panitia Terima Kasih');    
+                    ->with('error', 'Anda sudah terdaftar <br> Untuk Perubahan Data Silahkan Hubungi Panitia Terima Kasih');
             }
 
             if($peserta){
