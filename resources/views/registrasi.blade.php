@@ -202,7 +202,7 @@
                                 <h3 class="text-white mb-4"></h3>
                                 @if (session()->get('error'))
                                     <div class="alert alert-danger" role="alert">
-                                        {{ session()->get('error') }}
+                                        {!! session('error') !!}
                                     </div>
                                 @endif
 
