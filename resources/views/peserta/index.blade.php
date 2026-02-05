@@ -26,6 +26,7 @@
                             <tr>
                                 <th style="width: 5%" class="text-center">No</th>
                                 <th style="width: 20%" class="text-center">Nama Peserta</th>
+                                <th style="width: 20%" class="text-center">No. Handphone</th>
                                 <th class="text-center">Role</th>
                                 <th class="text-center">Instansi</th>
                                 <th class="text-center">Unit Kerja</th>
@@ -39,6 +40,7 @@
                             <tr>
                                 <th style="width: 5%" class="text-center">No</th>
                                 <th style="width: 20%" class="text-center">Nama Peserta</th>
+                                <th style="width: 20%" class="text-center">No. Handphone</th>
                                 <th class="text-center">Role</th>
                                 <th class="text-center">Instansi</th>
                                 <th class="text-center">Unit Kerja</th>
@@ -58,6 +60,7 @@
                                     <td style="font-size: 16px" class="">{{ $peserta->nama }} <br><small
                                             class="{{ $peserta->nip ? '' : 'text-danger' }}">({{ $peserta->nip ?? 'Belum Mendaftar' }})</small>
                                     </td>
+                                    <td style="font-size: 16px" class="text-center">{{ $peserta->no_wa }}</td>
                                     <td style="font-size: 16px"><span
                                             class="badge badge-pill badge-{{ $peserta->role == 'PANITIA' ? 'primary' : 'success' }}">{{ $peserta->role }}</span>
                                     </td>
