@@ -318,9 +318,9 @@
                                 <div class="">
                                     <label class="form-label text-light" for="edit-role">Jenis Kepesertaan</label>
                                     <select class="form-control" id="edit-role" name="edit-role">
-                                        <option value="PESERTA">PESERTA</option>
-                                        <option value="PANITIA">PANITIA</option>
-                                        <option value="NARASUMBER">NARASUMBER</option>
+                                        <option value="Peserta">PESERTA</option>
+                                        <option value="Panitia">PANITIA</option>
+                                        <option value="Narasumber">NARASUMBER</option>
                                     </select>
                                 </div>
 
