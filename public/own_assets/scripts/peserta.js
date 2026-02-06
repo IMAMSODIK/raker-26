@@ -20,15 +20,15 @@ $("#store").click(function (e) {
     formData.append("nama", $("#nama").val());
     formData.append("jenis_kelamin", $("#jenis_kelamin").val());
     formData.append("no_wa", $("#no_wa").val());
-    formData.append("role", $("#role").val());
-    formData.append("asal_instansi", $("#asal_instansi").val());
-    formData.append("unit_kerja", $("#unit_kerja").val());
-    formData.append("jabatan", $("#jabatan").val());
-    formData.append("golongan", $("#golongan").val());
-    formData.append("bank", $("#bank").val());
-    formData.append("no_rek", $("#no_rek").val());
-    formData.append("ukuran_baju", $("#ukuran-baju").val());
-    formData.append("kamar", $("#kamar").val());
+    // formData.append("role", $("#role").val());
+    // formData.append("asal_instansi", $("#asal_instansi").val());
+    // formData.append("unit_kerja", $("#unit_kerja").val());
+    // formData.append("jabatan", $("#jabatan").val());
+    // formData.append("golongan", $("#golongan").val());
+    // formData.append("bank", $("#bank").val());
+    // formData.append("no_rek", $("#no_rek").val());
+    // formData.append("ukuran_baju", $("#ukuran-baju").val());
+    // formData.append("kamar", $("#kamar").val());
     formData.append("_token", $("meta[name='csrf-token']").attr("content"));
 
     $.ajax({

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('instansi');
             $table->foreignId('unit_kerja_id')->nullable();
             $table->foreignId('jabatan_id')->nullable();
-            $table->string('golongan');
+            $table->string('golongan')->nullable();
             $table->string('jenis_kelamin')->nullable();
             $table->string('no_wa')->nullable()->unique();
             $table->string('no_rek')->nullable()->unique();

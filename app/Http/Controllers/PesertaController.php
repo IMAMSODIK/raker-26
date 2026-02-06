@@ -48,19 +48,19 @@ class PesertaController extends Controller
     {
         try {
             $peserta = Peserta::create([
-                'role' => $r->role,
+                'role' => "Peserta",
                 'nama' => $r->nama,
                 'nip' => $r->nip,
-                'instansi' => $r->asal_instansi,
-                'unit_kerja_id' => $r->unit_kerja,
-                'jabatan_id' => $r->jabatan,
-                'kamar_id' => $r->kamar,
-                'golongan' => $r->golongan,
+                'instansi' => "UIN Sumatera Utara Medan",
+                // 'unit_kerja_id' => $r->unit_kerja,
+                // 'jabatan_id' => $r->jabatan,
+                // 'kamar_id' => $r->kamar,
+                // 'golongan' => $r->golongan,
                 'jenis_kelamin' => $r->jenis_kelamin,
                 'no_wa' => $r->no_wa,
-                'ukuran_baju' => '0',
-                'no_rek' => $r->no_rek,
-                'nama_bank' => $r->bank,
+                // 'ukuran_baju' => '0',
+                // 'no_rek' => $r->no_rek,
+                // 'nama_bank' => $r->bank,
             ]);
 
             if ($peserta) {

@@ -27,6 +27,7 @@
                                 <th style="width: 5%" class="text-center">No</th>
                                 <th style="width: 20%" class="text-center">Nama Peserta</th>
                                 <th style="width: 20%" class="text-center">No. Handphone</th>
+                                <th style="width: 20%" class="text-center">Jenis Kelamin</th>
                                 <th class="text-center">Role</th>
                                 <th class="text-center">Instansi</th>
                                 <th class="text-center">Unit Kerja</th>
@@ -41,6 +42,7 @@
                                 <th style="width: 5%" class="text-center">No</th>
                                 <th style="width: 20%" class="text-center">Nama Peserta</th>
                                 <th style="width: 20%" class="text-center">No. Handphone</th>
+                                <th style="width: 20%" class="text-center">Jenis Kelamin</th>
                                 <th class="text-center">Role</th>
                                 <th class="text-center">Instansi</th>
                                 <th class="text-center">Unit Kerja</th>
@@ -61,6 +63,7 @@
                                             class="{{ $peserta->nip ? '' : 'text-danger' }}">({{ $peserta->nip ?? 'Belum Mendaftar' }})</small>
                                     </td>
                                     <td style="font-size: 16px" class="text-center">{{ $peserta->no_wa }}</td>
+                                    <td style="font-size: 16px" class="text-center">{{ $peserta->jenis_kelamin }}</td>
                                     <td style="font-size: 16px"><span
                                             class="badge badge-pill badge-{{ $peserta->role == 'PANITIA' ? 'primary' : 'success' }}">{{ $peserta->role }}</span>
                                     </td>
@@ -134,7 +137,7 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="row mt-4">
+                                {{-- <div class="row mt-4">
                                     <div class="col-md-4">
                                         <hr>
                                     </div>
@@ -203,12 +206,13 @@
                                 <div class="">
                                     <label class="form-label text-light" for="ukuran-baju">Ukuran Baju</label>
                                     <select class="form-control" id="ukuran-baju" name="ukuran-baju">
-                                        <option value="s">s</option>
-                                        <option value="m">m</option>
-                                        <option value="l">l</option>
-                                        <option value="xl">xl</option>
-                                        <option value="xxl">xxl</option>
-                                        <option value="xxxl">xxxl</option>
+                                        <option value="S">S</option>
+                                        <option value="M">M</option>
+                                        <option value="L">L</option>
+                                        <option value="XL">XL</option>
+                                        <option value="XXL">XXL</option>
+                                        <option value="XXXL">XXXL</option>
+                                        <option value="XXXXL">XXXXL</option>
                                     </select>
                                 </div>
 
@@ -240,7 +244,7 @@
                                             <option value="{{ $k->id }}">Nomor: {{ $k->no_kamar }}</option>
                                         @endforeach
                                     </select>
-                                </div>
+                                </div> --}}
                                 <hr>
                             </div>
                             <div class="card-footer text-end">
@@ -280,19 +284,19 @@
                                 </div>
 
                                 <div class="">
-                                    <label class="form-label text-light" for="edit-nama">Nama Lengkap</label>
+                                    <label class="form-label mb-2 text-dark" for="edit-nama">Nama Lengkap</label>
                                     <input type="text" class="form-control" id="edit-nama" name="edit-nama"
                                         placeholder="Nama Lengkap">
                                 </div>
 
                                 <div class="">
-                                    <label class="form-label text-light" for="edit-nip">NIP</label>
+                                    <label class="form-label mb-2 text-dark" for="edit-nip">NIP</label>
                                     <input type="text" class="form-control" id="edit-nip" name="edit-nip"
                                         placeholder="NIP Peserta/Panitia" maxlength="15">
                                 </div>
 
                                 <div class="">
-                                    <label class="form-label text-light" for="edit-jenis-kelamin">Jenis Kelamin</label>
+                                    <label class="form-label mb-2 text-dark" for="edit-jenis-kelamin">Jenis Kelamin</label>
                                     <select class="form-control" id="edit-jenis-kelamin" name="edit-jenis-kelamin">
                                         <option value="Laki-laki">Laki-laki</option>
                                         <option value="Perempuan">Perempuan</option>
@@ -300,7 +304,7 @@
                                 </div>
 
                                 <div class="">
-                                    <label class="form-label text-light" for="edit-no-wa">No. Whatsapp</label>
+                                    <label class="form-label mb-2 text-dark" for="edit-no-wa">No. Whatsapp</label>
                                     <input type="text" class="form-control" id="edit-no-wa" name="edit-no-wa"
                                         placeholder="Masukkan No. Whatsapp" maxlength="15">
                                 </div>
@@ -316,7 +320,7 @@
                                 </div>
 
                                 <div class="">
-                                    <label class="form-label text-light" for="edit-role">Jenis Kepesertaan</label>
+                                    <label class="form-label mb-2 text-dark" for="edit-role">Jenis Kepesertaan</label>
                                     <select class="form-control" id="edit-role" name="edit-role">
                                         <option value="Peserta">PESERTA</option>
                                         <option value="Panitia">PANITIA</option>
@@ -325,13 +329,13 @@
                                 </div>
 
                                 <div class="">
-                                    <label class="form-label text-light" for="edit-instansi">Asal Instansi</label>
+                                    <label class="form-label mb-2 text-dark" for="edit-instansi">Asal Instansi</label>
                                     <input type="text" class="form-control" id="edit-instansi" name="edit-instansi"
                                         placeholder="Asal Instansi">
                                 </div>
 
                                 <div class="">
-                                    <label class="form-label text-light" for="edit-unit-kerja">Unit Kerja</label>
+                                    <label class="form-label mb-2 text-dark" for="edit-unit-kerja">Unit Kerja</label>
                                     <select class="form-control" id="edit-unit-kerja" name="edit-unit-kerja">
                                         @foreach ($unit_kerjas as $unit_kerja)
                                             <option value="{{ $unit_kerja->id }}">{{ $unit_kerja->nama }}</option>
@@ -340,7 +344,7 @@
                                 </div>
 
                                 <div class="">
-                                    <label class="form-label text-light" for="edit-jabatan">Jabatan</label>
+                                    <label class="form-label mb-2 text-dark" for="edit-jabatan">Jabatan</label>
                                     <select class="form-control" id="edit-jabatan" name="edit-jabatan">
                                         @foreach ($jabatans as $jabatan)
                                             <option value="{{ $jabatan->id }}">{{ $jabatan->nama }}</option>
@@ -349,10 +353,8 @@
                                 </div>
 
                                 <div class="">
-                                    <label class="form-label text-light" for="edit-golongan">Golongan</label>
+                                    <label class="form-label mb-2 text-dark" for="edit-golongan">Golongan</label>
                                     <select class="form-control" id="edit-golongan" name="edit-golongan">
-                                        <option value="I">Golongan I</option>
-                                        <option value="II">Golongan II</option>
                                         <option value="III">Golongan III</option>
                                         <option value="IV">Golongan IV</option>
                                     </select>
@@ -369,19 +371,20 @@
                                 </div>
 
                                 <div class="">
-                                    <label class="form-label text-light" for="edit-ukuran-baju">Ukuran Baju</label>
+                                    <label class="form-label mb-2 text-dark" for="edit-ukuran-baju">Ukuran Baju</label>
                                     <select class="form-control" id="edit-ukuran-baju" name="edit-ukuran-baju">
-                                        <option value="s">s</option>
-                                        <option value="m">m</option>
-                                        <option value="l">l</option>
-                                        <option value="xl">xl</option>
-                                        <option value="xxl">xxl</option>
-                                        <option value="xxxl">xxxl</option>
+                                        <option value="S">S</option>
+                                        <option value="M">M</option>
+                                        <option value="L">L</option>
+                                        <option value="XL">XL</option>
+                                        <option value="XXL">XXL</option>
+                                        <option value="XXXL">XXXL</option>
+                                        <option value="XXXXL">XXXXL</option>
                                     </select>
                                 </div>
 
                                 <div class="">
-                                    <label class="form-label text-light" for="edit-bank">Bank</label>
+                                    <label class="form-label mb-2 text-dark" for="edit-bank">Bank</label>
                                     <select class="form-control" id="edit-bank" name="edit-bank">
                                         @foreach ($banks as $bank)
                                             <option value="{{ $bank->nama_bank }}">{{ $bank->nama_bank }}</option>
@@ -390,7 +393,7 @@
                                 </div>
 
                                 <div class="">
-                                    <label class="form-label text-light" for="edit-kamar">Kamar Peserta</label>
+                                    <label class="form-label mb-2 text-dark" for="edit-kamar">Kamar Peserta</label>
                                     <select class="form-control" id="edit-kamar" name="edit-kamar">
                                         @foreach ($kamars as $k)
                                             <option value="{{ $k->id }}">Nomor: {{ $k->no_kamar }}</option>
@@ -399,7 +402,7 @@
                                 </div>
 
                                 <div class="">
-                                    <label class="form-label text-light" for="edit-no-rek">No. Rekening</label>
+                                    <label class="form-label mb-2 text-dark" for="edit-no-rek">No. Rekening</label>
                                     <input type="text" class="form-control" id="edit-no-rek" name="edit-no-rek"
                                         placeholder="Masukkan No. Rekening" maxlength="50">
                                 </div>

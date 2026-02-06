@@ -140,3 +140,8 @@ Route::get('/storage-link', function () {
     $linkFolder = $_SERVER['DOCUMENT_ROOT'] . '/storage';
     symlink($targetStorage, $linkFolder);
 });
+
+
+// jenis kelamin di munculkan
+// tambah data cuman biodata
+// edit peserta tambahkan lable
