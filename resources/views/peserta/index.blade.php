@@ -9,7 +9,8 @@
                 <h1 class="h3 mb-2 text-gray-800">{{ $pageTitle }}</h1>
             </div>
             <div class="col-md-6 d-flex justify-content-end">
-                <button class="btn btn-success" id="tambah-data">Tambah Data</button>
+                <button class="btn btn-success" id="btn-export" style="margin-right: 5px"><i class="fa fa-download"></i> Export CSV</button>
+                <button class="btn btn-info" id="tambah-data">Tambah Data</button>
             </div>
         </div>
 
@@ -21,6 +22,7 @@
 
             <div class="card-body">
                 <div class="table-responsive">
+
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
@@ -73,8 +75,8 @@
                                     <td style="font-size: 16px" class="text-center">{{ $peserta->golongan }}</td>
                                     <td style="font-size: 16px" class="text-center">{{ $peserta->ukuran_baju }}</td>
                                     <td style="font-size: 16px" class="text-center">
-                                        <button class="btn btn-success"
-                                            data-id="{{ $peserta->id }}" id="btn-detail">Detail</button>
+                                        <button class="btn btn-success" data-id="{{ $peserta->id }}"
+                                            id="btn-detail">Detail</button>
                                         <button class="btn btn-primary edit" data-id="{{ $peserta->id }}">Edit</button>
                                         <button class="btn btn-danger delete" data-id="{{ $peserta->id }}">Hapus</button>
                                     </td>
@@ -296,7 +298,8 @@
                                 </div>
 
                                 <div class="">
-                                    <label class="form-label mb-2 text-dark" for="edit-jenis-kelamin">Jenis Kelamin</label>
+                                    <label class="form-label mb-2 text-dark" for="edit-jenis-kelamin">Jenis
+                                        Kelamin</label>
                                     <select class="form-control" id="edit-jenis-kelamin" name="edit-jenis-kelamin">
                                         <option value="Laki-laki">Laki-laki</option>
                                         <option value="Perempuan">Perempuan</option>
@@ -420,6 +423,62 @@
         </div>
     </div>
 
+    <div class="modal fade" id="exportModal" tabindex="-1">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Pilih Kolom Export</h5>
+                    <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <form id="exportForm">
+
+                        <div class="row">
+
+                            @php
+                                $columns = [
+                                    'nama' => 'Nama',
+                                    'nip' => 'NIP',
+                                    'no_wa' => 'No HP',
+                                    'jenis_kelamin' => 'Jenis Kelamin',
+                                    'role' => 'Role',
+                                    'instansi' => 'Instansi',
+                                    'unit_kerja' => 'Unit Kerja',
+                                    'jabatan' => 'Jabatan',
+                                    'golongan' => 'Golongan',
+                                    'ukuran_baju' => 'Ukuran Baju',
+                                ];
+                            @endphp
+
+                            @foreach ($columns as $key => $label)
+                                <div class="col-6 mb-2">
+                                    <label>
+                                        <input type="checkbox" name="columns[]" value="{{ $key }}" checked>
+                                        {{ $label }}
+                                    </label>
+                                </div>
+                            @endforeach
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary btn-close" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-success" id="downloadCSV">
+                        Download CSV
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade bd-example-modal-xl" id="detail-data-modal" tabindex="-1" role="dialog"
         aria-labelledby="myExtraLargeModal" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -480,13 +539,14 @@
 
                                 <div class="">
                                     <label class="form-label text-black" for="detail-role">Jenis Kepesertaan</label>
-                                    <input type="text" class="form-control" id="detail-role" name="detail-role" readonly>
+                                    <input type="text" class="form-control" id="detail-role" name="detail-role"
+                                        readonly>
                                 </div>
 
                                 <div class="">
                                     <label class="form-label text-black" for="detail-instansi">Asal Instansi</label>
-                                    <input type="text" class="form-control" id="detail-instansi" name="detail-instansi"
-                                        placeholder="Asal Instansi" readonly>
+                                    <input type="text" class="form-control" id="detail-instansi"
+                                        name="detail-instansi" placeholder="Asal Instansi" readonly>
                                 </div>
 
                                 <div class="">
@@ -503,8 +563,8 @@
 
                                 <div class="">
                                     <label class="form-label text-black" for="detail-golongan">Golongan</label>
-                                    <input type="text" class="form-control" id="detail-golongan" name="detail-golongan"
-                                        readonly>
+                                    <input type="text" class="form-control" id="detail-golongan"
+                                        name="detail-golongan" readonly>
                                 </div>
 
                                 <div class="row mt-4">
@@ -519,15 +579,18 @@
 
                                 <div class="">
                                     <label class="form-label text-black" for="detail-kamar">Kamar Peserta</label>
-                                    <input type="text" class="form-control" id="detail-kamar" name="detail-kamar" readonly>
+                                    <input type="text" class="form-control" id="detail-kamar" name="detail-kamar"
+                                        readonly>
                                 </div>
                                 <div class="">
                                     <label class="form-label text-black" for="detail-baju">Ukuran Baju</label>
-                                    <input type="text" class="form-control" id="detail-baju" name="detail-baju" readonly>
+                                    <input type="text" class="form-control" id="detail-baju" name="detail-baju"
+                                        readonly>
                                 </div>
                                 <div class="">
                                     <label class="form-label text-black" for="detail-bank">Bank</label>
-                                    <input type="text" class="form-control" id="detail-bank" name="detail-bank" readonly>
+                                    <input type="text" class="form-control" id="detail-bank" name="detail-bank"
+                                        readonly>
                                 </div>
 
                                 <div class="">
@@ -539,7 +602,8 @@
                                 <hr>
                             </div>
                             <div class="card-footer text-end">
-                                <input class="btn btn-info cancel-add" type="button" id="btn-close-detail" value="Close">
+                                <input class="btn btn-info cancel-add" type="button" id="btn-close-detail"
+                                    value="Close">
                             </div>
                         </form>
                     </div>
@@ -547,7 +611,6 @@
             </div>
         </div>
     </div>
-
 
     <div class="modal fade modal-alert" id="alert" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenter1" aria-hidden="true">

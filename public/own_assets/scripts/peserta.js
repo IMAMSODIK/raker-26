@@ -508,3 +508,14 @@ $("#simpan-dokumen").on("click", function(){
         },
     });
 })
+
+$('#btn-export').on('click', function () {
+    new bootstrap.Modal(document.getElementById('exportModal')).show();
+});
+
+$('#downloadCSV').on('click', function () {
+
+    let form = $('#exportForm').serialize();
+
+    window.location = '/export-csv?' + form;
+});

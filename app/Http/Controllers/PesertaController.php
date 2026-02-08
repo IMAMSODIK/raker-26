@@ -285,4 +285,57 @@ class PesertaController extends Controller
             ]);
         }
     }
+
+    public function exportCSV(Request $request)
+    {
+        $columns = $request->columns ?? [];
+
+        if (empty($columns)) {
+            return back();
+        }
+
+        $pesertas = Peserta::with(['unitKerja', 'jabatan'])->get();
+
+        $filename = "peserta_export.csv";
+
+        $headers = [
+            "Content-Type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=$filename",
+        ];
+
+        $callback = function () use ($pesertas, $columns) {
+
+            $file = fopen('php://output', 'w');
+
+            // header csv
+            fputcsv($file, $columns);
+
+            foreach ($pesertas as $p) {
+
+                $row = [];
+
+                foreach ($columns as $col) {
+
+                    switch ($col) {
+                        case 'unit_kerja':
+                            $row[] = $p->unitKerja->nama ?? '';
+                            break;
+
+                        case 'jabatan':
+                            $row[] = $p->jabatan->nama ?? '';
+                            break;
+
+                        default:
+                            $row[] = $p->$col;
+                    }
+                }
+
+                fputcsv($file, $row);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }

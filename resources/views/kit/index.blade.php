@@ -109,28 +109,28 @@
                                             class="{{ $peserta->nip ? '' : 'text-danger' }}">({{ $peserta->nip ?? 'Belum Mendaftar' }})</small>
                                     </td>
 
-                                    <td class="text-center">
+                                    <td class="text-center align-middle">
                                         {!! optional($peserta->kit)->tumbler ? '✅' : '❌' !!}
                                     </td>
 
-                                    <td class="text-center">
+                                    <td class="text-center align-middle">
                                         {!! optional($peserta->kit)->buku_panduan ? '✅' : '❌' !!}
                                     </td>
 
-                                    <td class="text-center">
+                                    <td class="text-center align-middle">
                                         {!! optional($peserta->kit)->lanyard ? '✅' : '❌' !!}
                                     </td>
 
-                                    <td class="text-center">
+                                    <td class="text-center align-middle">
                                         {!! optional($peserta->kit)->topi ? '✅' : '❌' !!}
                                     </td>
 
-                                    <td class="text-center">
+                                    <td class="text-center align-middle">
                                         {!! optional($peserta->kit)->baju ? '✅' : '❌' !!}
                                     </td>
 
 
-                                    <td style="font-size: 16px" class="text-center">
+                                    <td style="font-size: 16px" class="text-center align-middle">
                                         <button class="btn btn-primary edit" data-id="{{ $peserta->id }}">Edit</button>
                                     </td>
                                 </tr>

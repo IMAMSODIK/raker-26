@@ -31,6 +31,7 @@
         $("#tambah-data-modal").modal("hide");
         $("#edit-data-modal").modal("hide");
         $("#detail-data-modal").modal("hide");
+        $("#exportModal").modal("hide");
     })
 </script>
 @yield('own_scripts')

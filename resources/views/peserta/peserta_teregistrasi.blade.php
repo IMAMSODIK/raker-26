@@ -31,7 +31,7 @@
                                 <th class="text-center">Status</th>
                                 <th class="text-center">Foto</th>
                                 <th class="text-center">Tanda Tangan</th>
-                                <th class="text-center">Aksi</th>
+                                {{-- <th class="text-center">Aksi</th> --}}
                             </tr>
                         </thead>
                         <tfoot>
@@ -46,7 +46,7 @@
                                 <th class="text-center">Status</th>
                                 <th class="text-center">Foto</th>
                                 <th class="text-center">Tanda Tangan</th>
-                                <th class="text-center">Aksi</th>
+                                {{-- <th class="text-center">Aksi</th> --}}
                             </tr>
                         </tfoot>
                         <tbody>
@@ -81,11 +81,11 @@
                                         <img src="{{ asset('storage/ttd') . '/' . $peserta->ttd }}" alt=""
                                             width="100%">
                                     </td>
-                                    <td class="text-center">
+                                    {{-- <td class="text-center">
                                         <button class="btn btn-primary registrasi"
                                             data-id="{{ $peserta->id }}"
                                             {{($peserta->registrasi == 1) ? "disabled" : "" }}>Registrasi</button>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                             @endforeach
                         </tbody>
