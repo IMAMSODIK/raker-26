@@ -25,4 +25,12 @@
 <script src="{{asset('dashboard_assets/js/demo/datatables-demo.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}">
+
+<script>
+    $(".btn-close").on("click", function(){
+        $("#tambah-data-modal").modal("hide");
+        $("#edit-data-modal").modal("hide");
+        $("#detail-data-modal").modal("hide");
+    })
+</script>
 @yield('own_scripts')

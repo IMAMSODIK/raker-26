@@ -7,6 +7,7 @@ use App\Http\Controllers\DokumentasiController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KamarController;
+use App\Http\Controllers\KitController;
 use App\Http\Controllers\MateriRapatController;
 use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\RegistrasiController;
@@ -94,6 +95,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/daftar-peserta/detail', [PesertaController::class, 'detail']);
     Route::post('/daftar-peserta/update', [PesertaController::class, 'update']);
     Route::post('/daftar-peserta/delete', [PesertaController::class, 'delete']);
+
+    Route::get('/kit-peserta', [KitController::class, 'index']);
+    Route::get('/kit-peserta/edit', [KitController::class, 'edit']);
+    Route::post('/kit-peserta/update', [KitController::class, 'update']);
 
     Route::get('/materi-raker', [MateriRapatController::class, 'index']);
     Route::post('/materi-raker/store', [MateriRapatController::class, 'store']);
