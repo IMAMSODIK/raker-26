@@ -10,7 +10,7 @@
             </div>
             <div class="col-md-6 d-flex justify-content-end">
                 <button class="btn btn-success" id="btn-export" style="margin-right: 5px"><i class="fa fa-download"></i> Export CSV</button>
-                <button class="btn btn-info" id="tambah-data">Tambah Data</button>
+                <button class="btn btn-info" id="tambah-data"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah Data</button>
             </div>
         </div>
 
