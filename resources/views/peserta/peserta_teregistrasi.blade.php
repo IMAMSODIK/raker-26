@@ -29,6 +29,7 @@
                                 <th class="text-center">Jabatan</th>
                                 <th class="text-center">Golongan</th>
                                 <th class="text-center">Status</th>
+                                <th class="text-center">Status Kit</th>
                                 <th class="text-center">Foto</th>
                                 <th class="text-center">Tanda Tangan</th>
                                 {{-- <th class="text-center">Aksi</th> --}}
@@ -44,6 +45,7 @@
                                 <th class="text-center">Jabatan</th>
                                 <th class="text-center">Golongan</th>
                                 <th class="text-center">Status</th>
+                                <th class="text-center">Status Kit</th>
                                 <th class="text-center">Foto</th>
                                 <th class="text-center">Tanda Tangan</th>
                                 {{-- <th class="text-center">Aksi</th> --}}
@@ -71,6 +73,13 @@
                                             <span class="badge badge-pill badge-success">Sudah Registrasi</span>
                                         @else
                                             <span class="badge badge-pill badge-danger">Belum Registrasi</span>
+                                        @endif
+                                    </td>
+                                    <td style="font-size: 16px" class="text-center">
+                                        @if ($peserta->kit?->tumbler == 1)
+                                            <span class="badge badge-pill badge-success">Sudah</span>
+                                        @else
+                                            <span class="badge badge-pill badge-danger">Belum</span>
                                         @endif
                                     </td>
                                     <td style="font-size: 16px" class="text-center">

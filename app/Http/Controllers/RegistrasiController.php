@@ -28,7 +28,7 @@ class RegistrasiController extends Controller
     public function indexRegistrasi(){
         $data = [
             'pageTitle' => "Peserta Teregistrasi",
-            'pesertas' => Peserta::with(['jabatan', 'unitKerja'])->get()
+            'pesertas' => Peserta::with(['jabatan', 'unitKerja', 'kit'])->get()
         ];
         return view('peserta.peserta_teregistrasi', $data);
     }
