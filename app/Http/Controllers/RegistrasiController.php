@@ -176,6 +176,13 @@ class RegistrasiController extends Controller
 
     public function registrasiStore(Request $r){
         $data = Peserta::where("id", $r->id)->first();
+        if($data->ttd){
+            return response()->json([
+                'status' => false,
+                'message' => "Anda sudah melakukan proses registrasi"
+            ]);
+        }
+
         if(!$data->nip){
             return response()->json([
                 'status' => false,
