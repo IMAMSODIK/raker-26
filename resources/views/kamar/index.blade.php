@@ -41,7 +41,7 @@
                                     <td style="font-size: 16px">
 
                                         @forelse ($k->peserta as $p)
-                                            <span class="badge bg-primary mb-1">
+                                            <span class="badge bg-primary mb-1 text-white">
                                                 {{ $p->nama }}
                                             </span>
                                         @empty
