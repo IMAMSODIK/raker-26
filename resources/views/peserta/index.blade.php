@@ -450,6 +450,7 @@
                                     'jabatan' => 'Jabatan',
                                     'golongan' => 'Golongan',
                                     'ukuran_baju' => 'Ukuran Baju',
+                                    'kamar' => 'Nomor Kamar',
                                 ];
                             @endphp
 

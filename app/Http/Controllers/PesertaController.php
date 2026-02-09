@@ -294,7 +294,7 @@ class PesertaController extends Controller
             return back();
         }
 
-        $pesertas = Peserta::with(['unitKerja', 'jabatan'])->get();
+        $pesertas = Peserta::with(['unitKerja', 'jabatan', 'kamar'])->get();
 
         $filename = "peserta_export.csv";
 
@@ -323,6 +323,10 @@ class PesertaController extends Controller
 
                         case 'jabatan':
                             $row[] = $p->jabatan->nama ?? '';
+                            break;
+
+                        case 'kamar':
+                            $row[] = $p->kamar->no_kamar ?? '';
                             break;
 
                         default:
