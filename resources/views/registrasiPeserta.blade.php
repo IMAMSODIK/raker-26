@@ -85,7 +85,8 @@
                                     <div class="col-12 col-lg-12 mx-auto">
                                         <img src="{{ asset('own_assets/images/banner.jpeg') }}" style="width: 100%">
                                         <h1 class="text-9 text-dark fw-300 mb-5 text-center">Registrasi Peserta</h1>
-                                        <h1 class="text-9 text-dark fw-300 mb-5 text-center">Transformasi BLU UIN Sumatera Utara Medan Menuju Reputasi Dunia</h1>
+                                        <h1 class="text-9 text-dark fw-300 mb-5 text-center">Transformasi BLU UIN
+                                            Sumatera Utara Medan Menuju Reputasi Dunia</h1>
                                         <h2 class="text-center">Mariana Resort & Convention</h2>
                                         <h2 class="text-center">09-12 FEBRUARI 2026</h2>
                                     </div>
@@ -117,7 +118,7 @@
                                 <form class="form-dark" enctype="multipart/form-data">
                                     {{ csrf_field() }}
                                     <div class="row mb-3">
-                                        <img src="{{asset('own_assets/images/header.jpeg')}}" alt="">
+                                        <img src="{{ asset('own_assets/images/header.jpeg') }}" alt="">
                                     </div>
                                     <div class="row mb-3">
                                         <button class="btn btn-primary shadow-none my-2" id="cari_data"
@@ -164,7 +165,10 @@
                                     <div class="mb-3">
                                         <div class="border-canvas" style="background-color: white">
                                             <canvas width="460" height="300" id="signature-pad"
-                                                class="signature-pad" style="border:1px solid #000;"></canvas>
+                                                class="signature-pad"
+                                                style="border:1px solid #000; touch-action:none;">
+                                            </canvas>
+
                                         </div>
                                         <div class="row d-flex justify-content-center mt-3">
                                             <button id="reset-canvas" class="btn btn-danger mr-1"
@@ -283,7 +287,7 @@
 
     <!-- Page level custom scripts -->
     <script src="{{ asset('dashboard_assets/js/demo/datatables-demo.js') }}"></script>
-    
+
 
     <script>
         $("#pilih_bank").on("click", function() {
@@ -338,7 +342,7 @@
             var drawing = false;
             var lastPos = null;
 
-            context.lineWidth = 5;  // Ubah angka ini untuk menyesuaikan ketebalan
+            context.lineWidth = 5; // Ubah angka ini untuk menyesuaikan ketebalan
             context.lineCap = "round"; // Membuat ujung garis lebih halus
             context.strokeStyle = "#000";
 
@@ -379,24 +383,27 @@
             canvas.addEventListener("mouseup", endDrawing);
             canvas.addEventListener("mouseleave", endDrawing);
 
-            canvas.addEventListener(
-                "touchstart",
-                function(e) {
-                    mouseDownHandler(e.touches[0]);
-                },
-                false
-            );
+            canvas.addEventListener("touchstart", function(e) {
+                e.preventDefault();
+                mouseDownHandler(e.touches[0]);
+            }, {
+                passive: false
+            });
 
-            canvas.addEventListener(
-                "touchmove",
-                function(e) {
-                    mouseMoveHandler(e.touches[0]);
-                    e.preventDefault();
-                },
-                false
-            );
+            canvas.addEventListener("touchmove", function(e) {
+                e.preventDefault();
+                mouseMoveHandler(e.touches[0]);
+            }, {
+                passive: false
+            });
 
-            canvas.addEventListener("touchend", endDrawing, false);
+            canvas.addEventListener("touchend", function(e) {
+                e.preventDefault();
+                endDrawing();
+            }, {
+                passive: false
+            });
+
 
             document
                 .getElementById("reset-canvas")
