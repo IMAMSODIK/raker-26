@@ -6,7 +6,7 @@
     <a class="sidebar-brand d-flex align-items-center justify-content-center"
         href="/dashboard">
         <div class="sidebar-brand-text mx-5">
-            <img src="{{asset('own_assets/images/logo_real.png')}}" width="100%" alt="">
+            <img src="{{asset('own_assets/images/logo_real.png')}}" width="70%" alt="">
         </div>
     </a>
 
