@@ -40,7 +40,7 @@
                                     <td style="font-size: 16px" class="text-center">{{ $k->no_kamar }}</td>
                                     <td style="font-size: 16px">
 
-                                        @forelse ($k->pesertas as $p)
+                                        @forelse ($k->peserta as $p)
                                             <span class="badge bg-primary mb-1">
                                                 {{ $p->nama }}
                                             </span>
