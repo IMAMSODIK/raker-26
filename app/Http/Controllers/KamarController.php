@@ -15,7 +15,7 @@ class KamarController extends Controller
     {
         $data = [
             'pageTitle' => "Kamar",
-            'kamars' => Kamar::with('pesertas')->get()
+            'kamars' => Kamar::with('peserta')->get()
         ];
 
         return view('kamar.index', $data);
