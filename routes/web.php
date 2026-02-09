@@ -99,6 +99,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/kit-peserta', [KitController::class, 'index']);
     Route::get('/kit-peserta/edit', [KitController::class, 'edit']);
     Route::post('/kit-peserta/update', [KitController::class, 'update']);
+    Route::get('/kit/export-pdf', [KitController::class, 'exportPDF']);
 
     Route::get('/materi-raker', [MateriRapatController::class, 'index']);
     Route::post('/materi-raker/store', [MateriRapatController::class, 'store']);

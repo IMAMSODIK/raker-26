@@ -61,7 +61,9 @@
                 <h1 class="h3 mb-2 text-gray-800">{{ $pageTitle }}</h1>
             </div>
             <div class="col-md-6 d-flex justify-content-end">
-                <button class="btn btn-success" id="tambah-data">Tambah Data</button>
+                <a href="/kit/export-pdf" class="btn btn-danger">
+                    <i class="fa fa-file-pdf"></i> Export PDF
+                </a>
             </div>
         </div>
 
@@ -73,6 +75,7 @@
 
             <div class="card-body">
                 <div class="table-responsive">
+
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>

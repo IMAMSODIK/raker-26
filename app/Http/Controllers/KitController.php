@@ -7,6 +7,7 @@ use App\Http\Requests\StoreKitRequest;
 use App\Http\Requests\UpdateKitRequest;
 use App\Models\Peserta;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class KitController extends Controller
 {
@@ -62,5 +63,15 @@ class KitController extends Controller
                 'error' => $e->getMessage() // hapus di production kalau mau aman
             ], 500);
         }
+    }
+
+    public function exportPDF()
+    {
+        $pesertas = Peserta::with('kit')->get();
+
+        $pdf = Pdf::loadView('export.kit', compact('pesertas'))
+            ->setPaper('A4', 'landscape');
+
+        return $pdf->download('kit-peserta.pdf');
     }
 }
