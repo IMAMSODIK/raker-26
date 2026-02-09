@@ -6,7 +6,7 @@
         <!-- Page Heading -->
         <div class="row mb-2">
             <div class="col-md-6">
-                <h1 class="h3 mb-2 text-gray-800">{{$pageTitle}}</h1>
+                <h1 class="h3 mb-2 text-gray-800">{{ $pageTitle }}</h1>
             </div>
             <div class="col-md-6 d-flex justify-content-end">
                 <button class="btn btn-success" id="btn-tambah-kamar">Tambah Data</button>
@@ -16,7 +16,7 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header">
-                <h6 class="m-0 font-weight-bold text-primary">{{$pageTitle}}</h6>
+                <h6 class="m-0 font-weight-bold text-primary">{{ $pageTitle }}</h6>
             </div>
 
             <div class="card-body">
@@ -26,7 +26,7 @@
                             <tr>
                                 <th style="width: 5%" class="text-center">No</th>
                                 <th style="width: 20%" class="text-center">Nomor Kamar</th>
-                                {{-- <th class="text-center">Nama</th> --}}
+                                <th class="text-center">Penghuni</th>
                                 <th style="width: 20%" class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -36,12 +36,23 @@
                             @endphp
                             @foreach ($kamars as $k)
                                 <tr>
-                                    <td style="font-size: 16px" class="text-center">{{$index++}}</td>
-                                    <td style="font-size: 16px" class="text-center">{{$k->no_kamar}}</td>
-                                    {{-- <td style="font-size: 16px">{{$jabatan->nama}}</td> --}}
+                                    <td style="font-size: 16px" class="text-center">{{ $index++ }}</td>
+                                    <td style="font-size: 16px" class="text-center">{{ $k->no_kamar }}</td>
+                                    <td style="font-size: 16px">
+
+                                        @forelse ($k->pesertas as $p)
+                                            <span class="badge bg-primary mb-1">
+                                                {{ $p->nama }}
+                                            </span>
+                                        @empty
+                                            <span class="text-muted">Kosong</span>
+                                        @endforelse
+
+                                    </td>
+
                                     <td style="font-size: 16px" class="text-center">
-                                        <button class="btn btn-primary edit" data-id="{{$k->id}}">Edit</button>
-                                        <button class="btn btn-danger delete" data-id="{{$k->id}}">Hapus</button>
+                                        <button class="btn btn-primary edit" data-id="{{ $k->id }}">Edit</button>
+                                        <button class="btn btn-danger delete" data-id="{{ $k->id }}">Hapus</button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -59,7 +70,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="myExtraLargeModal">Tambah kamar</h4>
-                    <button class="btn-close py-0 cancel-add" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button class="btn-close py-0 cancel-add" type="button" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body dark-modal">
                     <div class="card">
@@ -92,7 +104,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="myExtraLargeModal">Edit kamar</h4>
-                    <button class="btn-close py-0 cancel-edit" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button class="btn-close py-0 cancel-edit" type="button" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body dark-modal">
                     <div class="card">
@@ -103,8 +116,8 @@
                                     <div class="col">
                                         <div class="mb-3">
                                             <label class="form-label" for="edit-no-kamar">Nomor kamar</label>
-                                            <input type="text" class="form-control input-air-primary" id="edit-no-kamar"
-                                                placeholder="nomor kamar" required>
+                                            <input type="text" class="form-control input-air-primary"
+                                                id="edit-no-kamar" placeholder="nomor kamar" required>
                                         </div>
                                     </div>
                                 </div>

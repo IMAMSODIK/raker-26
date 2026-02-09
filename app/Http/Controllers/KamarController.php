@@ -15,10 +15,12 @@ class KamarController extends Controller
     {
         $data = [
             'pageTitle' => "Kamar",
-            'kamars' => Kamar::all()
+            'kamars' => Kamar::with('pesertas')->get()
         ];
+
         return view('kamar.index', $data);
     }
+
 
     public function store(Request $r)
     {
@@ -159,7 +161,8 @@ class KamarController extends Controller
         }
     }
 
-    public function pengaturanKamar(){
+    public function pengaturanKamar()
+    {
         $data = [
             'pageTitle' => "Pengaturan Kamar",
             'kamars' => Kamar::with(['peserta'])->get(),

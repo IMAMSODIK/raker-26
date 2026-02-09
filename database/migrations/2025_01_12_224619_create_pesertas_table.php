@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('pesertas', function (Blueprint $table) {
             $table->id();
             $table->string('role');
+            $table->foreignId('kamar_id');
             $table->string('nama');
             $table->string('nip')->nullable();
             $table->string('instansi');
