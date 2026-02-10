@@ -141,7 +141,7 @@
                                             value="{{ old('asal_instansi') }}" />
                                     </div>
                                     <button class="btn btn-primary shadow-none my-2 btn-submit"
-                                        type="button">Absen Hari 1</button>
+                                        type="button">Absen Hari ke-2</button>
                                 </form>
                             </div>
                         </div>
