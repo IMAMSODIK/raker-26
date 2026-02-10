@@ -74,7 +74,7 @@ class RegistrasiController extends Controller
             ]);
         }
 
-        $data->absensi2 = 1;
+        $data->absensi3 = 1;
         $data->save();
 
         return response()->json([
