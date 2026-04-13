@@ -277,12 +277,10 @@
             // trigger download
             window.location = '/export-absensi?' + form;
 
-            // 🔥 fallback reset (karena tidak bisa detect selesai download)
-            let detik = 5 * 1000 * 60;
             setTimeout(function() {
                 $('#loadingOverlay').hide();
                 btn.prop('disabled', false);
-            }, detik);
+            }, 15000);
 
         });
     </script>
