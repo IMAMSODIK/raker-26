@@ -10,7 +10,7 @@
             </div>
             <div class="col-md-6 d-flex justify-content-end">
                 <button class="btn btn-success" id="exportAbsensi" style="margin-right: 5px"><i class="fa fa-download"></i>
-                    Export CSV</button>
+                    Export Data</button>
             </div>
         </div>
 
