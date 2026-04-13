@@ -6,7 +6,11 @@
         <!-- Page Heading -->
         <div class="row mb-2">
             <div class="col-md-6">
-                <h1 class="h3 mb-2 text-gray-800">Daftar Peserta</h1>
+                <h1 class="h3 mb-2 text-gray-800">{{ $pageTitle }}</h1>
+            </div>
+            <div class="col-md-6 d-flex justify-content-end">
+                <button class="btn btn-success" id="exportAbsensi" style="margin-right: 5px"><i class="fa fa-download"></i>
+                    Export CSV</button>
             </div>
         </div>
 
@@ -15,7 +19,7 @@
             <div class="card-header">
                 <h6 class="m-0 font-weight-bold text-primary">Peserta</h6>
             </div>
-            
+
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -53,35 +57,45 @@
                             @endphp
                             @foreach ($pesertas as $peserta)
                                 <tr>
-                                    <td style="font-size: 16px" class="text-center align-middle">{{$index++}}</td>
-                                    <td style="font-size: 16px" class="align-middle">{{$peserta->nama}} <br><small class="{{$peserta->nip ? '' : 'text-danger'}}">({{$peserta->nip ?? "Belum Mendaftar"}})</small></td>
-                                    <td style="font-size: 16px" class="align-middle"><span class="badge badge-pill badge-{{$peserta->role == 'PANITIA' ? 'primary' : 'success'}}">{{$peserta->role}}</span></td>
-                                    <td style="font-size: 16px" class="align-middle">{{$peserta->instansi}}</td>
-                                    <td style="font-size: 16px" class="align-middle">{{$peserta->unitKerja->nama ?? ""}}</td>
-                                    <td style="font-size: 16px" class="align-middle">{{$peserta->jabatan->nama ?? ""}}</td>
-                                    <td style="font-size: 16px" class="text-center align-middle">{{$peserta->golongan}}</td>
+                                    <td style="font-size: 16px" class="text-center align-middle">{{ $index++ }}</td>
+                                    <td style="font-size: 16px" class="align-middle">{{ $peserta->nama }} <br><small
+                                            class="{{ $peserta->nip ? '' : 'text-danger' }}">({{ $peserta->nip ?? 'Belum Mendaftar' }})</small>
+                                    </td>
+                                    <td style="font-size: 16px" class="align-middle"><span
+                                            class="badge badge-pill badge-{{ $peserta->role == 'PANITIA' ? 'primary' : 'success' }}">{{ $peserta->role }}</span>
+                                    </td>
+                                    <td style="font-size: 16px" class="align-middle">{{ $peserta->instansi }}</td>
+                                    <td style="font-size: 16px" class="align-middle">{{ $peserta->unitKerja->nama ?? '' }}
+                                    </td>
+                                    <td style="font-size: 16px" class="align-middle">{{ $peserta->jabatan->nama ?? '' }}
+                                    </td>
+                                    <td style="font-size: 16px" class="text-center align-middle">{{ $peserta->golongan }}
+                                    </td>
                                     <td style="font-size: 16px" class="text-center align-middle">
                                         @if ($peserta->absensi1 == 1)
                                             <span class="badge badge-pill badge-success">Sudah Absensi</span>
                                         @else
                                             <span class="badge badge-pill badge-danger">Belum Absensi</span><br>
-                                            <button class="btn btn-primary absensi" data-absensi="1" data-id="{{$peserta->id}}">Presensi</button>
+                                            <button class="btn btn-primary absensi" data-absensi="1"
+                                                data-id="{{ $peserta->id }}">Presensi</button>
                                         @endif
                                     </td>
                                     <td style="font-size: 16px" class="text-center align-middle">
                                         @if ($peserta->absensi2 == 1)
                                             <span class="badge badge-pill badge-success">Sudah Absensi</span>
                                         @else
-                                            <span class="badge badge-pill badge-danger">Belum Absensi</span>    
-                                            <button class="btn btn-primary absensi" data-absensi="2" data-id="{{$peserta->id}}">Presensi</button>
+                                            <span class="badge badge-pill badge-danger">Belum Absensi</span>
+                                            <button class="btn btn-primary absensi" data-absensi="2"
+                                                data-id="{{ $peserta->id }}">Presensi</button>
                                         @endif
                                     </td>
                                     <td style="font-size: 16px" class="text-center align-middle">
                                         @if ($peserta->absensi3 == 1)
                                             <span class="badge badge-pill badge-success">Sudah Absensi</span>
                                         @else
-                                            <span class="badge badge-pill badge-danger">Belum Absensi</span> 
-                                            <button class="btn btn-primary absensi" data-absensi="3" data-id="{{$peserta->id}}">Presensi</button>   
+                                            <span class="badge badge-pill badge-danger">Belum Absensi</span>
+                                            <button class="btn btn-primary absensi" data-absensi="3"
+                                                data-id="{{ $peserta->id }}">Presensi</button>
                                         @endif
                                     </td>
                                 </tr>
@@ -137,8 +151,8 @@
         </div>
     </div> --}}
 
-    <div class="modal fade modal-alert" id="alert" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenter1" aria-hidden="true">
+    <div class="modal fade modal-alert" id="alert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter1"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body">
@@ -216,8 +230,60 @@
             </div>
         </div>
     </div>
+
+    <div id="loadingOverlay"
+        style="
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.4);
+    z-index:9999;
+    cursor:wait;
+    justify-content:center;
+    align-items:center;
+">
+        <div
+            style="
+        background:#fff;
+        padding:20px 30px;
+        border-radius:8px;
+        font-family:Arial;
+        font-size:14px;
+    ">
+            Export sedang diproses...
+        </div>
+    </div>
 @endsection
 
 @section('own_scripts')
     <script src="{{ asset('own_assets/scripts/peserta.js') }}"></script>
+
+    <script>
+        $('#exportAbsensi').on('click', function() {
+
+            let btn = $(this);
+
+            // 🔥 tampilkan overlay (block semua klik)
+            $('#loadingOverlay').css('display', 'flex');
+
+            // disable tombol
+            btn.prop('disabled', true);
+
+            let form = $('#exportForm').serialize();
+
+            // trigger download
+            window.location = '/export-absensi?' + form;
+
+            // 🔥 fallback reset (karena tidak bisa detect selesai download)
+            let detik = 5 * 1000 * 60;
+            setTimeout(function() {
+                $('#loadingOverlay').hide();
+                btn.prop('disabled', false);
+            }, detik);
+
+        });
+    </script>
 @endsection

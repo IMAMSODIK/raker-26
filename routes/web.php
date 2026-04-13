@@ -120,6 +120,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/pengaturan-kamar', [KamarController::class, 'pengaturanKamar']);
     Route::get('/export', [ExportController::class, 'exportLaporan']);
     Route::get('/export-csv', [PesertaController::class, 'exportCSV']);
+    Route::get('/export-absensi', [PesertaController::class, 'exportAbsensi']);
 });
 
 Route::middleware('guest')->group(function () {

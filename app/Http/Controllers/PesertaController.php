@@ -11,6 +11,7 @@ use App\Models\UnitKerja;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PesertaController extends Controller
 {
@@ -284,6 +285,17 @@ class PesertaController extends Controller
                 'message' => $e->getMessage()
             ]);
         }
+    }
+
+    public function exportAbsensi()
+    {
+        $pesertas = Peserta::with(['jabatan'])->get();
+
+        $pdf = Pdf::loadView('pdf.peserta', [
+            'pesertas' => $pesertas,
+        ])->setPaper('a4', 'landscape');
+
+        return $pdf->stream('daftar-peserta.pdf');
     }
 
     public function exportCSV(Request $request)
